@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from sapc_audio import decode_audio, load_split, pathology_label, speaker_dir_name
+from sapc_audio import condition_label, decode_audio, load_speaker_severity, load_split, speaker_dir_name
 
 
 def main():
@@ -26,6 +26,10 @@ def main():
     data_cfg = settings["dataset"]
     ds_by_split = {split: load_split(data_cfg["path"], split) for split in ("train", "dev")}
     label_cfg = data_cfg.get("pathology_labels") or {}
+    condition_cfg = data_cfg.get("condition_labels") or {}
+    severity_lookup = None
+    if condition_cfg.get("mode") == "joint_etiology_severity":
+        severity_lookup = load_speaker_severity(condition_cfg["speaker_csv"])
     label_column = label_cfg.get("column")
     required = ["id", "speaker", data_cfg["text_column"], "audio"]
     if label_column:
@@ -54,7 +58,7 @@ def main():
     labels = label_cfg
     if not labels.get("mapping") and not labels.get("by_speaker") and not labels.get("by_category"):
         ap.error("Set dataset.pathology_labels mapping in the Katana config")
-    num_classes = int(labels["num_classes"])
+    num_classes = int(condition_cfg.get("num_classes", labels["num_classes"]))
     # Validate the full mapping before loading checkpoints or running GPU work.
     preflight_counts = Counter()
     for split, ds in ds_by_split.items():
@@ -62,7 +66,9 @@ def main():
         preflight_columns.append(label_column or "Category")
         for row in ds.select_columns(preflight_columns):
             if str(row.get(data_cfg["text_column"]) or "").strip():
-                label = pathology_label(row, labels)
+                label, _etiology_id, _severity_id = condition_label(
+                    row, split, data_cfg, severity_lookup
+                )
                 if not 0 <= label < num_classes:
                     raise ValueError(f"Pathology label {label} outside 0..{num_classes - 1}")
                 preflight_counts[(split, label)] += 1
@@ -71,7 +77,13 @@ def main():
         raise ValueError(f"SAPC train has no rows for pathology classes {absent}; check the mapping")
     absent_dev = [label for label in range(num_classes) if not preflight_counts[("dev", label)]]
     if absent_dev:
-        raise ValueError(f"SAPC dev has no rows for pathology classes {absent_dev}; check the mapping")
+        if condition_cfg.get("mode") == "joint_etiology_severity":
+            logger.warning(
+                f"SAPC dev has no rows for joint condition classes {absent_dev}; "
+                "validation will use the conditions present in dev"
+            )
+        else:
+            raise ValueError(f"SAPC dev has no rows for pathology classes {absent_dev}; check the mapping")
     logger.info(f"Preflight rows by split/pathology class: {dict(preflight_counts)}")
     out = Path(args.out_dir).expanduser().resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -88,7 +100,9 @@ def main():
             if not speaker or not text:
                 counts[(split, "empty_speaker_or_text")] += 1
                 continue
-            label = pathology_label(row, labels)
+            label, etiology_id, severity_id = condition_label(
+                row, split, data_cfg, severity_lookup
+            )
             if not 0 <= label < num_classes:
                 raise ValueError(f"Label {label} for speaker {speaker!r} is outside 0..{num_classes - 1}")
             speaker_key = speaker_dir_name(speaker)
@@ -125,6 +139,7 @@ def main():
                 "id": uid, "text": text, "codes": str(codes_p), "mels": str(mel_p),
                 "condition": str(cond_p), "duration": duration,
                 "pathology_label": label, "patient_id": speaker,
+                "etiology_label": etiology_id, "severity_label": severity_id,
                 "audio_filepath": row.get("audio_filepath"),
             })
             counts[(split, "kept")] += 1
@@ -169,6 +184,8 @@ def main():
                         "id": key, "text": item["text"], "codes": str(codes_p),
                         "mels": str(mel_p), "condition": str(cond_p),
                         "duration": duration, "pathology_label": label,
+                        "etiology_label": item.get("etiology_label"),
+                        "severity_label": item.get("severity_label"),
                         "patient_id": item["patient_id"], "wav": str(wav_path),
                     })
                     counts[("converted", "kept")] += 1

@@ -1,0 +1,32 @@
+experiment:
+  name: Park_v1
+  seed: 1234
+  output_dir: /srv/scratch/z5327748/dys-gen-runs/Park_v1
+  overwrite: false
+
+dataset:
+  path: /srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full
+  split: train
+  etiology: Parkinson's Disease
+  speaker_column: speaker
+  etiology_column: etiology
+  id_column: id
+  audio_column: audio
+  text_column: norm_text_with_disfluency_team
+  pairing_text_column: norm_text_without_disfluency_team
+  speaker_severity_csv: configs/utterance_research_v1_noFTModel/severity-speaker-labelling.csv
+
+selection:
+  low_label: low
+  high_label: high
+  # Leave these null to select a reproducible random pair with shared text.
+  low_speaker: null
+  high_speaker: null
+
+seed_vc:
+  bidirectional: true
+  diffusion_steps: 30
+  length_adjust: 1.0
+  inference_cfg_rate: 0.7
+  fp16: true
+

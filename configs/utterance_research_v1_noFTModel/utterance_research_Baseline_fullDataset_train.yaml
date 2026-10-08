@@ -1,0 +1,82 @@
+user_settings:
+  repo_root: /home/z5327748/SAPC-GroupApple-parakeet
+  hf_dataset_path: /srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full
+  run_root: /srv/scratch/speechdata/Jinghao_shared/parakeet_runs
+  hf_cache_root: /srv/scratch/speechdata/jinghao/cache/8981609/hf
+  sctk_dir: /srv/scratch/z5327748/tools/SCTK
+  devices: 1
+  num_workers: 2
+  model_name: /srv/scratch/speechdata/SAPC_Team/parakeet-tdt-1.1b/parakeet-tdt-1.1b.nemo
+  name: utterance_research_Baseline_fullDataset_train
+  eval_decoding_strategy: malsd_batch
+  eval_beam_size: 5
+  pipeline_stages:
+  - infer
+  - eval
+project:
+  root: ${user_settings.repo_root}
+model:
+  name: ${user_settings.model_name}
+pipeline:
+  stages: ${user_settings.pipeline_stages}
+run:
+  run_root: ${user_settings.run_root}
+  name: ${user_settings.name}
+  output_subdir: artifacts
+  hyp_csv: hyp_train_normalized.paired.csv
+  train_log: eval_only.log
+  model_path: ${model.name}
+environment:
+  env:
+    PYTHONUNBUFFERED: '1'
+    HF_HOME: ${user_settings.hf_cache_root}
+    TRANSFORMERS_CACHE: ${environment.env.HF_HOME}/transformers
+    HF_DATASETS_CACHE: ${environment.env.HF_HOME}/datasets
+infer:
+  script: ${project.root}/parakeet_infer.py
+  args:
+    model_path: ${run.model_path}
+    dataset_path: ${user_settings.hf_dataset_path}
+    split: train
+    audio_column: audio
+    id_column: id
+    output_csv: ${run.hyp_csv_path}
+    batch_size: 5
+    num_gpus: ${user_settings.devices}
+    eval_decoding_strategy: ${user_settings.eval_decoding_strategy}
+    eval_beam_size: ${user_settings.eval_beam_size}
+    empty_retry_audit_csv: ${run.run_dir}/empty_retry_audit.csv
+    empty_retry_audio_variant: all
+    empty_retry_collect_all_candidates: true
+eval:
+  script: ${project.root}/scripts/evaluate.sh
+  args:
+    dataset-path: ${user_settings.hf_dataset_path}
+    hf-split: train
+    split: Train
+    data-root: ${run.run_dir}
+    hyp-csv: ${run.hyp_csv_path}
+    hyp-col: raw_hypos
+    ref1-col: norm_text_with_disfluency
+    ref2-col: norm_text_without_disfluency
+    sctk_dir: ${user_settings.sctk_dir}
+utterance_research:
+  cleanup_split_run_dirs: true
+  splits:
+  - hf_split: train
+    eval_split: Train
+    run_suffix: train
+    hyp_csv: hyp_train_normalized.paired.csv
+  - hf_split: dev
+    eval_split: Dev
+    run_suffix: dev
+    hyp_csv: hyp_dev_normalized.paired.csv
+  mid_threshold: 0.25
+  high_threshold: 0.5
+  label_source: parakeet_baseline_wer_cer
+  skip_empty_reference_rows: true
+  normalized_hyp_col: norm_hyp
+  without_dys_hyp_col: norm_hyp_without_dys
+  speaker_col: speaker
+  output_csv: ${user_settings.run_root}/${user_settings.name}/severity-utterance-labelling.csv
+  summary_md: ${user_settings.run_root}/${user_settings.name}/severity-utterance-labelling-summary.md

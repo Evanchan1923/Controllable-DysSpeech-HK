@@ -10,10 +10,10 @@ import numpy as np
 import soundfile as sf
 import yaml
 
-from sapc_audio import decode_audio, load_split, pathology_label, speaker_dir_name
+from sapc_audio import condition_label, decode_audio, load_speaker_severity, load_split, speaker_dir_name
 
 
-def plan_pairs(dataset, data_cfg, max_labels, seed):
+def plan_pairs(dataset, data_cfg, max_labels, seed, severity_lookup=None):
     if max_labels < 1:
         raise ValueError("generate.max_source_labels_per_target must be >= 1")
     label_column = data_cfg["pathology_labels"].get("column") or "Category"
@@ -24,19 +24,23 @@ def plan_pairs(dataset, data_cfg, max_labels, seed):
     rows = dataset.select_columns(list(required))
     records = []
     by_text_label = defaultdict(list)
-    labels = data_cfg["pathology_labels"]
+    condition_cfg = data_cfg.get("condition_labels") or {}
+    pairing_mode = condition_cfg.get("pairing_mode", "cross_condition")
     for index, row in enumerate(rows):
         speaker = str(row["speaker"] or "").strip()
         text = str(row[data_cfg["text_column"]] or "").strip()
         pairing_text = str(row[data_cfg["pairing_text_column"]] or "").strip().casefold()
         if not speaker or not text or not pairing_text:
             continue
-        label = pathology_label(row, labels)
-        num_classes = int(labels["num_classes"])
+        label, etiology_label, severity_label = condition_label(
+            row, "train", data_cfg, severity_lookup
+        )
+        num_classes = int(condition_cfg.get("num_classes", data_cfg["pathology_labels"]["num_classes"]))
         if not 0 <= label < num_classes:
             raise ValueError(f"Pathology label {label} for speaker {speaker!r} must be 0..{num_classes - 1}")
         rec = {"index": index, "id": str(row["id"] or index), "speaker": speaker,
-               "text": text, "pairing_text": pairing_text, "pathology_label": label}
+               "text": text, "pairing_text": pairing_text, "pathology_label": label,
+               "etiology_label": etiology_label, "severity_label": severity_label}
         records.append(rec)
         by_text_label[(pairing_text, label)].append(rec)
     classes = sorted({r["pathology_label"] for r in records})
@@ -45,10 +49,14 @@ def plan_pairs(dataset, data_cfg, max_labels, seed):
     for target in records:
         candidates_by_class = []
         for label in classes:
-            if label == target["pathology_label"]:
+            donors = by_text_label[(target["pairing_text"], label)]
+            if pairing_mode == "same_etiology_cross_severity":
+                donors = [r for r in donors
+                          if r["etiology_label"] == target["etiology_label"]
+                          and r["severity_label"] != target["severity_label"]]
+            elif label == target["pathology_label"]:
                 continue
-            donors = [r for r in by_text_label[(target["pairing_text"], label)]
-                      if r["speaker"] != target["speaker"]]
+            donors = [r for r in donors if r["speaker"] != target["speaker"]]
             if donors:
                 candidates_by_class.append((label, donors))
         rng.shuffle(candidates_by_class)
@@ -73,7 +81,11 @@ def main():
     cfg = settings["dataset"]
     gen = settings["generate"]
     ds = load_split(cfg["path"], "train")
-    pairs, n_records = plan_pairs(ds, cfg, int(gen["max_source_labels_per_target"]), int(gen["seed"]))
+    condition_cfg = cfg.get("condition_labels") or {}
+    severity_lookup = None
+    if condition_cfg.get("mode") == "joint_etiology_severity":
+        severity_lookup = load_speaker_severity(condition_cfg["speaker_csv"])
+    pairs, n_records = plan_pairs(ds, cfg, int(gen["max_source_labels_per_target"]), int(gen["seed"]), severity_lookup)
     pairs = [p for i, p in enumerate(pairs) if i % args.num_shards == args.shard]
     if args.max_pairs is not None:
         pairs = pairs[:args.max_pairs]
@@ -125,6 +137,8 @@ def main():
                 continue
         manifest.append({"id": key, "speaker": f"{target_speaker}_converted_from_{label}",
                          "patient_id": target["speaker"], "pathology_label": label,
+                         "etiology_label": donor["etiology_label"],
+                         "severity_label": donor["severity_label"],
                          "text": donor["text"], "wav": str(wav_path),
                          "source_id": donor["id"], "target_id": target["id"]})
         if i % 100 == 0:

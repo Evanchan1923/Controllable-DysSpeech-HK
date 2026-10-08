@@ -1,6 +1,7 @@
 """SAPC_full loading and audio decoding, following SAPC-Qwen's decode=False path."""
 import io
 import hashlib
+import csv
 import re
 from pathlib import Path
 
@@ -33,6 +34,51 @@ def pathology_label(row, label_cfg):
     if category in by_category:
         return int(by_category[category])
     raise ValueError(f"No pathology label for speaker={speaker!r}, Category={category!r}")
+
+
+def load_speaker_severity(path):
+    """Load one severity record per (split, speaker)."""
+    lookup = {}
+    with Path(path).expanduser().resolve().open(encoding="utf-8", newline="") as input_file:
+        reader = csv.DictReader(input_file)
+        required = {"split", "speaker", "etiology", "speaker_avg_cer", "speaker_severity"}
+        missing = required - set(reader.fieldnames or [])
+        if missing:
+            raise KeyError(f"Speaker severity CSV is missing columns: {sorted(missing)}")
+        for row in reader:
+            key = (str(row["split"]).strip(), str(row["speaker"]).strip())
+            if key in lookup:
+                raise ValueError(f"Duplicate speaker severity key: {key}")
+            lookup[key] = dict(row)
+    return lookup
+
+
+def condition_label(row, split, data_cfg, severity_lookup=None):
+    """Return (joint condition ID, etiology ID, severity ID or None)."""
+    etiology_id = pathology_label(row, data_cfg["pathology_labels"])
+    condition_cfg = data_cfg.get("condition_labels") or {}
+    if condition_cfg.get("mode") != "joint_etiology_severity":
+        return etiology_id, etiology_id, None
+    if severity_lookup is None:
+        raise ValueError("joint_etiology_severity requires the speaker severity CSV")
+    speaker = str(row.get("speaker") or "").strip()
+    key = (str(split), speaker)
+    if key not in severity_lookup:
+        raise KeyError(f"No speaker severity row for {key}")
+    severity_row = severity_lookup[key]
+    etiology_column = data_cfg["pathology_labels"].get("column")
+    if etiology_column and str(severity_row["etiology"]).strip() != str(row.get(etiology_column) or "").strip():
+        raise ValueError(f"Etiology mismatch for {key}")
+    severity_name = str(severity_row["speaker_severity"]).strip()
+    severity_mapping = condition_cfg["severity_mapping"]
+    if severity_name not in severity_mapping:
+        raise ValueError(f"Unknown severity {severity_name!r} for {key}")
+    severity_id = int(severity_mapping[severity_name])
+    num_severities = len(severity_mapping)
+    joint_id = etiology_id * num_severities + severity_id
+    if not 0 <= joint_id < int(condition_cfg["num_classes"]):
+        raise ValueError(f"Joint condition {joint_id} outside configured class range")
+    return joint_id, etiology_id, severity_id
 
 
 def load_split(dataset_path, split):

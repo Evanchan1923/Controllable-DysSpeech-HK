@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 
-os.environ['HF_HUB_CACHE'] = './checkpoints/hf_cache'
+os.environ.setdefault('HF_HUB_CACHE', './checkpoints/hf_cache')
 import shutil
 import warnings
 import argparse

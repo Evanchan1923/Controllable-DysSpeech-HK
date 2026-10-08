@@ -36,7 +36,7 @@ from indextts.utils.typical_sampling import TypicalLogitsWarper
 from transformers import LogitsProcessorList
 
 # Legacy TORGO per-patient condition IDs. SAPC uses the etiology mapping in
-# configs/katana.yaml instead.
+# the selected SAPC experiment config instead.
 TORGO_PATHOLOGY_MAP = {
     "FC01": 0, "FC02": 0, "FC03": 0,
     "MC01": 0, "MC02": 0, "MC03": 0, "MC04": 0,

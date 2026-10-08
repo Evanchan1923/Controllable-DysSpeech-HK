@@ -1,0 +1,41 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=2:ngpus=1:mem=32gb
+#PBS -l walltime=02:00:00
+#PBS -j oe
+#PBS -N Park_v1
+#PBS -o Park_v1.log
+
+set -euo pipefail
+cd "${PBS_O_WORKDIR:-$PWD}"
+
+CONFIG_PATH="${CONFIG_PATH:-configs/Park_v1.yaml}"
+VENV_DIR="${VENV_DIR:-/srv/scratch/z5327748/venv/controll-dys-gen}"
+export CACHE_ROOT="${CACHE_ROOT:-/srv/scratch/z5327748/cache}"
+JOB_CACHE_ID="${PBS_JOBID:-Park_v1_$$}"
+JOB_CACHE_ID="${JOB_CACHE_ID%%.*}"
+export TMPDIR="${CACHE_ROOT}/${JOB_CACHE_ID}/tmp"
+export TMP="$TMPDIR" TEMP="$TMPDIR"
+export HF_HOME="${HF_HOME:-/srv/scratch/speechdata/Jinghao_shared/controll-dys-gen/hf}"
+export HF_HUB_CACHE="${HF_HOME}/hub"
+export XDG_CACHE_HOME="${CACHE_ROOT}/xdg_cache"
+export NUMBA_CACHE_DIR="${CACHE_ROOT}/numba"
+export SEED_VC_CACHE_DIR="${SEED_VC_CACHE_DIR:-/srv/scratch/speechdata/Jinghao_shared/controll-dys-gen/seed_vc}"
+mkdir -p "$TMPDIR" "$HF_HUB_CACHE" "$XDG_CACHE_HOME" "$NUMBA_CACHE_DIR" "$SEED_VC_CACHE_DIR"
+
+module load python/3.10.8
+module load ffmpeg/7.0.2
+module load cuda/12.1.1
+if [[ ! -f "${VENV_DIR}/bin/activate" ]]; then
+  echo "Missing virtual environment: ${VENV_DIR}" >&2
+  exit 1
+fi
+source "${VENV_DIR}/bin/activate"
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+
+echo "Job started at: $(date)  Job ID: ${PBS_JOBID:-unknown}  Host: $(hostname)"
+args=(--config "$CONFIG_PATH")
+if [[ "${DRY_RUN:-0}" == "1" ]]; then args+=(--dry-run); fi
+python scripts/run_park_v1.py "${args[@]}"
+echo "Job finished at: $(date)"
+

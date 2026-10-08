@@ -14,13 +14,13 @@ STAGES = ("cache_models", "generate", "prepare", "train", "infer")
 
 def required_path(value, name):
     if not value:
-        raise ValueError(f"Set {name} in configs/katana.yaml")
+        raise ValueError(f"Set {name} in the selected pipeline config")
     return Path(value).expanduser().resolve()
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--config", default=str(ROOT / "configs/katana.yaml"))
+    ap.add_argument("--config", required=True, help="Pipeline YAML to run")
     ap.add_argument("--stage", choices=STAGES, help="Run one stage instead of run.stages")
     ap.add_argument("--check", action="store_true", help="Check paths and print commands only")
     args = ap.parse_args()
@@ -50,6 +50,18 @@ def main():
         labels = cfg["dataset"].get("pathology_labels") or {}
         if not labels.get("mapping") and not labels.get("by_speaker") and not labels.get("by_category"):
             ap.error("Set dataset.pathology_labels mapping")
+        condition_cfg = cfg["dataset"].get("condition_labels") or {}
+        if condition_cfg.get("mode") == "joint_etiology_severity":
+            severity_csv = required_path(condition_cfg.get("speaker_csv"), "dataset.condition_labels.speaker_csv")
+            if not severity_csv.is_file():
+                ap.error(f"Speaker severity CSV missing: {severity_csv}")
+            severity_mapping = condition_cfg.get("severity_mapping") or {}
+            expected_classes = len(labels.get("mapping") or {}) * len(severity_mapping)
+            if int(condition_cfg.get("num_classes", -1)) != expected_classes:
+                ap.error(
+                    "dataset.condition_labels.num_classes must equal "
+                    f"etiologies x severities ({expected_classes})"
+                )
 
     model_dir = required_path(cfg["model"]["pretrained_dir"], "model.pretrained_dir") if any(s in stages for s in ("prepare", "train", "infer")) else None
     if model_dir is not None:
@@ -67,7 +79,10 @@ def main():
         ap.error(f"Prepared data missing: {prepared / 'speaker_info.json'}")
 
     python = sys.executable
-    pathology_num_classes = int(cfg["dataset"]["pathology_labels"]["num_classes"])
+    condition_cfg = cfg["dataset"].get("condition_labels") or {}
+    pathology_num_classes = int(
+        condition_cfg.get("num_classes", cfg["dataset"]["pathology_labels"]["num_classes"])
+    )
     commands = []
     if "cache_models" in stages:
         commands.append((ROOT, [python, "scripts/cache_seedvc_models.py"]))
@@ -89,7 +104,10 @@ def main():
         checkpoint = training / "checkpoints_dys_spk_grl_exp1/gpt_best.pth"
         if "train" not in stages and not checkpoint.is_file():
             ap.error(f"Trained checkpoint missing: {checkpoint}")
-        commands.append((ROOT, [python, "-m", "indextts.inference", "--cfg", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--model-dir", str(model_dir), "--gpt-ckpt", str(checkpoint), "--num-pathology-classes", str(pathology_num_classes), "--prompt", str(prompt), "--text", str(text), "--pathology", str(cfg["run"]["pathology"]), "--out", str(outputs / cfg["inference"]["output_name"])]))
+        pathology_id = cfg["run"].get("condition_id", cfg["run"].get("pathology"))
+        if pathology_id is None:
+            ap.error("Set run.condition_id for inference")
+        commands.append((ROOT, [python, "-m", "indextts.inference", "--cfg", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--model-dir", str(model_dir), "--gpt-ckpt", str(checkpoint), "--num-pathology-classes", str(pathology_num_classes), "--prompt", str(prompt), "--text", str(text), "--pathology", str(pathology_id), "--out", str(outputs / cfg["inference"]["output_name"])]))
 
     print(f"Run directory: {run_dir}", flush=True)
     for cwd, command in commands:

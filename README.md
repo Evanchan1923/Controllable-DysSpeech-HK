@@ -1,126 +1,129 @@
-# Controllable Dysarthric Speech Synthesis
+# Controllable Dysarthric Speech Synthesis with SAPC_full
 
-This repository contains the data generation, training, and inference code for controllable dysarthric speech synthesis.
+This repository prepares SAPC_full, fine-tunes IndexTTS-1.5, and synthesizes
+speech conditioned on one of five dysarthria etiologies. The main workflow is
+configured for the UNSW Katana cluster.
 
-**Project page:** [Audio samples and system overview](https://mors20.github.io/Controllable-Dysarthric-Speech-Synthesis/)
+The original TORGO workflow has been preserved separately in
+[`scripts/torgo/README.md`](scripts/torgo/README.md).
+See [`PIPELINE_COMPARISON.md`](PIPELINE_COMPARISON.md) for a side-by-side
+comparison of the original TORGO, current SAPC, and planned severity-controlled
+workflows.
 
 ## Requirements
 
-Use Linux, Python 3.10, and an NVIDIA GPU. Prepare:
+Use Linux, Python 3.10, and an NVIDIA GPU. The Katana configuration expects:
 
-- the TORGO dataset;
-- the four IndexTTS-1.5 files shown below;
-- enough disk space for generated audio and prepared features.
+- SAPC_full at
+  `/srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full`;
+- IndexTTS-1.5 files under
+  `/srv/scratch/speechdata/Jinghao_shared/IndexTTS-Model`;
+- output under `/srv/scratch/z5327748/dys-gen-runs/sapc_full_v1`.
+
+The model directory must contain:
 
 ```text
-artifacts/pretrained/
- bpe.model
- dvae.pth
- gpt.pth
- bigvgan_generator.pth
+bpe.model
+dvae.pth
+gpt.pth
+bigvgan_generator.pth
 ```
 
-Install the environment once:
+Create the dedicated Katana virtual environment once:
 
 ```bash
-conda create -n tts python=3.10 -y
-conda activate tts
+module load python/3.10.8 ffmpeg/7.0.2 cuda/12.1.1
+python -m venv /srv/scratch/z5327748/venv/controll-dys-gen
+source /srv/scratch/z5327748/venv/controll-dys-gen/bin/activate
 pip install -e .
 pip install -r requirements-seed-vc.txt
 ```
 
-All commands below are run from the repository root unless stated otherwise.
+All commands below are run from the repository root. The generic Katana PBS
+and YAML launcher has been removed. The current runnable Katana experiment is
+the Parkinson's low/high Seed-VC check in
+[`configs/Park_v1.yaml`](configs/Park_v1.yaml) and [`Park_v1.pbs`](Park_v1.pbs).
+The full severity-aware VC, preparation, and IndexTTS training workflow is
+defined by [`configs/v1.yaml`](configs/v1.yaml) and [`v1.pbs`](v1.pbs).
 
-For the Katana setup using `SAPC_full` from the SAPC-Qwen repository, see
-[`KATANA_IMPLEMENTATION.md`](KATANA_IMPLEMENTATION.md). The Katana runner uses
-the Hugging Face `audio` column and the existing `train`/`dev` splits. SAPC
-conditioning uses its five `etiology` values; the exact ID mapping is in
-[`configs/katana.yaml`](configs/katana.yaml).
-Run `python scripts/inspect_sapc_metadata.py --out sapc_dataset_report.txt`
-on Katana to collect the speaker, Category, and etiology values without
-reading audio.
+## Etiology conditions
 
-## Step 1: Generate counterfactual audio with Seed-VC
+SAPC `Category` describes the prompt type. The synthesis condition comes from
+`etiology`:
 
-The original TORGO design, including the distinction between six conditioning
-IDs and its binary auxiliary classifier, is summarized in
-[`scripts/torgo/README.md`](scripts/torgo/README.md).
+| ID | Etiology |
+|---:|---|
+| 0 | ALS |
+| 1 | Cerebral Palsy |
+| 2 | Down Syndrome |
+| 3 | Parkinson's Disease |
+| 4 | Stroke |
 
-Input: the original TORGO folder.
-Output: voice-converted WAV files.
+SAPC_full contains no healthy/control class. The etiology-only baseline uses
+five condition prefixes. Full v1 crosses those etiologies with low, middle,
+and high severity, producing 15 joint condition prefixes and a 15-way
+auxiliary classifier. The original TORGO pipeline uses a different
+six-condition scheme.
+
+The current SAPC data also contains no healthy speakers. A healthy prompt may
+still work through the pretrained IndexTTS zero-shot capability, but that
+combination is not directly supervised by SAPC. For robust generation with a
+healthy speaker's timbre and dysarthric articulation, add an external healthy
+speech corpus as the Seed-VC timbre-reference pool. See
+[`KATANA_QUESTIONS.md`](KATANA_QUESTIONS.md) for the required dataset details.
+
+## Optional counterfactual audio with Seed-VC
+
+The SAPC code can fine-tune IndexTTS directly from real recordings or add
+offline Seed-VC counterfactual recordings. The focused `Park_v1` experiment
+tests the latter on one reproducibly selected low/high Parkinson's pair. Check
+its selection without decoding audio or loading Seed-VC:
 
 ```bash
-cd third_party/seed-vc
-python ../../scripts/torgo/generate_data.py \
-  --mode both \
-  --torgo_root /path/to/TORGO \
-  --output /path/to/converted_audio
-cd ../..
+qsub -v DRY_RUN=1 Park_v1.pbs
 ```
 
-The script skips output files that already exist, so it is safe to resume. Before a full run, add `--dry-run` to check the paths without loading the models.
+Generate both conversion directions with `qsub Park_v1.pbs`.
 
 ## Step 2: Prepare training features
 
-Input: original TORGO audio, Step 1 output, and IndexTTS-1.5 files.
-Output: mel features, codec tokens, conditioning features, manifests, and pathology embeddings.
+This stage loads SAPC through its Hugging Face DatasetDict, decodes the `audio`
+column only when extracting features, and preserves the existing `train` and
+`dev` split. It writes mel features, DVAE codes, conditioning features,
+manifests, and 15 initial joint etiology/severity embeddings for full v1.
 
-```bash
-python scripts/torgo/prepare_torgo.py \
-  --torgo_root /path/to/TORGO \
-  --converted_root /path/to/converted_audio \
-  --out_dir /path/to/prepared_data \
-  --finetune_dir artifacts/pretrained \
-  --config configs/controllable_dysarthric_speech_synthesis.yaml
+Prepared data is written to:
+
+```text
+/srv/scratch/z5327748/dys-gen-runs/sapc_full_v1/prepared_data
 ```
-
-This step also skips completed features and can be resumed.
 
 ## Step 3: Train
 
-Input: Step 2 output and the IndexTTS-1.5 files.
-Output: checkpoints under `artifacts/pretrained/checkpoints_dys_spk_grl_exp1/`.
-
-```bash
-python train.py \
-  --config configs/controllable_dysarthric_speech_synthesis.yaml \
-  --model-dir artifacts/pretrained \
-  --data-dir /path/to/prepared_data \
-  --embedding-dir /path/to/prepared_data/pathology_embedding \
-  --epochs 20 \
-  --batch-size 2 \
-  --num-workers 4
-```
-
-For a quick training check, append:
+Training uses the 836 SAPC train speakers and validates on 126 separate dev
+speakers. Checkpoints and logs are written beneath:
 
 ```text
---epochs 1 --max-train-batches 1 --skip-validation --no-save
+/srv/scratch/z5327748/dys-gen-runs/sapc_full_v1/training
 ```
 
 ## Step 4: Run inference
 
-Choose a prompt WAV for the target voice and a pathology ID:
+Use the same prompt and text with different etiology IDs to retain the prompt
+speaker's timbre while changing the requested dysarthric condition. Generated
+audio is written beneath the selected experiment's output folder. A new
+training/inference experiment config is required before the full SAPC model is
+launched again.
 
-- `0`: healthy condition
-- `1`: F01
-- `2`: M01
-- `3`: M02
-- `4`: M04
-- `5`: M05
+## More detail
+
+See [`KATANA_IMPLEMENTATION.md`](KATANA_IMPLEMENTATION.md) for dataset-loading,
+cache, output, and PBS details. To inspect SAPC metadata without touching the
+audio column, run:
 
 ```bash
-python -m indextts.inference \
-  --cfg configs/controllable_dysarthric_speech_synthesis.yaml \
-  --model-dir artifacts/pretrained \
-  --gpt-ckpt /path/to/gpt_best.pth \
-  --prompt /path/to/prompt.wav \
-  --text "Please call Stella." \
-  --pathology 4 \
-  --out outputs/example.wav
+python scripts/inspect_sapc_metadata.py --out sapc_dataset_report.txt
 ```
-
-Use the same prompt with different pathology IDs to change the articulation condition while retaining the prompt speaker's timbre.
 
 ## License and disclaimer
 

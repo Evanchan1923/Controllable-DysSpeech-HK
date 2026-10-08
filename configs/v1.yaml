@@ -1,0 +1,57 @@
+# Full SAPC v1: severity-aware Seed-VC augmentation, feature preparation,
+# and IndexTTS fine-tuning. The model uses 15 joint condition IDs:
+# etiology_id * 3 + severity_id.
+dataset:
+  path: /srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full
+  text_column: norm_text_with_disfluency_team
+  pairing_text_column: norm_text_without_disfluency_team
+  pathology_labels:
+    column: etiology
+    num_classes: 5
+    mapping:
+      ALS: 0
+      Cerebral Palsy: 1
+      Down Syndrome: 2
+      Parkinson's Disease: 3
+      Stroke: 4
+  condition_labels:
+    mode: joint_etiology_severity
+    pairing_mode: same_etiology_cross_severity
+    speaker_csv: configs/utterance_research_v1_noFTModel/severity-speaker-labelling.csv
+    num_classes: 15
+    severity_mapping:
+      low: 0
+      middle: 1
+      high: 2
+
+model:
+  pretrained_dir: /srv/scratch/speechdata/Jinghao_shared/IndexTTS-Model
+
+run:
+  root: /srv/scratch/z5327748/dys-gen-runs
+  name: sapc_full_v1
+  stages: [generate, prepare, train]
+  # Optional inference inputs. Joint condition example: Parkinson's high = 11.
+  prompt_wav: null
+  text: null
+  condition_id: 11
+
+generate:
+  num_shards: 1
+  shard: 0
+  seed: 1234
+  # For each target utterance, select at most one same-etiology donor from a
+  # different severity level.
+  max_source_labels_per_target: 1
+
+prepare:
+  valid_ratio: 0.02
+
+train:
+  epochs: 20
+  batch_size: 2
+  num_workers: 4
+
+inference:
+  output_name: example.wav
+

@@ -1,0 +1,963 @@
+speaker,split,etiology,num_utterances,speaker_avg_wer,speaker_median_wer,speaker_avg_cer,speaker_median_cer,speaker_score_avg_cer_wer,speaker_severity,low_utterances,middle_utterances,high_utterances,low_utterance_ratio,middle_utterance_ratio,high_utterance_ratio,low_cer_threshold,high_cer_threshold,severity_source
+01570ac8-6f88-4424-3a69-08dc183f4f57,dev,ALS,345,0.1795,0.0769,0.1070,0.0294,0.1432,middle,235,68,42,0.6812,0.1971,0.1217,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+02005a84-8847-4ef7-7b99-08dc286c108f,dev,Parkinson's Disease,448,0.2233,0.1250,0.1519,0.0706,0.1876,middle,255,115,78,0.5692,0.2567,0.1741,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+031e84ad-54f2-434b-abb3-08dc5d6a38e4,dev,ALS,445,0.8164,0.9091,0.6322,0.6552,0.7243,high,7,20,418,0.0157,0.0449,0.9393,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0539d504-1dee-4c09-e989-08dc2e961576,dev,Stroke,428,0.1543,0.0000,0.0755,0.0000,0.1149,low,300,101,27,0.7009,0.2360,0.0631,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+08626c89-3dbd-4756-488d-08db66e486e4,dev,Parkinson's Disease,449,0.0334,0.0000,0.0111,0.0000,0.0222,low,436,13,0,0.9710,0.0290,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+099bd3df-9122-4a77-cb41-08dd739d0cac,dev,ALS,393,0.0549,0.0000,0.0236,0.0000,0.0392,low,361,29,3,0.9186,0.0738,0.0076,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0a71bb2c-5579-468f-3729-08dc13d38337,dev,ALS,180,0.0635,0.0000,0.0293,0.0000,0.0464,low,164,9,7,0.9111,0.0500,0.0389,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0f7d84c8-5fe1-49ec-6114-08dcdb04185c,dev,ALS,415,0.2251,0.1111,0.1380,0.0500,0.1815,middle,253,88,74,0.6096,0.2120,0.1783,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0f9ac13f-e103-4926-a1a8-08dc11dcc589,dev,ALS,450,0.1365,0.0000,0.0729,0.0000,0.1047,low,342,82,26,0.7600,0.1822,0.0578,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+108bae54-13c5-4f33-769b-08dc54a70eeb,dev,Down Syndrome,428,0.2809,0.2000,0.1784,0.1176,0.2297,middle,193,139,96,0.4509,0.3248,0.2243,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+11a9ea43-641f-49d1-a1b5-08dc11dcc589,dev,ALS,80,0.3324,0.1847,0.2438,0.1046,0.2881,middle,40,16,24,0.5000,0.2000,0.3000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+15dec664-dc2b-4a05-4a54-08dc3c7b3134,dev,Down Syndrome,82,0.7137,0.8000,0.5216,0.5458,0.6177,high,6,10,66,0.0732,0.1220,0.8049,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1628ada6-3321-4052-22b4-08dc56b55882,dev,Down Syndrome,430,0.2808,0.2000,0.1789,0.1047,0.2298,middle,213,118,99,0.4953,0.2744,0.2302,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+165dda37-a252-4e37-40cb-08dcec8ec3cc,dev,Parkinson's Disease,443,0.0680,0.0000,0.0334,0.0000,0.0507,low,394,42,7,0.8894,0.0948,0.0158,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+17073b31-5882-4a6f-680c-08db4cce187f,dev,Parkinson's Disease,450,0.0481,0.0000,0.0210,0.0000,0.0345,low,420,26,4,0.9333,0.0578,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+17412e2b-d84f-48b1-cf3d-08dc89b72177,dev,ALS,448,0.0288,0.0000,0.0106,0.0000,0.0197,low,436,9,3,0.9732,0.0201,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+199e75a8-422f-473f-2b40-08db46c00613,dev,Parkinson's Disease,448,0.0946,0.0000,0.0451,0.0000,0.0699,low,374,63,11,0.8348,0.1406,0.0246,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+19afb5a2-41dc-42a1-1f5b-08db743c9986,dev,Parkinson's Disease,449,0.1105,0.0000,0.0613,0.0000,0.0859,low,365,61,23,0.8129,0.1359,0.0512,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1a2c36f7-7312-4b00-da7d-08dc75b20572,dev,Cerebral Palsy,421,0.2933,0.1667,0.2038,0.0846,0.2486,middle,215,91,115,0.5107,0.2162,0.2732,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1d6104ff-7e74-4839-37c8-08dce6e2632a,dev,Parkinson's Disease,444,0.0663,0.0000,0.0361,0.0000,0.0512,low,393,39,12,0.8851,0.0878,0.0270,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1dccccec-2fe4-47dc-fac3-08dd0a4af9ba,dev,Cerebral Palsy,429,0.1221,0.0000,0.0675,0.0000,0.0948,low,336,62,31,0.7832,0.1445,0.0723,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+24e7fbed-4e86-452f-67f6-08dcbab8e251,dev,Cerebral Palsy,417,0.8302,1.0000,0.6752,0.7222,0.7527,high,8,23,386,0.0192,0.0552,0.9257,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+253ded82-b663-4ed7-0fd2-08dcd99f98d3,dev,ALS,450,0.0370,0.0000,0.0147,0.0000,0.0259,low,431,12,7,0.9578,0.0267,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2685e5d9-b4f4-47d1-95f2-08dc379c1f1f,dev,Parkinson's Disease,450,0.0442,0.0000,0.0191,0.0000,0.0316,low,430,16,4,0.9556,0.0356,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+26c12635-5dde-45d0-e7a8-08dcd9e31338,dev,ALS,450,0.1099,0.0000,0.0694,0.0000,0.0896,low,388,29,33,0.8622,0.0644,0.0733,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+27b5dbf8-d6ec-449e-627a-08dcdcbbcec7,dev,ALS,141,0.0583,0.0000,0.0288,0.0000,0.0435,low,127,10,4,0.9007,0.0709,0.0284,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2816a74e-df3e-4ec3-cf24-08dc89b72177,dev,ALS,450,0.0323,0.0000,0.0127,0.0000,0.0225,low,436,12,2,0.9689,0.0267,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+284d7944-ac8e-47bb-1f66-08db3dcbbd09,dev,Parkinson's Disease,450,0.0679,0.0000,0.0366,0.0000,0.0522,low,405,32,13,0.9000,0.0711,0.0289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2866a69c-4e37-439c-60b9-08db37b72f34,dev,Parkinson's Disease,450,0.0590,0.0000,0.0286,0.0000,0.0438,low,410,34,6,0.9111,0.0756,0.0133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2d157949-e40e-4b8a-816b-08dc70f89134,dev,Parkinson's Disease,440,0.2507,0.2000,0.1422,0.0909,0.1964,middle,224,146,70,0.5091,0.3318,0.1591,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2ef1df63-fbee-4bd4-3855-08dd34a28b01,dev,Cerebral Palsy,414,0.8011,1.0000,0.6362,0.6875,0.7187,high,20,29,365,0.0483,0.0700,0.8816,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+311638fc-a891-4ba8-7f97-08dc9f90df2f,dev,Cerebral Palsy,430,0.1371,0.0000,0.1037,0.0000,0.1204,middle,297,68,65,0.6907,0.1581,0.1512,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+361d90cd-e838-451e-c58f-08dc27c1bd26,dev,Parkinson's Disease,85,0.0418,0.0000,0.0249,0.0000,0.0334,low,80,3,2,0.9412,0.0353,0.0235,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+36aa3164-db71-4ee3-b6b1-08dc8d7bb350,dev,ALS,450,0.1535,0.0435,0.0835,0.0134,0.1185,low,335,82,33,0.7444,0.1822,0.0733,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3c1f5ec6-17d8-4d69-87a5-08dc74e08a4e,dev,Cerebral Palsy,428,0.1964,0.0827,0.1207,0.0358,0.1585,middle,276,95,57,0.6449,0.2220,0.1332,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3e9ab29f-daf0-4a3c-a181-08dc11dcc589,dev,ALS,450,0.0558,0.0000,0.0236,0.0000,0.0397,low,417,27,6,0.9267,0.0600,0.0133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+45d88ea8-432d-49ba-95f8-08dc379c1f1f,dev,Parkinson's Disease,445,0.0725,0.0000,0.0344,0.0000,0.0534,low,397,37,11,0.8921,0.0831,0.0247,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+46e801cd-b319-443b-5311-08dc95210be1,dev,Cerebral Palsy,164,0.4315,0.4000,0.2706,0.2638,0.3510,middle,50,46,68,0.3049,0.2805,0.4146,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+486642ad-4daa-48a0-fd62-08dcb5d1edd7,dev,Cerebral Palsy,429,0.1548,0.0000,0.0937,0.0000,0.1243,low,299,93,37,0.6970,0.2168,0.0862,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4a9f71ab-f3a6-48a9-a1ba-08dcc7adb730,dev,Down Syndrome,352,0.8945,1.0000,0.7229,0.7500,0.8087,high,6,9,337,0.0170,0.0256,0.9574,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4ede54a7-2133-4ef2-1161-08db2577509f,dev,Parkinson's Disease,444,0.0877,0.0000,0.0412,0.0000,0.0645,low,377,60,7,0.8491,0.1351,0.0158,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4f03e91e-a8a7-45b7-b1eb-08dd512ec3b7,dev,Stroke,439,0.5210,0.5000,0.3963,0.4082,0.4587,high,85,88,266,0.1936,0.2005,0.6059,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+51451a02-b769-42db-fd6d-08dcb5d1edd7,dev,Cerebral Palsy,415,0.1427,0.0000,0.0769,0.0000,0.1098,low,300,85,30,0.7229,0.2048,0.0723,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+54618732-a2cb-49ec-c034-08dc605e0191,dev,Cerebral Palsy,430,0.8167,0.8889,0.6620,0.7000,0.7393,high,7,19,404,0.0163,0.0442,0.9395,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+55c1784a-ece4-414a-25b4-08dc18e8f490,dev,ALS,2,0.0000,0.0000,0.0000,0.0000,0.0000,low,2,0,0,1.0000,0.0000,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+55f3ac96-0f93-4f9a-8df8-08dd4ae40880,dev,ALS,247,0.0922,0.0000,0.0521,0.0000,0.0721,low,205,31,11,0.8300,0.1255,0.0445,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+56084d10-2aa7-4f02-304a-08dbf050033d,dev,Down Syndrome,429,0.5053,0.5000,0.3115,0.2800,0.4084,high,95,134,200,0.2214,0.3124,0.4662,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5801631a-2f04-4d94-0b19-08dc228b8bf7,dev,Cerebral Palsy,430,0.7748,0.8990,0.6085,0.6500,0.6917,high,24,42,364,0.0558,0.0977,0.8465,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5a3c16b7-fd51-4c8a-cf50-08dc89b72177,dev,ALS,450,0.0316,0.0000,0.0121,0.0000,0.0219,low,432,16,2,0.9600,0.0356,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5ac33366-70eb-43de-ce95-08dc58c09eb8,dev,ALS,268,0.2571,0.1250,0.1508,0.0607,0.2039,middle,149,73,46,0.5560,0.2724,0.1716,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5b50291f-f241-483e-8bbd-08dd4210739c,dev,Down Syndrome,427,0.3676,0.2667,0.2345,0.1667,0.3011,middle,173,110,144,0.4052,0.2576,0.3372,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5cce2e41-7adc-474d-1241-08dc8ec52b92,dev,ALS,450,0.2045,0.0909,0.1257,0.0446,0.1651,middle,297,91,62,0.6600,0.2022,0.1378,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5e17c1c9-eb2a-4fa6-4985-08dcb4d7acba,dev,Cerebral Palsy,422,0.4380,0.3750,0.2807,0.2071,0.3593,middle,146,108,168,0.3460,0.2559,0.3981,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5e4b7521-8a66-4c8b-7a25-08dc2a829031,dev,Parkinson's Disease,447,0.0466,0.0000,0.0172,0.0000,0.0319,low,419,26,2,0.9374,0.0582,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+621afbb7-6745-452a-d57b-08dc71d79b4d,dev,Parkinson's Disease,444,0.1341,0.0000,0.0752,0.0000,0.1046,low,344,71,29,0.7748,0.1599,0.0653,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+63bc6f35-9437-44e5-1604-08dbb62a2382,dev,Parkinson's Disease,449,0.0969,0.0000,0.0516,0.0000,0.0742,low,374,61,14,0.8330,0.1359,0.0312,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6532d81c-e8be-4910-1c46-08db344ca254,dev,Parkinson's Disease,444,0.4413,0.4000,0.3360,0.2894,0.3887,high,91,135,218,0.2050,0.3041,0.4910,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+659f50e6-6690-435a-5cee-08db46a76191,dev,Parkinson's Disease,439,0.0407,0.0000,0.0163,0.0000,0.0285,low,426,9,4,0.9704,0.0205,0.0091,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6e34ea84-5d05-47f3-c599-08dc27c1bd26,dev,Parkinson's Disease,449,0.0458,0.0000,0.0184,0.0000,0.0321,low,426,22,1,0.9488,0.0490,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+74613052-fd59-45c8-ab54-08db7376d336,dev,Parkinson's Disease,447,0.1985,0.0833,0.1270,0.0417,0.1627,middle,293,89,65,0.6555,0.1991,0.1454,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+79dc1110-bef7-414c-24af-08dcbcb70931,dev,Cerebral Palsy,429,0.1336,0.0000,0.0792,0.0000,0.1064,low,329,65,35,0.7669,0.1515,0.0816,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+79f4b8bb-7ffa-4422-115c-08dba7fa5465,dev,Parkinson's Disease,446,0.0573,0.0000,0.0276,0.0000,0.0424,low,407,30,9,0.9126,0.0673,0.0202,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7c51bade-4203-4bba-37c3-08dce6e2632a,dev,ALS,450,0.0807,0.0000,0.0385,0.0000,0.0596,low,395,37,18,0.8778,0.0822,0.0400,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7f1d37a6-dc22-4bb8-b2f1-08db6e8bdba4,dev,Parkinson's Disease,450,0.0289,0.0000,0.0093,0.0000,0.0191,low,440,8,2,0.9778,0.0178,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7f7a9a12-66dc-43bb-ed39-08dd22cabb5c,dev,ALS,449,0.0814,0.0000,0.0417,0.0000,0.0616,low,393,44,12,0.8753,0.0980,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7fee5dfd-1c4d-44db-0e9c-08db39f45d00,dev,Parkinson's Disease,449,0.0799,0.0000,0.0396,0.0000,0.0598,low,392,43,14,0.8731,0.0958,0.0312,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8295012a-4710-496e-5bcd-08dcf1e988d8,dev,Cerebral Palsy,344,0.1021,0.0000,0.0531,0.0000,0.0776,low,287,39,18,0.8343,0.1134,0.0523,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+860cc717-c664-4d80-e9a2-08dc2e961576,dev,Stroke,155,0.0788,0.0000,0.0474,0.0000,0.0631,low,139,6,10,0.8968,0.0387,0.0645,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+866b68e7-78f2-4abb-e21e-08dc3963a250,dev,Parkinson's Disease,418,0.1027,0.0000,0.0495,0.0000,0.0761,low,351,50,17,0.8397,0.1196,0.0407,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+870ab2b5-e5fb-4aaf-03ce-08dd2552a33c,dev,Down Syndrome,424,0.1658,0.0000,0.0995,0.0000,0.1326,low,284,99,41,0.6698,0.2335,0.0967,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+889c317c-39f2-4dcd-d5e5-08dc00f40ee5,dev,Cerebral Palsy,374,0.7093,0.8000,0.5653,0.5830,0.6373,high,31,44,299,0.0829,0.1176,0.7995,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+88ff2689-ab03-41ba-3919-08dc358e2588,dev,Stroke,423,0.1150,0.0000,0.0622,0.0000,0.0886,low,320,86,17,0.7565,0.2033,0.0402,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8926bff8-ec04-42ba-57e1-08dcbb9f64e1,dev,Cerebral Palsy,401,0.4567,0.4444,0.3041,0.2727,0.3804,high,126,86,189,0.3142,0.2145,0.4713,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+892b7b73-a330-4b1d-7f8e-08dc9f90df2f,dev,Cerebral Palsy,430,0.2614,0.1463,0.1583,0.0713,0.2098,middle,238,109,83,0.5535,0.2535,0.1930,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8b7f6b37-fd80-4318-a1b9-08dcc7adb730,dev,Parkinson's Disease,444,0.2481,0.1250,0.1469,0.0588,0.1975,middle,255,103,86,0.5743,0.2320,0.1937,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8e2d6856-1d18-46a5-b68b-08dc1130022a,dev,Cerebral Palsy,430,0.0985,0.0000,0.0497,0.0000,0.0741,low,353,57,20,0.8209,0.1326,0.0465,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+915db191-604c-4dad-9991-08dcab8095cf,dev,ALS,439,0.0920,0.0000,0.0491,0.0000,0.0705,low,375,43,21,0.8542,0.0979,0.0478,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+93bbf306-cb27-4be5-e7ff-08dbe60d97fb,dev,Down Syndrome,429,0.3691,0.2857,0.2479,0.1765,0.3085,middle,141,135,153,0.3287,0.3147,0.3566,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+96ada12b-88af-44ce-0219-08dc41d581c9,dev,Cerebral Palsy,428,0.0893,0.0000,0.0470,0.0000,0.0682,low,365,38,25,0.8528,0.0888,0.0584,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9c0ed7c3-ff8e-495c-7092-08dd58089c18,dev,Down Syndrome,25,0.2044,0.0000,0.1364,0.0000,0.1704,middle,17,3,5,0.6800,0.1200,0.2000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9d33c23d-5a77-45dc-c547-08dbb7ad5db3,dev,Parkinson's Disease,450,0.1549,0.0714,0.0858,0.0213,0.1204,low,321,101,28,0.7133,0.2244,0.0622,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9e58a880-d0df-48a9-92b7-08dc971aa100,dev,ALS,75,0.1388,0.0000,0.1042,0.0000,0.1215,middle,58,6,11,0.7733,0.0800,0.1467,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9fa04401-2532-42e7-c578-08dc27c1bd26,dev,Parkinson's Disease,448,0.0507,0.0000,0.0264,0.0000,0.0385,low,427,13,8,0.9531,0.0290,0.0179,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a14d22c1-10e8-4dcf-e962-08dc2e961576,dev,Stroke,380,0.1077,0.0000,0.0684,0.0000,0.0880,low,297,52,31,0.7816,0.1368,0.0816,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a330c7be-433a-4eda-b953-08dc6eabb1a3,dev,Down Syndrome,430,0.2817,0.2000,0.1635,0.0976,0.2226,middle,215,120,95,0.5000,0.2791,0.2209,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+aff2de06-efe1-4074-3e3f-08dc895255bb,dev,Down Syndrome,119,0.7591,0.8000,0.5642,0.5714,0.6617,high,3,10,106,0.0252,0.0840,0.8908,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b2458036-ec6f-4e79-b93b-08dd4d26bbc8,dev,Down Syndrome,425,0.1372,0.0000,0.0774,0.0000,0.1073,low,327,61,37,0.7694,0.1435,0.0871,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b2f16a07-8441-43c9-fac8-08dd0a4af9ba,dev,Cerebral Palsy,350,0.9335,1.0000,0.7789,0.8000,0.8562,high,4,10,336,0.0114,0.0286,0.9600,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b4dbd9f9-85f2-4f92-973a-08dca59f2b1c,dev,Stroke,352,0.5157,0.5000,0.3677,0.2887,0.4417,high,123,55,174,0.3494,0.1562,0.4943,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b7398ee3-0bd7-44cf-4cc6-08dd0b23004e,dev,Cerebral Palsy,430,0.0562,0.0000,0.0261,0.0000,0.0411,low,391,32,7,0.9093,0.0744,0.0163,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b90d8200-649c-4709-0fc4-08dcd99f98d3,dev,ALS,270,0.0397,0.0000,0.0145,0.0000,0.0271,low,260,7,3,0.9630,0.0259,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bad3f1b6-4896-4c71-adfa-08db93721f13,dev,Parkinson's Disease,450,0.1168,0.0000,0.0633,0.0000,0.0900,low,362,62,26,0.8044,0.1378,0.0578,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bad794ff-c207-43b5-f3bc-08db49b9f20e,dev,Parkinson's Disease,450,0.0557,0.0000,0.0252,0.0000,0.0404,low,420,20,10,0.9333,0.0444,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bb82df4d-e1ed-409c-85da-08dbe07efb02,dev,Parkinson's Disease,442,0.1646,0.0851,0.0988,0.0331,0.1317,low,290,113,39,0.6561,0.2557,0.0882,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c0075f18-fbb3-4509-14b2-08dcbf756c98,dev,ALS,180,0.5191,0.5000,0.4035,0.3060,0.4613,high,50,38,92,0.2778,0.2111,0.5111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cc29e135-2a7a-46e9-8f04-08dc7f6a721b,dev,Cerebral Palsy,364,0.2587,0.1414,0.1653,0.0772,0.2120,middle,198,84,82,0.5440,0.2308,0.2253,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cfdcd1d4-e2e4-49eb-b409-08db76ad1dc0,dev,Parkinson's Disease,449,0.0667,0.0000,0.0319,0.0000,0.0493,low,407,32,10,0.9065,0.0713,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d08febe1-2f4b-4080-2ed1-08dc27684872,dev,Parkinson's Disease,450,0.0310,0.0000,0.0131,0.0000,0.0221,low,435,14,1,0.9667,0.0311,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d1b9444a-2ed1-438e-fd68-08dcb5d1edd7,dev,Parkinson's Disease,448,0.5109,0.5000,0.3575,0.3157,0.4342,high,89,126,233,0.1987,0.2812,0.5201,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d41daa38-6d46-433c-6825-08dd025ce1a9,dev,Cerebral Palsy,328,0.8686,1.0000,0.7275,0.7868,0.7981,high,11,14,303,0.0335,0.0427,0.9238,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d443c67d-a3ee-497d-e7b4-08dcd9e31338,dev,ALS,63,0.5604,0.5000,0.4403,0.3704,0.5004,high,17,11,35,0.2698,0.1746,0.5556,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d4e6f4e3-9b35-4c7e-669b-08db44e7c916,dev,Parkinson's Disease,58,0.0839,0.0000,0.0370,0.0000,0.0605,low,52,4,2,0.8966,0.0690,0.0345,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d765e201-53e7-41a9-1cdf-08dcd3e137e8,dev,Down Syndrome,402,0.1984,0.1194,0.1117,0.0478,0.1550,middle,245,113,44,0.6095,0.2811,0.1095,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d83c96a2-eeb0-416f-116d-08dc623ec532,dev,ALS,450,0.0687,0.0000,0.0318,0.0000,0.0503,low,406,32,12,0.9022,0.0711,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d9892453-ebb1-4d36-7ce0-08dc8ba4f236,dev,Cerebral Palsy,427,0.6425,0.6667,0.4570,0.4688,0.5498,high,53,79,295,0.1241,0.1850,0.6909,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dc5c25b4-43a7-4af3-cf4f-08dc89b72177,dev,ALS,89,0.5645,0.6364,0.4450,0.4113,0.5048,high,18,19,52,0.2022,0.2135,0.5843,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dd3b609c-ca04-47fb-dc90-08db7e3d374f,dev,Parkinson's Disease,445,0.0746,0.0000,0.0406,0.0000,0.0576,low,386,52,7,0.8674,0.1169,0.0157,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+df1bdab4-979a-451b-c2d9-08db6e0d6c39,dev,Parkinson's Disease,432,0.0413,0.0000,0.0165,0.0000,0.0289,low,408,21,3,0.9444,0.0486,0.0069,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e28286b0-a156-459a-b2f2-08db6e8bdba4,dev,Parkinson's Disease,450,0.0553,0.0000,0.0252,0.0000,0.0403,low,408,39,3,0.9067,0.0867,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e42558d6-5a42-437d-e7c4-08dcd9e31338,dev,ALS,312,0.8377,1.0000,0.6666,0.7303,0.7522,high,23,18,271,0.0737,0.0577,0.8686,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e597e7d7-3062-4982-32eb-08dd80de9631,dev,Stroke,238,0.1653,0.0000,0.0978,0.0000,0.1315,low,186,20,32,0.7815,0.0840,0.1345,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e6637ea3-8d88-40ca-8b32-08dc44f243ab,dev,ALS,448,0.6932,0.8000,0.5405,0.5556,0.6169,high,42,74,332,0.0938,0.1652,0.7411,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e7bda08b-6296-4d01-a165-08dc11dcc589,dev,ALS,450,0.1758,0.0000,0.1064,0.0000,0.1411,middle,321,71,58,0.7133,0.1578,0.1289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ea9825d9-3c46-49ed-b21d-08dc6a2b69be,dev,ALS,440,0.7135,0.8750,0.5751,0.6382,0.6443,high,56,49,335,0.1273,0.1114,0.7614,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ecd22914-6704-4880-da3f-08db8211616b,dev,Parkinson's Disease,447,0.2438,0.1429,0.1491,0.0732,0.1964,middle,251,119,77,0.5615,0.2662,0.1723,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ee4627de-c026-4d38-e164-08dc4555b94c,dev,ALS,98,0.4163,0.3333,0.2975,0.2071,0.3569,middle,28,35,35,0.2857,0.3571,0.3571,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ee837067-1278-4fc3-3e6b-08dc863e36ec,dev,Parkinson's Disease,450,0.4127,0.3636,0.2976,0.2333,0.3552,middle,161,88,201,0.3578,0.1956,0.4467,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f0472e92-85eb-46f5-dcfe-08dc1694d265,dev,Parkinson's Disease,122,0.3912,0.3333,0.2666,0.2124,0.3289,middle,39,43,40,0.3197,0.3525,0.3279,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f5a06bd3-3191-46dd-0bae-08dcf9635df3,dev,Down Syndrome,390,0.4169,0.3693,0.2699,0.2205,0.3434,middle,114,122,154,0.2923,0.3128,0.3949,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f692e483-c0ed-4549-0fc6-08dcd99f98d3,dev,ALS,438,0.3149,0.2183,0.2032,0.1327,0.2590,middle,187,143,108,0.4269,0.3265,0.2466,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f7a16987-f872-4be8-df26-08dc12f39a63,dev,ALS,450,0.0627,0.0000,0.0244,0.0000,0.0436,low,416,29,5,0.9244,0.0644,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f84154b0-68f1-42ae-2e8e-08dc27684872,dev,Parkinson's Disease,445,0.0409,0.0000,0.0175,0.0000,0.0292,low,417,24,4,0.9371,0.0539,0.0090,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f8e65210-0ac9-4c7c-c658-08db73ef9d1c,dev,Parkinson's Disease,443,0.0497,0.0000,0.0200,0.0000,0.0348,low,420,17,6,0.9481,0.0384,0.0135,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fb9c683c-41a5-486c-ae6a-08dc945c48db,dev,Cerebral Palsy,406,0.9267,1.0000,0.7806,0.8000,0.8536,high,2,4,400,0.0049,0.0099,0.9852,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fca65ce1-fabf-4914-172d-08db24d03de6,dev,Parkinson's Disease,445,0.0614,0.0000,0.0346,0.0000,0.0480,low,405,27,13,0.9101,0.0607,0.0292,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fcb35ef5-5a96-4f1c-012a-08dd15a179fb,dev,ALS,446,0.1827,0.0625,0.1058,0.0243,0.1442,middle,312,87,47,0.6996,0.1951,0.1054,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0011deac-27ce-4d61-a02e-08db2c0e5fe3,train,Parkinson's Disease,438,0.0756,0.0000,0.0448,0.0000,0.0602,low,379,44,15,0.8653,0.1005,0.0342,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0012df94-51aa-4ad0-79db-08dd17980f6b,train,Down Syndrome,429,0.3499,0.2812,0.2181,0.1538,0.2840,middle,171,136,122,0.3986,0.3170,0.2844,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+00617bdb-79b4-48dd-ce97-08dc58c09eb8,train,Down Syndrome,429,0.3273,0.2500,0.1970,0.1429,0.2621,middle,194,113,122,0.4522,0.2634,0.2844,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+006239c7-4caf-4289-a1a0-08dc11dcc589,train,ALS,450,0.6272,0.6667,0.4713,0.4599,0.5493,high,36,94,320,0.0800,0.2089,0.7111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0089188f-a7ce-481a-4155-08dcddb9e4a3,train,Parkinson's Disease,449,0.0371,0.0000,0.0134,0.0000,0.0253,low,432,13,4,0.9621,0.0290,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+01963e4d-e342-47f1-0fae-08dcd99f98d3,train,ALS,90,0.9310,1.0000,0.8461,0.8619,0.8886,high,0,1,89,0.0000,0.0111,0.9889,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0298b0ec-4be0-4ed6-83ba-08db78b5561a,train,Parkinson's Disease,449,0.0296,0.0000,0.0097,0.0000,0.0196,low,436,11,2,0.9710,0.0245,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+02d320db-8f1a-433e-4601-08dbb6c98185,train,Parkinson's Disease,449,0.0701,0.0000,0.0340,0.0000,0.0520,low,407,34,8,0.9065,0.0757,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+02df2d03-54da-4f60-0bb5-08dcf9635df3,train,Parkinson's Disease,444,0.4933,0.5000,0.3489,0.3117,0.4211,high,99,120,225,0.2230,0.2703,0.5068,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+031bd6e9-d0cb-4ac6-64d2-08dc18216525,train,ALS,223,0.0427,0.0000,0.0176,0.0000,0.0301,low,213,7,3,0.9552,0.0314,0.0135,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+03f1dec0-0000-4e2a-cf67-08dc89b72177,train,ALS,443,0.1058,0.0000,0.0554,0.0000,0.0806,low,374,47,22,0.8442,0.1061,0.0497,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+047bfad6-615c-446c-b735-08dc443ba3cc,train,Cerebral Palsy,428,0.3124,0.1890,0.2193,0.1104,0.2659,middle,201,101,126,0.4696,0.2360,0.2944,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+056d402b-f64c-4e74-aba3-08dc5d6a38e4,train,ALS,135,0.1006,0.0000,0.0602,0.0000,0.0804,low,120,4,11,0.8889,0.0296,0.0815,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+05873438-e988-4ede-0218-08dc41d581c9,train,Cerebral Palsy,426,0.7578,0.8571,0.5694,0.6000,0.6636,high,23,42,361,0.0540,0.0986,0.8474,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+06e2c7a3-71e2-483b-ac50-08dc297d5492,train,Parkinson's Disease,423,0.0596,0.0000,0.0270,0.0000,0.0433,low,384,30,9,0.9078,0.0709,0.0213,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+07102085-639b-4910-0fd4-08dcd99f98d3,train,ALS,119,0.0922,0.0000,0.0514,0.0000,0.0718,low,98,14,7,0.8235,0.1176,0.0588,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+07172c90-fcd6-4b5c-c4f1-08dcc960cba3,train,ALS,449,0.1050,0.0000,0.0576,0.0000,0.0813,low,378,43,28,0.8419,0.0958,0.0624,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0722bb1f-e1c6-4165-c597-08dce436cd5d,train,ALS,450,0.3510,0.1667,0.2433,0.0736,0.2972,middle,233,85,132,0.5178,0.1889,0.2933,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+073216b5-1cd1-4127-9277-08db27473805,train,Parkinson's Disease,284,0.3951,0.3750,0.2617,0.2314,0.3284,middle,77,100,107,0.2711,0.3521,0.3768,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+07b8fcab-237f-47f7-24e9-08db32506b53,train,Parkinson's Disease,450,0.1940,0.0588,0.1365,0.0241,0.1652,middle,300,75,75,0.6667,0.1667,0.1667,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0871da63-c175-4b34-4eb5-08dbaa61e12d,train,Parkinson's Disease,434,0.2538,0.1250,0.1614,0.0480,0.2076,middle,251,106,77,0.5783,0.2442,0.1774,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+08a68bf1-65c5-4c37-7c87-08dcc6cfbf82,train,Cerebral Palsy,215,0.0583,0.0000,0.0288,0.0000,0.0435,low,195,16,4,0.9070,0.0744,0.0186,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+09716de8-6f65-4a68-3769-08db63d00ed9,train,Parkinson's Disease,449,0.0626,0.0000,0.0301,0.0000,0.0463,low,405,37,7,0.9020,0.0824,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+098c7b31-a1e2-4a9b-0bb0-08dcf9635df3,train,ALS,450,0.0303,0.0000,0.0086,0.0000,0.0194,low,437,12,1,0.9711,0.0267,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+09b6b8e6-efbe-447c-ca98-08dd03e32564,train,Cerebral Palsy,424,0.6664,0.7500,0.5230,0.5590,0.5947,high,41,68,315,0.0967,0.1604,0.7429,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0a159981-665e-4b15-3a6c-08dc183f4f57,train,ALS,45,0.1628,0.0000,0.0997,0.0000,0.1313,low,29,13,3,0.6444,0.2889,0.0667,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0a205aa0-6fe2-4e78-e906-08dcf2e1353e,train,ALS,406,0.1075,0.0000,0.0573,0.0000,0.0824,low,327,62,17,0.8054,0.1527,0.0419,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0a232c15-1d0a-4fb9-085c-08dcd1c0704e,train,Stroke,394,0.6677,0.8000,0.5012,0.5000,0.5845,high,64,59,271,0.1624,0.1497,0.6878,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0acad164-9f6f-4abf-abca-08dc5d6a38e4,train,ALS,449,0.2393,0.1429,0.1481,0.0795,0.1937,middle,252,123,74,0.5612,0.2739,0.1648,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0add9018-bb82-4374-116a-08dc623ec532,train,Down Syndrome,430,0.3063,0.2000,0.1925,0.1081,0.2494,middle,209,105,116,0.4860,0.2442,0.2698,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0b9b6a5a-fff7-4129-8082-08db3c5502ba,train,Parkinson's Disease,439,0.0567,0.0000,0.0250,0.0000,0.0409,low,403,30,6,0.9180,0.0683,0.0137,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0c05204c-686a-4219-9fce-08dcee0760b0,train,Parkinson's Disease,446,0.1201,0.0000,0.0693,0.0000,0.0947,low,367,46,33,0.8229,0.1031,0.0740,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0c3278fa-e89c-4394-d69f-08db86874595,train,Parkinson's Disease,449,0.0594,0.0000,0.0307,0.0000,0.0451,low,413,25,11,0.9198,0.0557,0.0245,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0c3530f6-c6d8-4b8f-06f5-08dc3393f0c2,train,Parkinson's Disease,450,0.0369,0.0000,0.0147,0.0000,0.0258,low,428,20,2,0.9511,0.0444,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0c3a355b-c4da-40fe-57de-08dcbb9f64e1,train,Cerebral Palsy,195,0.7809,1.0000,0.5834,0.6364,0.6821,high,19,20,156,0.0974,0.1026,0.8000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0c9851af-ac0a-4ce0-75ec-08dc5951d476,train,Down Syndrome,65,0.5530,0.6667,0.3912,0.4242,0.4721,high,15,11,39,0.2308,0.1692,0.6000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0cc37842-3e60-493d-eab6-08db5ebeefc6,train,Parkinson's Disease,450,0.0363,0.0000,0.0135,0.0000,0.0249,low,427,21,2,0.9489,0.0467,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0d1662bb-9121-4239-80c0-08dd36570e96,train,Down Syndrome,238,0.5130,0.5000,0.3439,0.3333,0.4285,high,38,67,133,0.1597,0.2815,0.5588,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0db90eb5-234e-4bd3-0edc-08dc42fe0a19,train,Parkinson's Disease,443,0.1509,0.0000,0.1008,0.0000,0.1258,middle,345,52,46,0.7788,0.1174,0.1038,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0ddac1b4-317c-4d5b-a1cc-08dc11dcc589,train,ALS,448,0.0732,0.0000,0.0291,0.0000,0.0512,low,400,40,8,0.8929,0.0893,0.0179,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0dea3495-b287-46ca-a1e8-08dc11dcc589,train,ALS,316,0.0688,0.0000,0.0298,0.0000,0.0493,low,281,29,6,0.8892,0.0918,0.0190,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0ead5313-2f79-44c6-ab98-08db26923497,train,Parkinson's Disease,85,0.1116,0.0000,0.0710,0.0000,0.0913,low,70,11,4,0.8235,0.1294,0.0471,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0eec6379-3c4d-48e2-2bfa-08dc9148fdda,train,ALS,448,0.4396,0.4000,0.3084,0.2500,0.3740,high,120,131,197,0.2679,0.2924,0.4397,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0f16337b-734e-46b1-73ea-08dc1e92abdf,train,Parkinson's Disease,441,0.0975,0.0000,0.0490,0.0000,0.0733,low,371,57,13,0.8413,0.1293,0.0295,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0f26015b-55ed-4412-5315-08dc95210be1,train,Cerebral Palsy,430,0.9339,1.0000,0.8112,0.8148,0.8725,high,0,2,428,0.0000,0.0047,0.9953,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+0f397840-4dca-486d-5143-08dba881aa8d,train,Parkinson's Disease,445,0.1985,0.1000,0.1177,0.0417,0.1581,middle,286,103,56,0.6427,0.2315,0.1258,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+109686bb-8e54-4ad7-530d-08dc95210be1,train,Cerebral Palsy,78,0.9806,1.0000,0.8474,0.8461,0.9140,high,0,0,78,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+10988087-9d14-4c9d-b58a-08dc5e199653,train,ALS,383,0.0724,0.0000,0.0347,0.0000,0.0535,low,351,21,11,0.9164,0.0548,0.0287,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+111d8262-3a46-4d0a-816d-08dc70f89134,train,Parkinson's Disease,450,0.0922,0.0000,0.0447,0.0000,0.0684,low,378,60,12,0.8400,0.1333,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1191a69f-905d-41f7-0d6a-08db6695a2e1,train,Parkinson's Disease,296,0.4724,0.4286,0.3295,0.2869,0.4009,high,71,82,143,0.2399,0.2770,0.4831,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+11da7376-f5ee-4093-9514-08dc7733f79d,train,Cerebral Palsy,449,0.9348,1.0000,0.8179,0.8500,0.8764,high,4,6,439,0.0089,0.0134,0.9777,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+11e4aa43-fc83-46fb-dd25-08db782122ba,train,Parkinson's Disease,438,0.0870,0.0000,0.0483,0.0000,0.0677,low,380,39,19,0.8676,0.0890,0.0434,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1315d02d-1f43-4d11-a8ad-08dc1144581f,train,Cerebral Palsy,430,0.0598,0.0000,0.0236,0.0000,0.0417,low,397,22,11,0.9233,0.0512,0.0256,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+132876ee-6363-4789-4e12-08db39529b19,train,Parkinson's Disease,449,0.0413,0.0000,0.0159,0.0000,0.0286,low,430,16,3,0.9577,0.0356,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+137952a5-3e65-4f4b-bd57-08dc8ad4730d,train,ALS,449,0.3202,0.2500,0.2129,0.1481,0.2666,middle,190,136,123,0.4232,0.3029,0.2739,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+13f27a9a-360d-45ce-5272-08db72fc16cf,train,Parkinson's Disease,446,0.1273,0.0000,0.0658,0.0000,0.0965,low,342,79,25,0.7668,0.1771,0.0561,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+13f386bd-ab37-4183-8cf0-08dcff4f47ae,train,Cerebral Palsy,346,0.5561,0.6000,0.3766,0.3652,0.4664,high,73,75,198,0.2110,0.2168,0.5723,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1433daa5-d443-4379-79d9-08dd17980f6b,train,Down Syndrome,426,0.3218,0.2500,0.2073,0.1538,0.2646,middle,174,143,109,0.4085,0.3357,0.2559,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1485a1cd-5411-4c74-1cdb-08dce2a2fe9b,train,Stroke,225,0.2257,0.1429,0.1336,0.0444,0.1797,middle,128,61,36,0.5689,0.2711,0.1600,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+148d82f1-418f-4adc-2bf9-08dc9148fdda,train,Parkinson's Disease,447,0.0591,0.0000,0.0279,0.0000,0.0435,low,409,32,6,0.9150,0.0716,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+14d7c170-6b3a-4dbd-c576-08dc27c1bd26,train,Parkinson's Disease,447,0.0282,0.0000,0.0110,0.0000,0.0196,low,436,7,4,0.9754,0.0157,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+14d9556f-a6df-4984-a84f-08dc202b0c19,train,Parkinson's Disease,418,0.1160,0.0000,0.0680,0.0000,0.0920,low,327,67,24,0.7823,0.1603,0.0574,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+153362b4-93c5-4860-9f9f-08dc61272c21,train,ALS,450,0.0291,0.0000,0.0098,0.0000,0.0195,low,442,6,2,0.9822,0.0133,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1572a6b0-4b83-4ff4-c589-08dc27c1bd26,train,Parkinson's Disease,449,0.0613,0.0000,0.0287,0.0000,0.0450,low,415,23,11,0.9243,0.0512,0.0245,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+162d9494-828f-4fa2-a85d-08dcf77c2ab9,train,Parkinson's Disease,448,0.0894,0.0000,0.0494,0.0000,0.0694,low,391,40,17,0.8728,0.0893,0.0379,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+16b68dd2-bfc4-45c5-8dfd-08dd4ae40880,train,ALS,445,0.0520,0.0000,0.0236,0.0000,0.0378,low,410,28,7,0.9213,0.0629,0.0157,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+16ec08db-f78e-418e-7a4d-08dc92404de1,train,Down Syndrome,215,0.7362,0.8750,0.5346,0.5556,0.6354,high,21,20,174,0.0977,0.0930,0.8093,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+17ba4136-008b-47f8-8f16-08dcdbd22259,train,ALS,170,0.3530,0.1909,0.2516,0.0860,0.3023,middle,86,31,53,0.5059,0.1824,0.3118,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+17d899b9-3365-4430-da24-08dc3bf38957,train,Stroke,271,0.2580,0.0000,0.1650,0.0000,0.2115,middle,170,50,51,0.6273,0.1845,0.1882,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+17ea9e04-d4c1-43d2-dec5-08dcb7c16175,train,Cerebral Palsy,401,0.0457,0.0000,0.0213,0.0000,0.0335,low,370,25,6,0.9227,0.0623,0.0150,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+17fc5f44-e24f-4138-db5b-08db263bd57d,train,Parkinson's Disease,450,0.0588,0.0000,0.0270,0.0000,0.0429,low,421,21,8,0.9356,0.0467,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+18103139-b813-48db-6ddb-08dc1b6d5dbc,train,Down Syndrome,430,0.2074,0.0667,0.1266,0.0329,0.1670,middle,272,94,64,0.6326,0.2186,0.1488,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+18890dc1-8320-43ba-e505-08dced32d6ea,train,ALS,450,0.5272,0.5000,0.3863,0.3258,0.4567,high,133,82,235,0.2956,0.1822,0.5222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+189ae8ae-e800-43c1-e956-08dc2e961576,train,Stroke,15,0.1600,0.0000,0.0733,0.0000,0.1166,low,11,3,1,0.7333,0.2000,0.0667,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+18d960a7-be7b-455b-a19d-08dc11dcc589,train,ALS,449,0.1707,0.0667,0.0964,0.0254,0.1335,low,314,94,41,0.6993,0.2094,0.0913,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+19544a94-6a1d-48a1-b199-08db2507e8b5,train,Parkinson's Disease,439,0.1992,0.1111,0.1241,0.0426,0.1616,middle,266,114,59,0.6059,0.2597,0.1344,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+199470db-2cd5-410a-1c23-08dd195745b0,train,Parkinson's Disease,450,0.1497,0.0000,0.0974,0.0000,0.1235,low,326,75,49,0.7244,0.1667,0.1089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+19e5b81c-15e5-4f2b-dd02-08db380c575a,train,Parkinson's Disease,450,0.0769,0.0000,0.0380,0.0000,0.0574,low,400,35,15,0.8889,0.0778,0.0333,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1a029240-167d-4433-8b30-08dc44f243ab,train,Cerebral Palsy,428,0.5635,0.6000,0.4101,0.4167,0.4868,high,55,85,288,0.1285,0.1986,0.6729,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1a31d058-b4f0-4915-94e2-08dc0dffdde6,train,ALS,449,0.0704,0.0000,0.0338,0.0000,0.0521,low,409,26,14,0.9109,0.0579,0.0312,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1af4bcb6-5607-4fee-0fd7-08dcd99f98d3,train,ALS,444,0.1324,0.0931,0.0825,0.0354,0.1074,low,333,73,38,0.7500,0.1644,0.0856,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1b10a3f6-b3cd-460a-a1c7-08dc11dcc589,train,ALS,450,0.0449,0.0000,0.0158,0.0000,0.0303,low,433,12,5,0.9622,0.0267,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1b369798-cbf7-4a94-4ef0-08dcacc27c9e,train,ALS,450,0.0671,0.0000,0.0294,0.0000,0.0483,low,406,37,7,0.9022,0.0822,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1b3e248a-f3dc-4173-2e7a-08dc27684872,train,Parkinson's Disease,443,0.0758,0.0000,0.0345,0.0000,0.0552,low,391,41,11,0.8826,0.0926,0.0248,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1b82ca80-115a-4348-43db-08dc13e54ff5,train,Cerebral Palsy,430,0.4811,0.4741,0.3228,0.2857,0.4020,high,109,113,208,0.2535,0.2628,0.4837,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1bfccfc9-298f-4352-a1cf-08dc11dcc589,train,ALS,134,0.0245,0.0000,0.0146,0.0000,0.0196,low,130,2,2,0.9701,0.0149,0.0149,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1d02346c-0e65-4107-0a8f-08dc160787df,train,ALS,55,0.0553,0.0000,0.0266,0.0000,0.0409,low,50,3,2,0.9091,0.0545,0.0364,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1d97f400-f70d-48da-6485-08db26850d18,train,Parkinson's Disease,449,0.0520,0.0000,0.0233,0.0000,0.0376,low,420,22,7,0.9354,0.0490,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1db08df5-d67e-44e5-7f99-08dc9f90df2f,train,Cerebral Palsy,430,0.2008,0.0476,0.1215,0.0321,0.1611,middle,284,86,60,0.6605,0.2000,0.1395,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1df0f05f-f951-4945-e506-08dced32d6ea,train,Parkinson's Disease,450,0.0321,0.0000,0.0122,0.0000,0.0221,low,435,14,1,0.9667,0.0311,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1e4a17d9-1d51-46e1-fb35-08db3b0245c7,train,Parkinson's Disease,450,0.4192,0.3267,0.2938,0.2108,0.3565,middle,135,143,172,0.3000,0.3178,0.3822,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1e997703-8b78-4fcb-e98b-08dc2e961576,train,Stroke,349,0.6354,0.7500,0.4645,0.4783,0.5499,high,68,52,229,0.1948,0.1490,0.6562,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1ea56339-9616-47da-0faf-08dcd99f98d3,train,ALS,450,0.0612,0.0000,0.0275,0.0000,0.0443,low,417,25,8,0.9267,0.0556,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1ef92aec-b267-4e16-0fc9-08dcd99f98d3,train,ALS,224,0.0515,0.0000,0.0228,0.0000,0.0372,low,204,16,4,0.9107,0.0714,0.0179,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1efde431-6c53-4fcc-1162-08db2577509f,train,Parkinson's Disease,447,0.0455,0.0000,0.0181,0.0000,0.0318,low,426,16,5,0.9530,0.0358,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1f028daa-142f-405c-0ede-08dc42fe0a19,train,Down Syndrome,430,0.3021,0.2500,0.1878,0.1333,0.2450,middle,193,122,115,0.4488,0.2837,0.2674,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1f27e466-6e34-4c75-e903-08dcf2e1353e,train,Cerebral Palsy,19,0.9127,1.0000,0.7761,0.8148,0.8444,high,0,0,19,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1f3ca0f5-18d5-471b-5f7f-08dcb30cef1c,train,Down Syndrome,428,0.1481,0.0000,0.0772,0.0000,0.1126,low,325,62,41,0.7593,0.1449,0.0958,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1fd8133a-324e-400b-972f-08dca59f2b1c,train,Cerebral Palsy,429,0.3997,0.3333,0.2668,0.2222,0.3332,middle,157,88,184,0.3660,0.2051,0.4289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+1fdc2f8c-7bcb-4063-3383-08db7f04fed4,train,Parkinson's Disease,449,0.2553,0.1263,0.1609,0.0732,0.2081,middle,247,113,89,0.5501,0.2517,0.1982,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2007718f-efef-4f5e-ab5c-08dc51b077c7,train,Cerebral Palsy,430,0.6706,0.7143,0.4854,0.4833,0.5780,high,48,64,318,0.1116,0.1488,0.7395,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2012b36e-28c0-45de-a16a-08dc11dcc589,train,ALS,75,0.2611,0.0909,0.1610,0.0500,0.2110,middle,41,18,16,0.5467,0.2400,0.2133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+20404c96-66e6-4bfb-b066-08dbb4a9f295,train,Parkinson's Disease,448,0.1257,0.0000,0.0724,0.0000,0.0990,low,341,86,21,0.7612,0.1920,0.0469,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+20c27dbe-3ba4-445a-1b1a-08db3b55cd4a,train,Parkinson's Disease,450,0.8081,0.8856,0.6190,0.6417,0.7135,high,4,25,421,0.0089,0.0556,0.9356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2162b646-5caf-4cf2-3d76-08dc325485f0,train,Cerebral Palsy,129,0.1938,0.0278,0.1232,0.0088,0.1585,middle,86,25,18,0.6667,0.1938,0.1395,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+21d7dd89-eca0-4722-3a71-08dc183f4f57,train,ALS,450,0.1106,0.0000,0.0566,0.0000,0.0836,low,367,57,26,0.8156,0.1267,0.0578,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2272219d-dbc0-49ee-4408-08db797e52e3,train,Parkinson's Disease,448,0.0710,0.0000,0.0326,0.0000,0.0518,low,393,49,6,0.8772,0.1094,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+23114ff7-dade-4eb7-a1a6-08dc11dcc589,train,ALS,212,0.3286,0.2500,0.2163,0.1537,0.2724,middle,93,59,60,0.4387,0.2783,0.2830,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2335fe47-0b4a-4d4b-0fd5-08dcd99f98d3,train,ALS,449,0.8448,1.0000,0.6786,0.7143,0.7617,high,12,33,404,0.0267,0.0735,0.8998,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+23563b1d-87ba-4b52-a730-08dc6486c600,train,Cerebral Palsy,429,0.1004,0.0000,0.0502,0.0000,0.0753,low,360,46,23,0.8392,0.1072,0.0536,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2369d561-cdde-48e0-9153-08dcd7fdf875,train,ALS,120,0.0843,0.0000,0.0441,0.0000,0.0642,low,102,13,5,0.8500,0.1083,0.0417,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+23736436-53fa-46dc-6226-08db384abf34,train,Parkinson's Disease,445,0.0770,0.0000,0.0377,0.0000,0.0573,low,397,36,12,0.8921,0.0809,0.0270,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+23b27207-6d7f-4da9-a85b-08dcf77c2ab9,train,Cerebral Palsy,304,0.6785,1.0000,0.5158,0.5917,0.5972,high,72,24,208,0.2368,0.0789,0.6842,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+248b9155-c18c-450d-14d7-08db3f6f1688,train,Parkinson's Disease,449,0.0487,0.0000,0.0215,0.0000,0.0351,low,427,15,7,0.9510,0.0334,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+24a73324-3a99-46e3-a1aa-08dc11dcc589,train,ALS,433,0.1218,0.0000,0.0640,0.0000,0.0929,low,348,60,25,0.8037,0.1386,0.0577,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+268adcfd-a262-4bb2-d2c2-08db4723ec09,train,Parkinson's Disease,441,0.0738,0.0000,0.0339,0.0000,0.0539,low,400,31,10,0.9070,0.0703,0.0227,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2691d25b-f3e5-4750-6801-08dcbab8e251,train,Cerebral Palsy,429,0.1839,0.0000,0.1026,0.0000,0.1432,middle,290,85,54,0.6760,0.1981,0.1259,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+26e2c221-878d-4759-7101-08db6acf772a,train,Parkinson's Disease,449,0.3211,0.2500,0.2014,0.1515,0.2613,middle,184,157,108,0.4098,0.3497,0.2405,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+270f9bb1-5f0b-4811-e970-08dc2e961576,train,Stroke,87,0.1208,0.0000,0.0608,0.0000,0.0908,low,72,9,6,0.8276,0.1034,0.0690,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+27269d8c-d7c6-456c-6ece-08db6c5df3b4,train,Parkinson's Disease,439,0.0351,0.0000,0.0141,0.0000,0.0246,low,418,16,5,0.9522,0.0364,0.0114,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2762ece0-65e8-4cf2-dec6-08dcb7c16175,train,Cerebral Palsy,430,0.1094,0.0000,0.0567,0.0000,0.0831,low,347,60,23,0.8070,0.1395,0.0535,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+278536ce-8ba5-4fc3-4159-08dcbd76ee68,train,ALS,449,0.4122,0.3333,0.2765,0.1481,0.3444,middle,200,84,165,0.4454,0.1871,0.3675,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+27a3a1ac-c916-4bac-0b97-08dc12b452f6,train,Cerebral Palsy,430,0.8426,1.0000,0.7712,0.8214,0.8069,high,3,16,411,0.0070,0.0372,0.9558,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+283e1ff7-120e-4147-498d-08dcb4d7acba,train,Cerebral Palsy,450,0.3082,0.1339,0.1897,0.0408,0.2490,middle,250,88,112,0.5556,0.1956,0.2489,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+28a16c37-69f6-4685-a1a3-08dc11dcc589,train,Parkinson's Disease,443,0.1294,0.0667,0.0632,0.0202,0.0963,low,353,74,16,0.7968,0.1670,0.0361,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+28b53a9b-acd7-4b3e-ddeb-08dc9aac4c52,train,ALS,450,0.0611,0.0000,0.0278,0.0000,0.0445,low,424,14,12,0.9422,0.0311,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+28bf06dd-a8af-4a04-ef99-08db2d62a830,train,Parkinson's Disease,156,0.4818,0.5000,0.3703,0.3333,0.4261,high,45,25,86,0.2885,0.1603,0.5513,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+28fe23ad-6c0d-411b-03f3-08dd318df37f,train,Cerebral Palsy,428,0.3874,0.3333,0.2555,0.2088,0.3215,middle,147,123,158,0.3435,0.2874,0.3692,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+291c4b1c-d84f-4c66-ed92-08dbae400ac5,train,Parkinson's Disease,441,0.1733,0.0361,0.1069,0.0167,0.1401,middle,321,68,52,0.7279,0.1542,0.1179,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+293353e2-b0e2-4fab-1e33-08dbe1ed2b7f,train,Down Syndrome,419,0.5391,0.5294,0.3506,0.3250,0.4449,high,79,109,231,0.1885,0.2601,0.5513,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+29446bcd-071b-4232-cf52-08dc36bdc819,train,Parkinson's Disease,448,0.0683,0.0000,0.0305,0.0000,0.0494,low,402,40,6,0.8973,0.0893,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+29bb2e3c-6eee-4a30-02a9-08dcaa8c3d9d,train,ALS,446,0.0324,0.0000,0.0101,0.0000,0.0213,low,430,16,0,0.9641,0.0359,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+29d01a4d-950a-4c6d-6e21-08db76c46b9c,train,Parkinson's Disease,162,0.0882,0.0000,0.0434,0.0000,0.0658,low,143,14,5,0.8827,0.0864,0.0309,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2a3b2d95-92b6-44fd-c588-08dc27c1bd26,train,Parkinson's Disease,443,0.0370,0.0000,0.0137,0.0000,0.0253,low,421,20,2,0.9503,0.0451,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2ab18dbe-6460-4adc-5537-08dc8c8af7c9,train,ALS,252,0.2713,0.1909,0.1519,0.0836,0.2116,middle,133,76,43,0.5278,0.3016,0.1706,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2ab74a1c-a193-46c7-c591-08dc27c1bd26,train,Cerebral Palsy,430,0.1149,0.0000,0.0622,0.0000,0.0886,low,345,54,31,0.8023,0.1256,0.0721,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2b4ebaba-cf6d-4c2c-25b5-08dc18e8f490,train,ALS,450,0.0524,0.0000,0.0250,0.0000,0.0387,low,422,19,9,0.9378,0.0422,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2b4ecf7b-57ff-492a-f5a4-08db45b05922,train,Parkinson's Disease,446,0.3100,0.1779,0.1819,0.0887,0.2460,middle,228,113,105,0.5112,0.2534,0.2354,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2b5e75af-0263-44fb-3a25-08dc5fadb5c5,train,Parkinson's Disease,438,0.1208,0.0000,0.0609,0.0000,0.0909,low,348,62,28,0.7945,0.1416,0.0639,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2b755f1e-f852-4da0-fd7f-08db4831e779,train,Parkinson's Disease,415,0.1008,0.0000,0.0540,0.0000,0.0774,low,347,51,17,0.8361,0.1229,0.0410,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2bee0d03-1967-4d7c-a1dc-08dc11dcc589,train,ALS,265,0.0683,0.0000,0.0388,0.0000,0.0535,low,242,13,10,0.9132,0.0491,0.0377,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2c36f1b5-db7f-4766-8117-08dd1e2cfafb,train,Down Syndrome,18,0.5935,0.6333,0.3430,0.3280,0.4683,high,4,4,10,0.2222,0.2222,0.5556,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2c6c3eb4-9956-48b2-a6d7-08dc15310511,train,ALS,450,0.0432,0.0000,0.0160,0.0000,0.0296,low,431,15,4,0.9578,0.0333,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2c96c714-ecc7-4e9d-982a-08dc7e56149c,train,Stroke,3,0.8889,1.0000,0.6776,0.7273,0.7832,high,0,0,3,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2cd1ce27-91cd-4b1f-2ec3-08dc27684872,train,Parkinson's Disease,450,0.0461,0.0000,0.0185,0.0000,0.0323,low,425,23,2,0.9444,0.0511,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2cdb605e-0dd8-4e47-cf49-08dc36bdc819,train,ALS,42,0.0378,0.0000,0.0196,0.0000,0.0287,low,39,2,1,0.9286,0.0476,0.0238,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2d0a692c-4150-4ed3-8e04-08dd4ae40880,train,ALS,450,0.1622,0.0513,0.0908,0.0214,0.1265,low,326,86,38,0.7244,0.1911,0.0844,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2d120fc4-e851-4ab8-4eff-08dcacc27c9e,train,ALS,85,0.1408,0.0000,0.0797,0.0000,0.1103,low,69,6,10,0.8118,0.0706,0.1176,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2d70d1b6-17d4-404f-ce38-08dca6823a12,train,Parkinson's Disease,448,0.1048,0.0000,0.0550,0.0000,0.0799,low,381,52,15,0.8504,0.1161,0.0335,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2dcb3ebc-59ea-4275-75a6-08dd3ba78fcd,train,Cerebral Palsy,427,0.7166,0.8000,0.5153,0.5357,0.6160,high,43,52,332,0.1007,0.1218,0.7775,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2e2f9aae-3d1d-4b97-8e90-08dc6c41cdfd,train,ALS,90,0.0727,0.0000,0.0455,0.0000,0.0591,low,78,10,2,0.8667,0.1111,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2eb5f501-b067-46f9-e901-08dcf2e1353e,train,ALS,449,0.1356,0.0000,0.0763,0.0000,0.1059,low,344,73,32,0.7661,0.1626,0.0713,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2ed8ae17-22a0-454e-8f05-08dc7f6a721b,train,Stroke,430,0.4352,0.3333,0.2992,0.2343,0.3672,middle,146,102,182,0.3395,0.2372,0.4233,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2f1acdcd-16af-4ef3-4e09-08dd589efe21,train,Down Syndrome,408,0.1117,0.0000,0.0596,0.0000,0.0856,low,326,59,23,0.7990,0.1446,0.0564,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2f4abb28-6f87-4c96-e7c3-08dcd9e31338,train,ALS,447,0.8753,1.0000,0.7045,0.7308,0.7899,high,9,16,422,0.0201,0.0358,0.9441,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+2f909f36-d59c-4ca4-5ab9-08db26ef62e1,train,Parkinson's Disease,449,0.1789,0.0833,0.0999,0.0294,0.1394,low,308,93,48,0.6860,0.2071,0.1069,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+300cf0d9-9261-420a-e95e-08dc2e961576,train,Stroke,220,0.1526,0.0000,0.0941,0.0000,0.1233,low,153,40,27,0.6955,0.1818,0.1227,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+30367f4b-f259-4248-4cdd-08db4b718502,train,Parkinson's Disease,448,0.0816,0.0000,0.0447,0.0000,0.0631,low,381,53,14,0.8504,0.1183,0.0312,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+305f56d6-2f54-4a1f-6957-08dbe84eccc1,train,Cerebral Palsy,330,0.1032,0.0000,0.0547,0.0000,0.0790,low,266,47,17,0.8061,0.1424,0.0515,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+309e2a55-50a4-4c5a-2e7f-08dc27684872,train,Parkinson's Disease,449,0.0364,0.0000,0.0129,0.0000,0.0246,low,433,14,2,0.9644,0.0312,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+32aa9cef-4937-4cfa-7a0b-08db42147f9a,train,Parkinson's Disease,450,0.0460,0.0000,0.0173,0.0000,0.0317,low,426,20,4,0.9467,0.0444,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+32ad7175-6db9-4e69-33a8-08db41d15341,train,Parkinson's Disease,448,0.0716,0.0000,0.0407,0.0000,0.0561,low,404,30,14,0.9018,0.0670,0.0312,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+32d04e9c-32db-467a-b6b4-08dc8d7bb350,train,ALS,440,0.4283,0.3333,0.3057,0.2143,0.3670,high,156,108,176,0.3545,0.2455,0.4000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+33a571de-54ef-4b4d-b2f0-08db6e8bdba4,train,Parkinson's Disease,450,0.0469,0.0000,0.0167,0.0000,0.0318,low,430,14,6,0.9556,0.0311,0.0133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+33e1fca1-5687-4873-3e6c-08dc863e36ec,train,Cerebral Palsy,394,0.9056,1.0000,0.7076,0.7302,0.8066,high,0,12,382,0.0000,0.0305,0.9695,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3415facd-2541-47f9-5b86-08db2bb3509e,train,Parkinson's Disease,450,0.0440,0.0000,0.0163,0.0000,0.0302,low,425,22,3,0.9444,0.0489,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3446a6b4-ac81-4fc4-f952-08dc1c2dd218,train,Stroke,423,0.1548,0.0000,0.0791,0.0000,0.1169,low,299,94,30,0.7069,0.2222,0.0709,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+34529c44-ad78-4f02-2ece-08dc27684872,train,Parkinson's Disease,447,0.0660,0.0000,0.0285,0.0000,0.0473,low,409,27,11,0.9150,0.0604,0.0246,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+34644bd1-4c96-47ac-a1d2-08dc11dcc589,train,ALS,450,0.0914,0.0000,0.0477,0.0000,0.0696,low,390,45,15,0.8667,0.1000,0.0333,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3468e898-4199-4829-a85a-08dcf77c2ab9,train,Parkinson's Disease,444,0.0552,0.0000,0.0224,0.0000,0.0388,low,418,21,5,0.9414,0.0473,0.0113,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+349041a7-7cbc-4327-f94f-08dc1c2dd218,train,ALS,450,0.0466,0.0000,0.0232,0.0000,0.0349,low,429,12,9,0.9533,0.0267,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+36819bf1-b6a8-4b73-2eca-08dc27684872,train,Parkinson's Disease,450,0.0376,0.0000,0.0170,0.0000,0.0273,low,430,13,7,0.9556,0.0289,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3697f56c-bfa7-4bef-ff1e-08db750bb973,train,Parkinson's Disease,45,0.0774,0.0000,0.0214,0.0000,0.0494,low,42,2,1,0.9333,0.0444,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+371ab70e-d1fe-45a5-3e99-08dc52a9876a,train,Parkinson's Disease,444,0.1000,0.0000,0.0447,0.0000,0.0724,low,388,44,12,0.8739,0.0991,0.0270,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+373e5404-3f4d-4d3d-9fd4-08dcee0760b0,train,Cerebral Palsy,355,0.9672,1.0000,0.8634,0.8947,0.9153,high,3,0,352,0.0085,0.0000,0.9915,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+374ad5cf-710f-4147-450c-08dc42c84745,train,Cerebral Palsy,450,0.9086,1.0000,0.8337,0.8696,0.8712,high,3,6,441,0.0067,0.0133,0.9800,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+37502a90-ddb7-4c5f-c582-08dc27c1bd26,train,Parkinson's Disease,450,0.0651,0.0000,0.0334,0.0000,0.0493,low,400,39,11,0.8889,0.0867,0.0244,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3793f574-311c-4146-699a-08dc17913c94,train,ALS,131,0.0378,0.0000,0.0136,0.0000,0.0257,low,125,5,1,0.9542,0.0382,0.0076,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+37a9fbdc-03a6-4ebd-1f62-08db3dcbbd09,train,Parkinson's Disease,447,0.0428,0.0000,0.0148,0.0000,0.0288,low,425,20,2,0.9508,0.0447,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3822e8ca-9b02-4a72-67f7-08dcbab8e251,train,Cerebral Palsy,97,0.2989,0.0000,0.1878,0.0000,0.2433,middle,56,20,21,0.5773,0.2062,0.2165,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+38bbecae-c73b-4791-f536-08db33311565,train,Parkinson's Disease,450,0.0470,0.0000,0.0196,0.0000,0.0333,low,418,27,5,0.9289,0.0600,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3a3190d2-4f6c-45b1-22b3-08dc56b55882,train,Down Syndrome,154,0.9233,1.0000,0.7447,0.7710,0.8340,high,0,4,150,0.0000,0.0260,0.9740,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3a67511d-bdb6-4e0b-0c46-08dbe9df9e4a,train,Cerebral Palsy,428,0.1900,0.0000,0.1121,0.0000,0.1511,middle,294,73,61,0.6869,0.1706,0.1425,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3aa9d4f5-a530-4f63-33fe-08dbb7176ebb,train,Parkinson's Disease,449,0.0452,0.0000,0.0171,0.0000,0.0311,low,431,14,4,0.9599,0.0312,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3b05351f-1cc7-40ae-cce2-08dd358723ba,train,Down Syndrome,430,0.0936,0.0000,0.0529,0.0000,0.0733,low,353,56,21,0.8209,0.1302,0.0488,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3b4e0116-8ab9-4522-54b8-08dc17c7b3c4,train,ALS,450,0.1376,0.0000,0.0767,0.0000,0.1072,low,344,75,31,0.7644,0.1667,0.0689,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3c9f3061-e5bd-4f9c-16eb-08dc1eef205f,train,Cerebral Palsy,430,0.0926,0.0000,0.0466,0.0000,0.0696,low,361,50,19,0.8395,0.1163,0.0442,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3cce7670-be7b-4f30-37a9-08dc1a9ff239,train,Parkinson's Disease,449,0.0617,0.0000,0.0333,0.0000,0.0475,low,396,47,6,0.8820,0.1047,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3d53af79-4abd-4370-df83-08db5c991d99,train,Parkinson's Disease,441,0.0462,0.0000,0.0191,0.0000,0.0326,low,417,19,5,0.9456,0.0431,0.0113,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3d7fc0a6-60cd-470f-4f4a-08db9399a6d5,train,Parkinson's Disease,443,0.1388,0.0345,0.0833,0.0165,0.1110,low,322,88,33,0.7269,0.1986,0.0745,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3df6f386-b762-4a89-43f5-08dc2f748b5c,train,Stroke,450,0.6276,0.7143,0.4831,0.4821,0.5553,high,75,90,285,0.1667,0.2000,0.6333,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3e01c059-ccd9-40a2-5242-08dc17032f59,train,Stroke,448,0.7132,0.9545,0.5553,0.5882,0.6343,high,56,52,340,0.1250,0.1161,0.7589,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3f0de68f-e620-49ba-5cef-08db46a76191,train,Parkinson's Disease,447,0.0343,0.0000,0.0094,0.0000,0.0219,low,437,10,0,0.9776,0.0224,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3f26fe3d-9cab-4073-769a-08db451a0b36,train,Parkinson's Disease,450,0.0858,0.0000,0.0419,0.0000,0.0638,low,384,53,13,0.8533,0.1178,0.0289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3f9653f8-ffc8-44f6-10e6-08db6af1ce41,train,Parkinson's Disease,449,0.0532,0.0000,0.0251,0.0000,0.0392,low,420,21,8,0.9354,0.0468,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3fa53307-ed46-4d78-5764-08dcfa856e25,train,Stroke,441,0.6498,0.6667,0.4347,0.3846,0.5423,high,62,101,278,0.1406,0.2290,0.6304,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3fe63e4f-19b0-48dd-dd38-08db6544cb87,train,Parkinson's Disease,98,0.1120,0.0000,0.0660,0.0000,0.0890,low,77,17,4,0.7857,0.1735,0.0408,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+3fe66d56-e194-4f6c-6998-08dc17913c94,train,ALS,450,0.0873,0.0000,0.0515,0.0000,0.0694,low,399,28,23,0.8867,0.0622,0.0511,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4001c750-b191-47db-611c-08dcdb04185c,train,ALS,153,0.9546,1.0000,0.8474,0.9048,0.9010,high,3,1,149,0.0196,0.0065,0.9739,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+40688524-90d9-4388-2e76-08dc27684872,train,Parkinson's Disease,85,0.0704,0.0000,0.0402,0.0000,0.0553,low,75,8,2,0.8824,0.0941,0.0235,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4071d589-6395-4486-ab97-08db26923497,train,Parkinson's Disease,449,0.0402,0.0000,0.0143,0.0000,0.0273,low,434,11,4,0.9666,0.0245,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+407d6de2-ab58-48b1-abb5-08dc5d6a38e4,train,ALS,449,0.1653,0.0455,0.0906,0.0185,0.1280,low,319,93,37,0.7105,0.2071,0.0824,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+40c405be-4046-4127-a1ab-08dc11dcc589,train,ALS,450,0.8046,1.0000,0.6747,0.7250,0.7397,high,18,32,400,0.0400,0.0711,0.8889,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+41cd19f7-8c7e-4845-4ccb-08dd60a97c83,train,Stroke,344,0.0546,0.0000,0.0252,0.0000,0.0399,low,322,15,7,0.9360,0.0436,0.0203,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+42f64a0c-c928-4f74-8fb5-08dc5412807c,train,Cerebral Palsy,32,0.2646,0.0000,0.1880,0.0000,0.2263,middle,20,3,9,0.6250,0.0938,0.2812,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+432bc723-0f23-4cc5-4ef2-08dcacc27c9e,train,ALS,450,0.0306,0.0000,0.0111,0.0000,0.0208,low,438,9,3,0.9733,0.0200,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+435006a9-e960-46a2-8a60-08db31656635,train,Parkinson's Disease,449,0.0668,0.0000,0.0312,0.0000,0.0490,low,397,47,5,0.8842,0.1047,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+438039aa-f477-405e-d25a-08db32115f35,train,Parkinson's Disease,449,0.0364,0.0000,0.0110,0.0000,0.0237,low,435,12,2,0.9688,0.0267,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+43fbb21e-2627-46a1-6829-08dd025ce1a9,train,ALS,449,0.0619,0.0000,0.0282,0.0000,0.0451,low,411,33,5,0.9154,0.0735,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4419493f-cde2-40cb-611a-08dcdb04185c,train,ALS,447,0.0841,0.0000,0.0453,0.0000,0.0647,low,390,39,18,0.8725,0.0872,0.0403,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+443e6183-0fe5-4a2f-03f2-08dd318df37f,train,Down Syndrome,423,0.2843,0.2000,0.1898,0.1250,0.2370,middle,189,130,104,0.4468,0.3073,0.2459,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4450c670-1015-4e12-ab55-08db7376d336,train,Parkinson's Disease,450,0.0293,0.0000,0.0116,0.0000,0.0205,low,435,10,5,0.9667,0.0222,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+44745cf0-a215-40a1-54f4-08dc0e2a1c3e,train,Down Syndrome,430,0.1730,0.0000,0.0979,0.0000,0.1354,low,298,87,45,0.6930,0.2023,0.1047,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4481a26b-356d-4740-c59f-08dc27c1bd26,train,Parkinson's Disease,303,0.1482,0.0000,0.0882,0.0000,0.1182,low,234,42,27,0.7723,0.1386,0.0891,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4495e9c0-6fab-4811-cf5a-08dc89b72177,train,ALS,246,0.7681,1.0000,0.6585,0.7143,0.7133,high,15,18,213,0.0610,0.0732,0.8659,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+44b93712-ce43-4b72-b7d3-08dba97af433,train,Parkinson's Disease,449,0.0476,0.0000,0.0195,0.0000,0.0336,low,429,15,5,0.9555,0.0334,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4519d53f-20a6-4968-ada3-08dce09abeb4,train,Cerebral Palsy,449,0.2805,0.0000,0.1856,0.0000,0.2330,middle,256,88,105,0.5702,0.1960,0.2339,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+45d8184f-d73c-4e3a-da82-08dc75b20572,train,Down Syndrome,429,0.2495,0.1667,0.1545,0.0877,0.2020,middle,225,118,86,0.5245,0.2751,0.2005,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+468955f5-481a-4220-8744-08db55811628,train,Parkinson's Disease,448,0.1058,0.0000,0.0581,0.0000,0.0820,low,365,66,17,0.8147,0.1473,0.0379,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+46954fd8-75b1-41d1-f6eb-08dc19181866,train,Cerebral Palsy,429,0.4490,0.4000,0.2793,0.2414,0.3642,middle,124,127,178,0.2890,0.2960,0.4149,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+46f77d44-3577-446f-a1c4-08dc11dcc589,train,ALS,450,0.0945,0.0000,0.0466,0.0000,0.0706,low,387,47,16,0.8600,0.1044,0.0356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4751f7a0-6709-411b-cf48-08dc89b72177,train,ALS,448,0.0962,0.0000,0.0408,0.0000,0.0685,low,392,46,10,0.8750,0.1027,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+479f6c3e-baa4-4782-27c3-08dc72e2a7b8,train,Parkinson's Disease,135,0.0661,0.0000,0.0412,0.0000,0.0536,low,125,5,5,0.9259,0.0370,0.0370,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4831b617-1e71-4205-ce35-08dca6823a12,train,Stroke,447,0.8880,1.0000,0.7555,0.8000,0.8217,high,8,18,421,0.0179,0.0403,0.9418,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+488e4f96-daaa-4013-87ab-08dc74e08a4e,train,Cerebral Palsy,430,0.0338,0.0000,0.0151,0.0000,0.0244,low,412,13,5,0.9581,0.0302,0.0116,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+49009238-7353-4d86-abc9-08dc5d6a38e4,train,Cerebral Palsy,430,0.1071,0.0000,0.0556,0.0000,0.0814,low,356,49,25,0.8279,0.1140,0.0581,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4972841b-fcaf-495f-d79e-08dc46c59895,train,Cerebral Palsy,361,0.5067,0.5000,0.3731,0.3333,0.4399,high,84,83,194,0.2327,0.2299,0.5374,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+49c0a40d-aa28-40c0-0fd6-08dcd99f98d3,train,ALS,450,0.2650,0.0000,0.1671,0.0000,0.2160,middle,285,72,93,0.6333,0.1600,0.2067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4a429a91-8c48-4133-87b5-08dc74e08a4e,train,Cerebral Palsy,425,0.1181,0.0000,0.0659,0.0000,0.0920,low,347,48,30,0.8165,0.1129,0.0706,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4a73d637-b066-4df7-76a1-08dc54a70eeb,train,Down Syndrome,430,0.6505,0.7143,0.4657,0.4853,0.5581,high,59,67,304,0.1372,0.1558,0.7070,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4a7d3f03-d421-48f2-e593-08dd187996f2,train,Stroke,445,0.5186,0.5000,0.3325,0.2941,0.4255,high,104,121,220,0.2337,0.2719,0.4944,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4a83a447-d51c-47f0-eca3-08dc9cb096c2,train,ALS,450,0.1540,0.0734,0.0862,0.0299,0.1201,low,323,94,33,0.7178,0.2089,0.0733,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4a901ec3-b373-41a3-7068-08db6375793f,train,Parkinson's Disease,313,0.0423,0.0000,0.0153,0.0000,0.0288,low,299,11,3,0.9553,0.0351,0.0096,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4aa4914d-e337-4297-fdb6-08dcad887b5e,train,Cerebral Palsy,430,0.1472,0.0000,0.0853,0.0000,0.1163,low,315,80,35,0.7326,0.1860,0.0814,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4aa6c6f2-9f9f-4394-59e4-08dd3c96897d,train,Down Syndrome,428,0.1155,0.0000,0.0705,0.0000,0.0930,low,336,56,36,0.7850,0.1308,0.0841,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4b05eff4-b30e-40e8-30ff-08db50c8319f,train,Parkinson's Disease,446,0.0688,0.0000,0.0330,0.0000,0.0509,low,400,39,7,0.8969,0.0874,0.0157,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4b3c8e9f-f9b2-496f-24b0-08dcbcb70931,train,Cerebral Palsy,445,0.4125,0.3333,0.2810,0.2000,0.3468,middle,168,107,170,0.3775,0.2404,0.3820,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4b4aeede-f4a5-49cf-808e-08dc28b09bf9,train,Parkinson's Disease,315,0.0738,0.0000,0.0351,0.0000,0.0545,low,285,18,12,0.9048,0.0571,0.0381,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4b8aae89-754d-4c6e-f7da-08db65f35c8b,train,Parkinson's Disease,447,0.0402,0.0000,0.0167,0.0000,0.0285,low,424,18,5,0.9485,0.0403,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4ba55594-5fb9-47db-853c-08dd210c9483,train,ALS,447,0.1783,0.0882,0.1004,0.0345,0.1393,middle,301,107,39,0.6734,0.2394,0.0872,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4beb2a15-8e5d-409d-b084-08dcd0e0b071,train,Down Syndrome,383,0.6366,0.6667,0.4528,0.4366,0.5447,high,21,77,285,0.0548,0.2010,0.7441,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4c4d9ab0-6bdd-41c5-4154-08dcddb9e4a3,train,Parkinson's Disease,446,0.0855,0.0000,0.0440,0.0000,0.0647,low,390,44,12,0.8744,0.0987,0.0269,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4c5d2214-df2a-4d7f-bb39-08dbdf14f113,train,Parkinson's Disease,438,0.0442,0.0000,0.0192,0.0000,0.0317,low,415,19,4,0.9475,0.0434,0.0091,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4c91dc4a-cb48-44af-ca97-08dd03e32564,train,Cerebral Palsy,449,0.7986,1.0000,0.5925,0.6250,0.6956,high,37,47,365,0.0824,0.1047,0.8129,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4cdd3d5d-1264-4bb2-3012-08dcc11ab035,train,ALS,450,0.0743,0.0000,0.0336,0.0000,0.0540,low,401,39,10,0.8911,0.0867,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4d300376-62e4-431b-3320-08dca05f46a7,train,Cerebral Palsy,422,0.5336,0.5000,0.3644,0.3381,0.4490,high,64,127,231,0.1517,0.3009,0.5474,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4d63203f-f931-4446-01d4-08dcfe7e7dfa,train,Cerebral Palsy,443,0.9849,1.0000,0.9129,0.9524,0.9489,high,0,0,443,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4e23b773-ec9d-4258-4588-08dcf3d34e85,train,ALS,418,0.2036,0.1111,0.1220,0.0417,0.1628,middle,258,111,49,0.6172,0.2656,0.1172,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4eaaccc6-1908-4349-46be-08db82273f48,train,Parkinson's Disease,446,0.0273,0.0000,0.0095,0.0000,0.0184,low,434,11,1,0.9731,0.0247,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4ee42ac6-45b5-4242-e7af-08dcd9e31338,train,ALS,450,0.0709,0.0000,0.0377,0.0000,0.0543,low,408,26,16,0.9067,0.0578,0.0356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4f9999db-b1ed-4ac0-dede-08dcc31013c0,train,Cerebral Palsy,82,0.0464,0.0000,0.0218,0.0000,0.0341,low,77,4,1,0.9390,0.0488,0.0122,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+4fd6ac1c-7520-4603-cf46-08dc36bdc819,train,Parkinson's Disease,450,0.0404,0.0000,0.0170,0.0000,0.0287,low,428,18,4,0.9511,0.0400,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+50594c91-060d-4b6e-43d8-08dca42d8162,train,Down Syndrome,427,0.5098,0.5000,0.3544,0.3056,0.4321,high,97,109,221,0.2272,0.2553,0.5176,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+50836d2a-d25b-48bf-ecff-08dbe1995a23,train,Down Syndrome,424,0.1157,0.0000,0.0622,0.0000,0.0890,low,345,54,25,0.8137,0.1274,0.0590,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+508d17d7-b0cf-4de7-1179-08dba7fa5465,train,Parkinson's Disease,449,0.0570,0.0000,0.0295,0.0000,0.0433,low,414,27,8,0.9220,0.0601,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+50c7e02a-1885-4429-da7c-08dc75b20572,train,Parkinson's Disease,447,0.1337,0.0250,0.0840,0.0072,0.1088,low,328,88,31,0.7338,0.1969,0.0694,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+50deb470-4008-4b71-3c98-08dd1d31334b,train,Cerebral Palsy,449,0.9711,1.0000,0.8964,1.0000,0.9338,high,2,3,444,0.0045,0.0067,0.9889,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+50e4234a-739d-4443-02b0-08dcaa8c3d9d,train,Cerebral Palsy,391,0.8940,1.0000,0.7656,0.7949,0.8298,high,4,9,378,0.0102,0.0230,0.9668,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+511e8ca5-236a-4aeb-bf52-08db3cfd4e3e,train,Parkinson's Disease,450,0.0582,0.0000,0.0275,0.0000,0.0429,low,415,29,6,0.9222,0.0644,0.0133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+511ea74b-4526-4237-a1d0-08dc11dcc589,train,ALS,446,0.0455,0.0000,0.0181,0.0000,0.0318,low,421,19,6,0.9439,0.0426,0.0135,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+513b2340-8493-4342-dde5-08dc9aac4c52,train,ALS,240,0.0635,0.0000,0.0306,0.0000,0.0471,low,217,19,4,0.9042,0.0792,0.0167,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+51605a57-686d-40d3-6273-08dcdcbbcec7,train,Parkinson's Disease,449,0.0368,0.0000,0.0142,0.0000,0.0255,low,431,12,6,0.9599,0.0267,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+51d89771-fbb2-4268-0bb3-08dcf9635df3,train,Stroke,450,0.3120,0.0000,0.2007,0.0000,0.2564,middle,257,77,116,0.5711,0.1711,0.2578,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+51d948c2-476f-4f0d-bc01-08dd438c3c56,train,Down Syndrome,210,0.5033,0.5000,0.3476,0.3288,0.4255,high,54,42,114,0.2571,0.2000,0.5429,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5213927f-8fb4-4ca3-bd25-08db66ae423c,train,Parkinson's Disease,449,0.0556,0.0000,0.0233,0.0000,0.0395,low,419,26,4,0.9332,0.0579,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+52334bb8-6f4a-4d73-a1b7-08dcc7adb730,train,Down Syndrome,428,0.5057,0.5000,0.3787,0.3415,0.4422,high,97,102,229,0.2266,0.2383,0.5350,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+52875471-c143-49b4-cb77-08dc45edfda4,train,ALS,449,0.0988,0.0000,0.0584,0.0000,0.0786,low,382,45,22,0.8508,0.1002,0.0490,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+52b660ca-1778-4dc4-5b83-08db2bb3509e,train,Parkinson's Disease,450,0.1150,0.0000,0.0647,0.0000,0.0898,low,354,73,23,0.7867,0.1622,0.0511,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+52bb5a13-34c5-4f5c-4cca-08dd60a97c83,train,Down Syndrome,430,0.0865,0.0000,0.0404,0.0000,0.0635,low,370,42,18,0.8605,0.0977,0.0419,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+537ecd95-4c5e-4bb3-123f-08dc8ec52b92,train,ALS,450,0.4910,0.4000,0.3611,0.2786,0.4260,high,156,78,216,0.3467,0.1733,0.4800,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+53a684d5-d42f-49c3-dc90-08dbacb1d678,train,Parkinson's Disease,448,0.0557,0.0000,0.0287,0.0000,0.0422,low,415,23,10,0.9263,0.0513,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5428856b-44d2-4c25-3e38-08dc895255bb,train,Cerebral Palsy,429,0.2495,0.1429,0.1535,0.0513,0.2015,middle,247,100,82,0.5758,0.2331,0.1911,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+544eb572-a9a8-42ed-a85c-08dcf77c2ab9,train,Cerebral Palsy,430,0.6038,0.6667,0.4376,0.4286,0.5207,high,64,74,292,0.1488,0.1721,0.6791,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+54770062-db50-4f3b-bd52-08dc8ad4730d,train,ALS,450,0.0313,0.0000,0.0111,0.0000,0.0212,low,438,8,4,0.9733,0.0178,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+54994211-7696-4987-02a1-08dcaa8c3d9d,train,ALS,449,0.0711,0.0000,0.0350,0.0000,0.0530,low,397,47,5,0.8842,0.1047,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+558c8b14-7e5a-45d4-6b84-08db40e65de5,train,Parkinson's Disease,446,0.0752,0.0000,0.0352,0.0000,0.0552,low,393,44,9,0.8812,0.0987,0.0202,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+55e37781-2d81-434e-3a28-08dc5fadb5c5,train,ALS,450,0.0555,0.0000,0.0211,0.0000,0.0383,low,416,31,3,0.9244,0.0689,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5687abdb-3aba-4d45-75ea-08dc5951d476,train,Down Syndrome,430,0.3427,0.2500,0.2141,0.1491,0.2784,middle,176,125,129,0.4093,0.2907,0.3000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+56ab820f-c997-4dd4-2bf6-08dc9148fdda,train,Cerebral Palsy,430,0.0997,0.0000,0.0523,0.0000,0.0760,low,361,46,23,0.8395,0.1070,0.0535,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+56d198e7-ad8c-4441-be52-08dc5a51b53b,train,Down Syndrome,430,0.4718,0.4000,0.3278,0.2929,0.3998,high,95,123,212,0.2209,0.2860,0.4930,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+578895fa-55a7-4ab4-ef6a-08db7199713e,train,Parkinson's Disease,408,0.0806,0.0000,0.0407,0.0000,0.0606,low,355,41,12,0.8701,0.1005,0.0294,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+57c429b4-a6c7-4e2a-dd1a-08db98f21470,train,Parkinson's Disease,449,0.1290,0.0000,0.0754,0.0000,0.1022,low,352,66,31,0.7840,0.1470,0.0690,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+57e0a805-a9b2-406f-57dc-08dcbb9f64e1,train,Cerebral Palsy,95,0.9921,1.0000,0.9168,1.0000,0.9544,high,0,1,94,0.0000,0.0105,0.9895,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5852ec8d-cbfd-4901-b907-08dc99d6617d,train,Cerebral Palsy,430,0.3980,0.2857,0.2726,0.1944,0.3353,middle,147,119,164,0.3419,0.2767,0.3814,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+587bf91a-74cd-4766-cf36-08dc89b72177,train,Parkinson's Disease,450,0.4449,0.4000,0.3151,0.2667,0.3800,high,106,139,205,0.2356,0.3089,0.4556,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+588411db-3601-45c4-59e1-08dd3c96897d,train,Stroke,377,0.2966,0.0000,0.1931,0.0000,0.2448,middle,211,72,94,0.5597,0.1910,0.2493,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+58cafa0c-85df-40eb-2eaf-08dc27684872,train,Parkinson's Disease,43,0.0306,0.0000,0.0154,0.0000,0.0230,low,41,1,1,0.9535,0.0233,0.0233,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+58ffb3d4-ccb8-4fce-852f-08dcd7240867,train,Parkinson's Disease,444,0.1065,0.0000,0.0526,0.0000,0.0795,low,355,76,13,0.7995,0.1712,0.0293,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+590fb318-bca6-4923-89f8-08db6b5f86fb,train,Parkinson's Disease,449,0.0356,0.0000,0.0128,0.0000,0.0242,low,432,11,6,0.9621,0.0245,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+59b47aea-1709-4559-aa22-08db7f28d1f2,train,Parkinson's Disease,450,0.0651,0.0000,0.0299,0.0000,0.0475,low,413,28,9,0.9178,0.0622,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+59f4ff3d-5edf-467c-facb-08dd0a4af9ba,train,Down Syndrome,425,0.3460,0.2571,0.2219,0.1579,0.2839,middle,152,137,136,0.3576,0.3224,0.3200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5a006fbe-b5c4-476b-7137-08dc19070b4a,train,ALS,85,0.3088,0.2500,0.2075,0.1429,0.2581,middle,39,24,22,0.4588,0.2824,0.2588,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5a96c15d-bbce-492a-117a-08dba7fa5465,train,Parkinson's Disease,446,0.4309,0.3431,0.3605,0.2348,0.3957,high,171,67,208,0.3834,0.1502,0.4664,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5aa635ad-c165-4b2a-3de4-08dd04d8f6c9,train,ALS,449,0.0378,0.0000,0.0166,0.0000,0.0272,low,424,21,4,0.9443,0.0468,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5ad4cd6a-c79c-4952-3a22-08dc5fadb5c5,train,Down Syndrome,428,0.0840,0.0000,0.0394,0.0000,0.0617,low,369,45,14,0.8621,0.1051,0.0327,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5b52d5da-bf66-4309-a19c-08dc11dcc589,train,ALS,447,0.0311,0.0000,0.0139,0.0000,0.0225,low,435,7,5,0.9732,0.0157,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5b6dbc46-a544-40e1-0bb4-08dcf9635df3,train,Down Syndrome,148,0.6705,0.7750,0.4854,0.4896,0.5780,high,22,26,100,0.1486,0.1757,0.6757,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5b74c670-a5d3-4a7b-6c8a-08dd543e01a5,train,Cerebral Palsy,347,0.7609,0.8571,0.5641,0.5833,0.6625,high,9,43,295,0.0259,0.1239,0.8501,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5b8566c5-f3f0-4c2e-7c8d-08dcc6cfbf82,train,Cerebral Palsy,449,0.8501,1.0000,0.6639,0.7143,0.7570,high,23,20,406,0.0512,0.0445,0.9042,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5b9d4592-7a2e-464a-8bbe-08dd4210739c,train,Stroke,357,0.5136,0.4286,0.3605,0.2727,0.4371,high,90,96,171,0.2521,0.2689,0.4790,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5c8b9c7f-1ebb-4bd8-3aee-08dbe2b5c47a,train,Down Syndrome,429,0.0915,0.0000,0.0450,0.0000,0.0683,low,362,48,19,0.8438,0.1119,0.0443,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5d0e07ea-fb76-451e-f782-08dcb8bbedb8,train,Cerebral Palsy,350,0.5055,0.5000,0.3531,0.3060,0.4293,high,86,84,180,0.2457,0.2400,0.5143,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5db3a40e-b10a-4f87-c3bf-08dd001d41dc,train,Cerebral Palsy,447,0.8430,1.0000,0.6589,0.7000,0.7510,high,21,27,399,0.0470,0.0604,0.8926,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5dc44062-8bfa-4867-db95-08dc26bda4f1,train,ALS,149,0.5877,0.6000,0.4244,0.4000,0.5060,high,18,40,91,0.1208,0.2685,0.6107,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5e2ed8a5-a43c-4254-2e66-08dce1b26f4b,train,ALS,449,0.0519,0.0000,0.0176,0.0000,0.0347,low,421,26,2,0.9376,0.0579,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5e9b0847-248d-4a1d-7f90-08dc9f90df2f,train,ALS,315,0.0643,0.0000,0.0261,0.0000,0.0452,low,284,28,3,0.9016,0.0889,0.0095,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+5ea03b3c-4204-4f2f-15fc-08dbb62a2382,train,Parkinson's Disease,450,0.0371,0.0000,0.0122,0.0000,0.0247,low,434,14,2,0.9644,0.0311,0.0044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+603b47ab-b99f-47b0-8086-08db80053c20,train,Parkinson's Disease,447,0.0739,0.0000,0.0378,0.0000,0.0559,low,391,47,9,0.8747,0.1051,0.0201,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6116e83e-8f91-4885-44aa-08dc2be1ce70,train,Parkinson's Disease,447,0.0844,0.0000,0.0422,0.0000,0.0633,low,382,51,14,0.8546,0.1141,0.0313,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+61668d9d-71d0-4e61-603d-08db888af625,train,Parkinson's Disease,449,0.5749,0.6000,0.3929,0.3871,0.4839,high,75,106,268,0.1670,0.2361,0.5969,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+61867433-ca92-4ac7-70db-08dd7672eb03,train,ALS,294,0.0838,0.0000,0.0414,0.0000,0.0626,low,255,28,11,0.8673,0.0952,0.0374,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+61c13881-3c87-4b92-5e18-08db426a2d1c,train,Parkinson's Disease,84,0.0329,0.0000,0.0084,0.0000,0.0207,low,81,3,0,0.9643,0.0357,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+61eef070-a4b3-4c93-67f9-08dcbab8e251,train,Cerebral Palsy,403,0.7299,0.8889,0.5618,0.6250,0.6459,high,43,44,316,0.1067,0.1092,0.7841,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+624dddfa-fcd7-4e86-4403-08dc2f748b5c,train,Stroke,406,0.2466,0.0000,0.1368,0.0000,0.1917,middle,273,70,63,0.6724,0.1724,0.1552,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+625d8b11-cce4-4876-010d-08db2c67da8b,train,Parkinson's Disease,450,0.0276,0.0000,0.0096,0.0000,0.0186,low,437,12,1,0.9711,0.0267,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+627597df-ca41-44cd-0fcf-08dcd99f98d3,train,ALS,245,0.0355,0.0000,0.0127,0.0000,0.0241,low,236,7,2,0.9633,0.0286,0.0082,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+62913b1c-bcc7-4adf-809c-08dc28b09bf9,train,Parkinson's Disease,358,0.1041,0.0000,0.0641,0.0000,0.0841,low,298,40,20,0.8324,0.1117,0.0559,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+629a8b94-87a0-4412-9271-08dc7b82c294,train,Stroke,422,0.2309,0.1250,0.1341,0.0430,0.1825,middle,249,102,71,0.5900,0.2417,0.1682,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+62f1b4a7-2d35-4e4f-0e04-08dc6bae8ecd,train,ALS,121,0.2672,0.1695,0.1767,0.0930,0.2219,middle,62,33,26,0.5124,0.2727,0.2149,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+632812b2-3a92-4e2a-699f-08dc17913c94,train,ALS,450,0.0917,0.0000,0.0448,0.0000,0.0682,low,391,45,14,0.8689,0.1000,0.0311,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+635fbfc5-4fa1-4fbb-0acd-08dcdea0684f,train,ALS,386,0.1340,0.0000,0.0724,0.0000,0.1032,low,287,74,25,0.7435,0.1917,0.0648,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+638f0b2e-3bb7-45b9-87b6-08dc74e08a4e,train,Cerebral Palsy,430,0.1096,0.0000,0.0609,0.0000,0.0853,low,354,49,27,0.8233,0.1140,0.0628,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+63ebcb02-e259-4632-1f63-08db3dcbbd09,train,Parkinson's Disease,450,0.0319,0.0000,0.0128,0.0000,0.0224,low,432,13,5,0.9600,0.0289,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+63f2665b-ddde-420b-d1ec-08db95465630,train,Parkinson's Disease,444,0.1086,0.0000,0.0593,0.0000,0.0840,low,367,60,17,0.8266,0.1351,0.0383,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6437b6d7-6381-4427-f1a5-08db41f4c88b,train,Parkinson's Disease,450,0.0582,0.0000,0.0244,0.0000,0.0413,low,414,28,8,0.9200,0.0622,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+643b2422-2f9a-45d7-a16b-08dc11dcc589,train,ALS,450,0.0548,0.0000,0.0264,0.0000,0.0406,low,421,19,10,0.9356,0.0422,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+64be89ec-8444-46b3-0b0c-08dc0c97c3b8,train,ALS,268,0.3574,0.2543,0.2404,0.1743,0.2989,middle,92,97,79,0.3433,0.3619,0.2948,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+64dc40ed-46c9-4f53-cf26-08dc89b72177,train,ALS,450,0.1091,0.0000,0.0613,0.0000,0.0852,low,375,47,28,0.8333,0.1044,0.0622,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+64fd6d17-bf05-4e96-8366-08dca350f4dc,train,Down Syndrome,128,0.6484,0.6905,0.4860,0.5000,0.5672,high,13,24,91,0.1016,0.1875,0.7109,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+64fecd03-ce4e-4b38-e960-08dc2e961576,train,Stroke,442,0.4069,0.3333,0.2795,0.1765,0.3432,middle,179,99,164,0.4050,0.2240,0.3710,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+653eb6f8-1b8f-457c-c58a-08dc27c1bd26,train,Parkinson's Disease,446,0.0499,0.0000,0.0225,0.0000,0.0362,low,421,18,7,0.9439,0.0404,0.0157,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+65870458-e018-461d-a172-08dc11dcc589,train,ALS,450,0.0408,0.0000,0.0168,0.0000,0.0288,low,424,25,1,0.9422,0.0556,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+65941f0e-4793-4142-808d-08dc28b09bf9,train,Parkinson's Disease,435,0.1796,0.0952,0.1084,0.0417,0.1440,middle,278,115,42,0.6391,0.2644,0.0966,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+65ceb5df-bc14-4a3d-ca67-08db7331a16c,train,Parkinson's Disease,446,0.0721,0.0000,0.0365,0.0000,0.0543,low,395,41,10,0.8857,0.0919,0.0224,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+65f496d9-78ad-45ba-c835-08dc7c5e38f1,train,Stroke,154,0.2118,0.0000,0.1189,0.0000,0.1654,middle,94,37,23,0.6104,0.2403,0.1494,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+66018674-5b03-4623-1188-08dba7fa5465,train,Parkinson's Disease,435,0.1994,0.0588,0.1174,0.0270,0.1584,middle,292,84,59,0.6713,0.1931,0.1356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+66143dd2-c117-4e29-87af-08dc74e08a4e,train,Cerebral Palsy,428,0.0857,0.0000,0.0469,0.0000,0.0663,low,371,34,23,0.8668,0.0794,0.0537,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+662ad6f3-d8fe-4bf5-d939-08db465e8b8a,train,Parkinson's Disease,450,0.0679,0.0000,0.0329,0.0000,0.0504,low,404,35,11,0.8978,0.0778,0.0244,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6678450d-b5b7-4a40-f185-08dd0e32d927,train,Cerebral Palsy,428,0.3135,0.2000,0.1977,0.1266,0.2556,middle,194,116,118,0.4533,0.2710,0.2757,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+667c880e-86a5-4ff6-67fe-08dcbab8e251,train,Cerebral Palsy,444,0.4414,0.3333,0.3248,0.1795,0.3831,high,186,77,181,0.4189,0.1734,0.4077,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6686c710-e679-4954-e969-08dc2e961576,train,Stroke,7,0.5190,0.4000,0.3714,0.2857,0.4452,high,1,3,3,0.1429,0.4286,0.4286,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+674ab9df-ce7d-4118-abb1-08dc5d6a38e4,train,ALS,444,0.8424,1.0000,0.6683,0.6866,0.7553,high,16,23,405,0.0360,0.0518,0.9122,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+675a063f-cb16-45ad-cc6e-08dc0a3366a4,train,Down Syndrome,428,0.2641,0.1667,0.1549,0.0929,0.2095,middle,221,129,78,0.5164,0.3014,0.1822,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+676ebf09-2dbd-4ec7-9d06-08dd3773226f,train,ALS,450,0.7872,1.0000,0.6013,0.6389,0.6943,high,27,41,382,0.0600,0.0911,0.8489,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+678d5169-75fb-47e5-5bd2-08dcf1e988d8,train,ALS,449,0.1004,0.0000,0.0565,0.0000,0.0785,low,379,49,21,0.8441,0.1091,0.0468,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+67e0c3ff-fa8e-488a-3b6f-08dba8c9670d,train,Parkinson's Disease,89,0.1887,0.0000,0.1103,0.0000,0.1495,middle,61,16,12,0.6854,0.1798,0.1348,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+67fd11af-176e-4ce3-4cb6-08dd0b23004e,train,Stroke,429,0.0833,0.0000,0.0362,0.0000,0.0597,low,372,43,14,0.8671,0.1002,0.0326,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+682ed0c5-f41a-488b-0856-08db66fd04b0,train,Parkinson's Disease,436,0.0531,0.0000,0.0260,0.0000,0.0395,low,402,27,7,0.9220,0.0619,0.0161,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+683f4dc1-195e-492e-3ae1-08dd5b4fffca,train,Down Syndrome,425,0.1120,0.0000,0.0565,0.0000,0.0842,low,346,51,28,0.8141,0.1200,0.0659,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+685a7079-e55b-4759-5760-08dcfa856e25,train,Down Syndrome,147,0.3802,0.3333,0.2485,0.1724,0.3144,middle,48,50,49,0.3265,0.3401,0.3333,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+687475ee-ac3a-4246-c563-08dc27c1bd26,train,Parkinson's Disease,448,0.0371,0.0000,0.0144,0.0000,0.0257,low,432,11,5,0.9643,0.0246,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+68c56fd0-7757-4017-1ce0-08dcd3e137e8,train,Down Syndrome,430,0.1646,0.0000,0.0963,0.0000,0.1304,low,306,77,47,0.7116,0.1791,0.1093,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+690a4970-0aa0-4457-115f-08dba7fa5465,train,Parkinson's Disease,450,0.0953,0.0000,0.0488,0.0000,0.0720,low,370,67,13,0.8222,0.1489,0.0289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+69694c4b-2f3b-4996-123e-08dc8ec52b92,train,ALS,357,0.9283,1.0000,0.7904,0.8125,0.8594,high,2,7,348,0.0056,0.0196,0.9748,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6986f30f-5d2d-449e-8bf9-08dbe1538f12,train,Down Syndrome,168,0.1007,0.0000,0.0453,0.0000,0.0730,low,141,19,8,0.8393,0.1131,0.0476,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+698a7386-afd4-4841-44ad-08dc2be1ce70,train,ALS,449,0.0677,0.0000,0.0334,0.0000,0.0505,low,402,37,10,0.8953,0.0824,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6a4ed682-bcde-4fd9-807b-08dc2d678af8,train,Stroke,430,0.0661,0.0000,0.0297,0.0000,0.0479,low,389,30,11,0.9047,0.0698,0.0256,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6a81e17f-fb8f-4289-1e2c-08dbe1ed2b7f,train,Down Syndrome,430,0.1348,0.0000,0.0799,0.0000,0.1073,low,324,68,38,0.7535,0.1581,0.0884,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6ac4b3e6-bb5d-4482-e9a9-08dc2e961576,train,Stroke,448,0.7521,0.8333,0.5215,0.5333,0.6368,high,31,47,370,0.0692,0.1049,0.8259,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6ad121e2-b05a-4ee9-c3a3-08dcf87380a2,train,Down Syndrome,368,0.5748,0.6000,0.4067,0.3835,0.4907,high,53,68,247,0.1440,0.1848,0.6712,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6ad1753e-36a8-498b-1175-08dba7fa5465,train,Parkinson's Disease,442,0.1148,0.0000,0.0643,0.0000,0.0896,low,345,76,21,0.7805,0.1719,0.0475,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6b1ea95a-ac97-404b-450b-08dc42c84745,train,Parkinson's Disease,448,0.0521,0.0000,0.0245,0.0000,0.0383,low,417,25,6,0.9308,0.0558,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6b40963e-06f4-4af2-d673-08dc687737d3,train,Cerebral Palsy,430,0.0569,0.0000,0.0251,0.0000,0.0410,low,391,31,8,0.9093,0.0721,0.0186,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6b4b24d9-1f5e-4a2d-530c-08dc95210be1,train,Parkinson's Disease,402,0.2385,0.1667,0.1281,0.0852,0.1833,middle,217,142,43,0.5398,0.3532,0.1070,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6b6875ec-8f41-48ca-2e64-08dce1b26f4b,train,Cerebral Palsy,415,0.5596,0.5714,0.4165,0.4000,0.4880,high,94,74,247,0.2265,0.1783,0.5952,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6b83360c-897c-4188-1070-08dc4d0abe5b,train,Cerebral Palsy,430,0.1683,0.0000,0.1048,0.0000,0.1365,middle,305,68,57,0.7093,0.1581,0.1326,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6c622825-c58a-43df-06cf-08dc6fa9589b,train,Parkinson's Disease,448,0.0805,0.0000,0.0392,0.0000,0.0599,low,396,37,15,0.8839,0.0826,0.0335,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6c6cbc6d-f66d-4b02-ea95-08db4e7b0019,train,Parkinson's Disease,440,0.0318,0.0000,0.0138,0.0000,0.0228,low,422,15,3,0.9591,0.0341,0.0068,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6c868961-e917-42d4-632d-08dbaaf8a4b7,train,Parkinson's Disease,449,0.1137,0.0000,0.0599,0.0000,0.0868,low,373,54,22,0.8307,0.1203,0.0490,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6cd9d7e7-380f-43aa-b90a-08dc99d6617d,train,Cerebral Palsy,430,0.8274,1.0000,0.6264,0.6429,0.7269,high,10,21,399,0.0233,0.0488,0.9279,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6ce4979e-e4cf-4550-b585-08dc5e199653,train,ALS,54,0.4811,0.4694,0.3367,0.2831,0.4089,high,11,18,25,0.2037,0.3333,0.4630,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6cfd7836-cf63-465c-5763-08dcfa856e25,train,Parkinson's Disease,450,0.0757,0.0000,0.0437,0.0000,0.0597,low,403,27,20,0.8956,0.0600,0.0444,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6d065598-3db6-4934-c039-08dc605e0191,train,ALS,450,0.1135,0.0000,0.0592,0.0000,0.0863,low,361,64,25,0.8022,0.1422,0.0556,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6d4fb4dc-43d8-4f56-4986-08dcb4d7acba,train,Cerebral Palsy,430,0.4622,0.4286,0.2974,0.2775,0.3798,middle,111,128,191,0.2581,0.2977,0.4442,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6d697024-54d1-4fbc-33a7-08dc856a35ea,train,Cerebral Palsy,419,0.4895,0.4286,0.3536,0.2941,0.4215,high,85,129,205,0.2029,0.3079,0.4893,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6db33070-fe04-4e1c-22b2-08dc56b55882,train,Down Syndrome,430,0.1427,0.0000,0.0679,0.0000,0.1053,low,336,68,26,0.7814,0.1581,0.0605,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6dd5a117-86d2-4847-1f7b-08dc22d2b6d4,train,Down Syndrome,427,0.2831,0.2000,0.1778,0.1250,0.2304,middle,198,127,102,0.4637,0.2974,0.2389,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6ddd2d5c-acbc-40ba-a170-08dc11dcc589,train,ALS,317,0.2852,0.2000,0.1842,0.1071,0.2347,middle,155,93,69,0.4890,0.2934,0.2177,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6e801e6a-9afd-4195-0a4a-08db7e715258,train,Parkinson's Disease,44,0.1090,0.0000,0.0756,0.0000,0.0923,low,38,2,4,0.8636,0.0455,0.0909,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6ee7333a-ccb4-42f9-12aa-08db3e6e5021,train,Parkinson's Disease,449,0.0311,0.0000,0.0131,0.0000,0.0221,low,435,11,3,0.9688,0.0245,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6f61dc7c-d9ba-4d52-914d-08dcd7fdf875,train,ALS,102,0.0604,0.0000,0.0214,0.0000,0.0409,low,96,5,1,0.9412,0.0490,0.0098,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6f697009-8d43-4a35-3a1d-08dc5fadb5c5,train,ALS,89,0.1393,0.0000,0.0926,0.0000,0.1160,low,71,9,9,0.7978,0.1011,0.1011,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6f7afcf6-5fea-4668-c724-08dd0d3b7be4,train,ALS,449,0.0417,0.0000,0.0152,0.0000,0.0284,low,427,21,1,0.9510,0.0468,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6fa3f212-6a4f-4019-f06f-08db4b4fdcbb,train,Parkinson's Disease,449,0.0319,0.0000,0.0117,0.0000,0.0218,low,430,18,1,0.9577,0.0401,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6fafb7f0-542c-40e0-7cdd-08dc8ba4f236,train,Parkinson's Disease,450,0.2567,0.1538,0.1694,0.0830,0.2130,middle,236,123,91,0.5244,0.2733,0.2022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+6fff333d-3b46-4c5c-a1d3-08dc11dcc589,train,ALS,449,0.9725,1.0000,0.8958,0.9310,0.9341,high,0,0,449,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7018e4a5-f536-4506-3f92-08db32dd3b41,train,Parkinson's Disease,337,0.1741,0.0800,0.1069,0.0288,0.1405,middle,214,89,34,0.6350,0.2641,0.1009,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+70ba239b-9b51-4789-1096-08db6b8d1576,train,Parkinson's Disease,450,0.0499,0.0000,0.0210,0.0000,0.0355,low,424,21,5,0.9422,0.0467,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+71127cd8-5b78-48b5-cb3e-08db30a2c2d0,train,Parkinson's Disease,246,0.3348,0.2500,0.2437,0.1659,0.2893,middle,101,64,81,0.4106,0.2602,0.3293,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+71b709a6-66a6-4c0f-3857-08dd34a28b01,train,Stroke,450,0.8302,1.0000,0.6400,0.6708,0.7351,high,19,43,388,0.0422,0.0956,0.8622,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+71bfe758-dfaa-4227-8365-08dca350f4dc,train,Cerebral Palsy,449,0.9478,1.0000,0.8193,0.8333,0.8835,high,1,3,445,0.0022,0.0067,0.9911,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+71c85a71-d2af-410b-87b2-08dc74e08a4e,train,Cerebral Palsy,50,0.4090,0.3542,0.3147,0.2630,0.3619,high,15,12,23,0.3000,0.2400,0.4600,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+71d6867e-272d-49ee-87ad-08dc74e08a4e,train,Cerebral Palsy,350,0.1758,0.0000,0.1019,0.0000,0.1388,middle,237,79,34,0.6771,0.2257,0.0971,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+72089bf2-acc1-41aa-cf5d-08dc89b72177,train,ALS,135,0.9793,1.0000,0.8809,0.9167,0.9301,high,0,1,134,0.0000,0.0074,0.9926,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7214c488-f338-47d8-7ac7-08db6614ae76,train,Parkinson's Disease,438,0.0696,0.0000,0.0402,0.0000,0.0549,low,394,30,14,0.8995,0.0685,0.0320,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7215b659-d731-478c-7698-08dc54a70eeb,train,Down Syndrome,430,0.1158,0.0000,0.0605,0.0000,0.0882,low,343,62,25,0.7977,0.1442,0.0581,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+72592637-45fd-4eb0-5b85-08db2bb3509e,train,Parkinson's Disease,437,0.1456,0.0000,0.0807,0.0000,0.1131,low,328,75,34,0.7506,0.1716,0.0778,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+72737d73-c35e-41f8-530b-08dc95210be1,train,Cerebral Palsy,102,0.9812,1.0000,0.8679,0.8571,0.9245,high,0,0,102,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7282bd95-7385-432b-54ba-08dc17c7b3c4,train,ALS,450,0.0713,0.0000,0.0355,0.0000,0.0534,low,408,29,13,0.9067,0.0644,0.0289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+72b94312-b54a-4585-415d-08dcddb9e4a3,train,Parkinson's Disease,446,0.0209,0.0000,0.0072,0.0000,0.0140,low,436,9,1,0.9776,0.0202,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7468c5a9-6f0e-4c86-b2ef-08db6e8bdba4,train,Parkinson's Disease,447,0.0672,0.0000,0.0327,0.0000,0.0500,low,401,36,10,0.8971,0.0805,0.0224,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+748019c4-bf28-4144-a168-08dc11dcc589,train,ALS,436,0.3564,0.2500,0.2473,0.1606,0.3018,middle,181,109,146,0.4151,0.2500,0.3349,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+74b14e89-4ea1-405e-d402-08dd72c9091a,train,ALS,435,0.0262,0.0000,0.0071,0.0000,0.0166,low,429,6,0,0.9862,0.0138,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+75129419-2333-4e29-fd6c-08dcb5d1edd7,train,Parkinson's Disease,448,0.0584,0.0000,0.0262,0.0000,0.0423,low,414,25,9,0.9241,0.0558,0.0201,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+75884af1-0630-4e57-b82c-08dbb85ab880,train,Parkinson's Disease,449,0.0442,0.0000,0.0188,0.0000,0.0315,low,432,13,4,0.9621,0.0290,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+75908261-5509-4a6e-7f9a-08dc9f90df2f,train,Cerebral Palsy,428,0.0821,0.0000,0.0453,0.0000,0.0637,low,358,53,17,0.8364,0.1238,0.0397,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+75a389c8-cae1-4e45-e828-08dbe0ac2304,train,Parkinson's Disease,448,0.1936,0.0822,0.1160,0.0411,0.1548,middle,288,111,49,0.6429,0.2478,0.1094,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+75acf6de-2864-4b6e-3d77-08dc325485f0,train,ALS,444,0.0948,0.0000,0.0517,0.0000,0.0732,low,381,44,19,0.8581,0.0991,0.0428,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7661028e-95ae-44cd-029a-08db8ea270da,train,Parkinson's Disease,447,0.0484,0.0000,0.0198,0.0000,0.0341,low,421,21,5,0.9418,0.0470,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+775ffa0d-65d3-4ad6-2e7d-08dc27684872,train,Parkinson's Disease,449,0.0640,0.0000,0.0317,0.0000,0.0478,low,405,31,13,0.9020,0.0690,0.0290,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+776a933a-c9d6-495c-5bc5-08dcf1e988d8,train,Parkinson's Disease,444,0.0517,0.0000,0.0274,0.0000,0.0395,low,419,17,8,0.9437,0.0383,0.0180,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7797862e-0242-4c4e-3f62-08dc27b62080,train,Parkinson's Disease,442,0.0547,0.0000,0.0211,0.0000,0.0379,low,405,35,2,0.9163,0.0792,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+782857ee-1517-4b33-3a1e-08dc5fadb5c5,train,ALS,450,0.0452,0.0000,0.0229,0.0000,0.0341,low,421,20,9,0.9356,0.0444,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+78718496-3433-429f-1559-08dd13b9e946,train,Cerebral Palsy,428,0.1000,0.0000,0.0494,0.0000,0.0747,low,363,43,22,0.8481,0.1005,0.0514,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7913cfeb-79d2-41f1-87b7-08dc74e08a4e,train,Cerebral Palsy,429,0.3104,0.1667,0.1935,0.1000,0.2520,middle,211,109,109,0.4918,0.2541,0.2541,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7960602d-a55a-42e6-ef04-08db5cba8704,train,Parkinson's Disease,449,0.0714,0.0000,0.0397,0.0000,0.0556,low,406,26,17,0.9042,0.0579,0.0379,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+797f7a6f-99e7-4ff0-9d7b-08dc12a8d9fa,train,Parkinson's Disease,444,0.8298,1.0000,0.6465,0.6880,0.7381,high,9,24,411,0.0203,0.0541,0.9257,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7a19d077-979e-4bc7-415c-08dcddb9e4a3,train,Down Syndrome,213,0.4019,0.3333,0.2719,0.2063,0.3369,middle,67,69,77,0.3146,0.3239,0.3615,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7a1b14f7-4f67-4cf4-a1fe-08dc11dcc589,train,ALS,9,0.4435,0.2500,0.2555,0.2500,0.3495,middle,3,4,2,0.3333,0.4444,0.2222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7ac194f4-f9f3-48d0-cf1f-08dc89b72177,train,ALS,449,0.9692,1.0000,0.9044,0.9444,0.9368,high,0,0,449,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7b0f16fa-2404-4335-07ac-08dbaed83b41,train,Parkinson's Disease,449,0.0760,0.0000,0.0372,0.0000,0.0566,low,400,39,10,0.8909,0.0869,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7b2fe565-fa97-4f75-d603-08dc12ec34ac,train,ALS,219,0.0677,0.0000,0.0321,0.0000,0.0499,low,195,17,7,0.8904,0.0776,0.0320,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7b641b5e-90da-4828-769f-08dc54a70eeb,train,Down Syndrome,430,0.2019,0.1050,0.1121,0.0431,0.1570,middle,262,115,53,0.6093,0.2674,0.1233,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7bc4acce-fd1d-44f0-6119-08dcdb04185c,train,ALS,449,0.1468,0.0000,0.0801,0.0000,0.1135,low,328,85,36,0.7305,0.1893,0.0802,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7ced1720-6305-4bc8-46bf-08db82273f48,train,Parkinson's Disease,434,0.1904,0.0833,0.1123,0.0380,0.1513,middle,280,113,41,0.6452,0.2604,0.0945,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7d292491-c03d-4e5b-8cf3-08dcff4f47ae,train,Stroke,436,0.5137,0.5000,0.3781,0.2876,0.4459,high,111,114,211,0.2546,0.2615,0.4839,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7d40ea39-22d3-451e-3c85-08dc4b8edc60,train,Parkinson's Disease,444,0.0690,0.0000,0.0317,0.0000,0.0504,low,406,27,11,0.9144,0.0608,0.0248,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7d7c9257-5e01-4b9f-a196-08dc11dcc589,train,ALS,450,0.0552,0.0000,0.0229,0.0000,0.0390,low,413,34,3,0.9178,0.0756,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7d7d589c-cfbd-4800-f6ea-08dc19181866,train,Cerebral Palsy,430,0.0806,0.0000,0.0381,0.0000,0.0593,low,377,40,13,0.8767,0.0930,0.0302,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7e27b4c5-9250-479e-5fe2-08dc630c1396,train,ALS,450,0.0962,0.0000,0.0500,0.0000,0.0731,low,370,68,12,0.8222,0.1511,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+7f36cf5a-a56b-4bd6-ef05-08db5cba8704,train,Parkinson's Disease,447,0.0633,0.0000,0.0297,0.0000,0.0465,low,410,27,10,0.9172,0.0604,0.0224,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+80dea61f-69d1-4e86-9992-08dcab8095cf,train,Down Syndrome,429,0.5336,0.5000,0.3610,0.3333,0.4473,high,80,115,234,0.1865,0.2681,0.5455,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+80e1d83c-19b4-4fff-2089-08dbb80075e5,train,Parkinson's Disease,446,0.4142,0.3333,0.2891,0.2066,0.3516,middle,139,123,184,0.3117,0.2758,0.4126,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+81cbf5cb-457d-47f6-ab9a-08dc0d884980,train,Down Syndrome,422,0.3975,0.3333,0.2623,0.2290,0.3299,middle,133,125,164,0.3152,0.2962,0.3886,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+82118252-9858-4410-19b9-08db2fb58edf,train,Parkinson's Disease,450,0.0393,0.0000,0.0135,0.0000,0.0264,low,431,16,3,0.9578,0.0356,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+83135bc4-8567-46e3-3c96-08dd1d31334b,train,Down Syndrome,430,0.5347,0.5000,0.3865,0.3750,0.4606,high,67,109,254,0.1558,0.2535,0.5907,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8353668e-9065-4b35-75a8-08dd3ba78fcd,train,ALS,450,0.1570,0.0000,0.0935,0.0000,0.1253,low,329,77,44,0.7311,0.1711,0.0978,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+836f18e3-3361-43ea-8cee-08dcff4f47ae,train,Cerebral Palsy,425,0.0950,0.0000,0.0486,0.0000,0.0718,low,363,39,23,0.8541,0.0918,0.0541,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+837551f2-df1e-492e-5533-08dc8c8af7c9,train,ALS,449,0.5330,0.5294,0.3679,0.3462,0.4504,high,89,100,260,0.1982,0.2227,0.5791,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+83a3efde-0b37-45e7-f584-08dc8fac837a,train,ALS,450,0.6757,0.8000,0.5441,0.5752,0.6099,high,56,68,326,0.1244,0.1511,0.7244,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+841b5954-25e9-4805-244a-08dc016f5033,train,Parkinson's Disease,448,0.2024,0.1111,0.1151,0.0486,0.1587,middle,274,114,60,0.6116,0.2545,0.1339,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+841ddd27-e1c0-4ba2-e7be-08dcd9e31338,train,ALS,449,0.3664,0.2222,0.2494,0.1111,0.3079,middle,215,100,134,0.4788,0.2227,0.2984,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+848dc807-d469-4979-e9a6-08dc2e961576,train,Stroke,449,0.2031,0.0000,0.1289,0.0000,0.1660,middle,315,64,70,0.7016,0.1425,0.1559,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+849db66f-8282-47d2-6f6c-08db436e98a4,train,Parkinson's Disease,449,0.0526,0.0000,0.0213,0.0000,0.0370,low,419,25,5,0.9332,0.0557,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+84d7a172-1a56-4c1a-982c-08dc7e56149c,train,ALS,449,0.9806,1.0000,0.8776,0.9032,0.9291,high,1,0,448,0.0022,0.0000,0.9978,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+85534091-2345-4f65-cf34-08dc89b72177,train,ALS,449,0.1168,0.0000,0.0611,0.0000,0.0889,low,366,56,27,0.8151,0.1247,0.0601,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+855424d7-22ff-4303-75a4-08dd3ba78fcd,train,Down Syndrome,430,0.1131,0.0000,0.0614,0.0000,0.0873,low,339,63,28,0.7884,0.1465,0.0651,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8654a868-71db-42de-b21b-08dc6a2b69be,train,Parkinson's Disease,447,0.0728,0.0000,0.0329,0.0000,0.0529,low,403,36,8,0.9016,0.0805,0.0179,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+86d9ad40-470e-41b3-1262-08db48c83e2c,train,Parkinson's Disease,449,0.1808,0.0714,0.1116,0.0256,0.1462,middle,311,84,54,0.6927,0.1871,0.1203,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+874883e9-cd96-466a-c354-08dd6888f774,train,ALS,425,0.5350,0.5385,0.3848,0.3605,0.4599,high,82,107,236,0.1929,0.2518,0.5553,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+877548ba-9c30-465e-0fa8-08dcd99f98d3,train,ALS,152,0.4750,0.4000,0.3379,0.2500,0.4065,high,38,45,69,0.2500,0.2961,0.4539,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+87828447-eda9-4e46-530f-08dc95210be1,train,Down Syndrome,429,0.1404,0.0000,0.0815,0.0000,0.1110,low,316,68,45,0.7366,0.1585,0.1049,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+88219ed9-d7ba-4d3d-f94e-08dc1c2dd218,train,Down Syndrome,430,0.3120,0.2500,0.1886,0.1308,0.2503,middle,194,125,111,0.4512,0.2907,0.2581,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+88473fad-a20d-4093-80c1-08dd36570e96,train,Down Syndrome,421,0.9752,1.0000,0.8371,0.8571,0.9061,high,5,2,414,0.0119,0.0048,0.9834,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+88893849-2896-4fc6-cf1e-08dc89b72177,train,ALS,450,0.1220,0.0000,0.0575,0.0000,0.0898,low,367,62,21,0.8156,0.1378,0.0467,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+888e9878-8142-4788-4ccd-08dd0b23004e,train,ALS,449,0.0361,0.0000,0.0151,0.0000,0.0256,low,429,14,6,0.9555,0.0312,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+88c0ceb1-d2e7-44f6-810a-08dd30bc293e,train,Parkinson's Disease,449,0.0912,0.0000,0.0484,0.0000,0.0698,low,390,44,15,0.8686,0.0980,0.0334,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+88f7dc04-4e18-4da7-c39e-08dcf87380a2,train,Parkinson's Disease,448,0.1314,0.0000,0.0787,0.0000,0.1050,low,337,84,27,0.7522,0.1875,0.0603,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8954331a-4767-4ab1-ce3a-08dca6823a12,train,Stroke,449,0.3828,0.2500,0.2572,0.1290,0.3200,middle,205,101,143,0.4566,0.2249,0.3185,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8970db2b-7672-40f4-a178-08dc11dcc589,train,ALS,180,0.1651,0.0000,0.0950,0.0000,0.1300,low,132,29,19,0.7333,0.1611,0.1056,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8a2785b4-c2d4-4561-33a8-08dc856a35ea,train,Cerebral Palsy,425,0.6220,0.6667,0.4678,0.4737,0.5449,high,51,79,295,0.1200,0.1859,0.6941,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8a4b09ab-9e6d-4f09-f350-08dd446c36bb,train,Cerebral Palsy,429,0.5640,0.6667,0.3841,0.4000,0.4740,high,113,55,261,0.2634,0.1282,0.6084,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8a8c72cc-2226-4786-4efa-08dcacc27c9e,train,ALS,448,0.0234,0.0000,0.0079,0.0000,0.0156,low,440,8,0,0.9821,0.0179,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8b43e597-8fb8-4a84-9319-08db7b2bf57b,train,Parkinson's Disease,450,0.0465,0.0000,0.0206,0.0000,0.0336,low,424,19,7,0.9422,0.0422,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8b4446c9-d818-4132-3de7-08dd04d8f6c9,train,Down Syndrome,429,0.2966,0.2105,0.1880,0.1308,0.2423,middle,181,149,99,0.4219,0.3473,0.2308,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8bbd158c-6085-46d1-9273-08dc7b82c294,train,Stroke,40,0.4996,0.5000,0.3413,0.2458,0.4204,high,16,5,19,0.4000,0.1250,0.4750,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8bf1a81b-146d-4df1-125a-08dc55a2762d,train,Down Syndrome,429,0.6659,0.7143,0.4731,0.4857,0.5695,high,22,68,339,0.0513,0.1585,0.7902,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8c341d58-2f7c-4404-0fb5-08dcd99f98d3,train,ALS,448,0.0736,0.0000,0.0384,0.0000,0.0560,low,404,29,15,0.9018,0.0647,0.0335,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8c6b6a3c-486a-4cbc-1c48-08db344ca254,train,Parkinson's Disease,167,0.8542,1.0000,0.8375,1.0000,0.8458,high,0,0,167,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8cf6d8fc-57c1-4fc1-b734-08dc443ba3cc,train,Cerebral Palsy,420,0.1137,0.0000,0.0603,0.0000,0.0870,low,350,38,32,0.8333,0.0905,0.0762,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8dcc2534-4954-488d-bd51-08dc8ad4730d,train,ALS,450,0.0736,0.0000,0.0366,0.0000,0.0551,low,407,27,16,0.9044,0.0600,0.0356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8e0bd322-5790-4f07-cf51-08dc89b72177,train,ALS,46,0.1400,0.0000,0.0798,0.0000,0.1099,low,38,4,4,0.8261,0.0870,0.0870,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8e1f74a8-8b7b-4f3f-db61-08db263bd57d,train,Parkinson's Disease,444,0.0437,0.0000,0.0228,0.0000,0.0332,low,421,16,7,0.9482,0.0360,0.0158,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8e27d987-52a1-4615-ada1-08dce09abeb4,train,Cerebral Palsy,430,0.0994,0.0000,0.0448,0.0000,0.0721,low,364,48,18,0.8465,0.1116,0.0419,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8e4386de-e685-45ae-8f23-08dcdbd22259,train,Down Syndrome,429,0.1166,0.0000,0.0566,0.0000,0.0866,low,336,75,18,0.7832,0.1748,0.0420,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8ebb4ccc-4356-47ca-0da3-08dc2684eac8,train,Stroke,430,0.2615,0.1667,0.1639,0.0837,0.2127,middle,225,116,89,0.5233,0.2698,0.2070,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+8ee07e3b-57c6-4df3-f086-08dbffd6e72c,train,Cerebral Palsy,430,0.1188,0.0000,0.0594,0.0000,0.0891,low,351,51,28,0.8163,0.1186,0.0651,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+90231471-f333-4f3a-115e-08dba7fa5465,train,Parkinson's Disease,444,0.3692,0.2857,0.2427,0.1719,0.3060,middle,164,145,135,0.3694,0.3266,0.3041,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+90c8f9c7-ee65-4178-c568-08dc27c1bd26,train,Parkinson's Disease,447,0.1637,0.0526,0.0899,0.0156,0.1268,low,311,95,41,0.6957,0.2125,0.0917,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+91ef5c26-f0af-455d-a464-08db2b045661,train,Parkinson's Disease,447,0.0499,0.0000,0.0254,0.0000,0.0377,low,420,19,8,0.9396,0.0425,0.0179,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9204489e-77c2-4236-da81-08dc75b20572,train,Cerebral Palsy,430,0.5472,0.5000,0.4027,0.3750,0.4750,high,75,100,255,0.1744,0.2326,0.5930,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+925ac806-0107-47b5-fef8-08db49b30d79,train,Parkinson's Disease,443,0.0691,0.0000,0.0296,0.0000,0.0494,low,398,42,3,0.8984,0.0948,0.0068,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+928c5940-3541-4aed-0fb9-08dcd99f98d3,train,ALS,267,0.5688,0.6667,0.4209,0.3750,0.4949,high,71,42,154,0.2659,0.1573,0.5768,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+929438bb-0082-4aaa-e997-08dc2e961576,train,Stroke,185,0.4192,0.3333,0.2720,0.2000,0.3456,middle,69,44,72,0.3730,0.2378,0.3892,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+92b4a66a-ea07-4435-0bb6-08dcf9635df3,train,Parkinson's Disease,449,0.0507,0.0000,0.0205,0.0000,0.0356,low,419,26,4,0.9332,0.0579,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+92dc3af6-87ed-4cae-338b-08dcaf3a39af,train,Cerebral Palsy,450,0.5382,0.5000,0.3436,0.3000,0.4409,high,118,104,228,0.2622,0.2311,0.5067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+93194409-cd02-46de-841d-08dc34b33839,train,Stroke,449,0.1027,0.0000,0.0504,0.0000,0.0765,low,382,42,25,0.8508,0.0935,0.0557,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+93b8a8bb-e30c-4d51-307f-08dd5740f974,train,ALS,450,0.0902,0.0000,0.0487,0.0000,0.0694,low,388,46,16,0.8622,0.1022,0.0356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+93dec82c-f740-4308-f585-08dc8fac837a,train,Cerebral Palsy,430,0.8239,1.0000,0.6566,0.6886,0.7403,high,7,31,392,0.0163,0.0721,0.9116,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9441ac9b-5902-42ce-3a27-08dc5fadb5c5,train,ALS,302,0.1449,0.0000,0.0905,0.0000,0.1177,low,227,43,32,0.7517,0.1424,0.1060,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+94dfb9c6-582b-41bc-763e-08dbba5845a5,train,Parkinson's Disease,268,0.1246,0.0000,0.0752,0.0000,0.0999,low,204,46,18,0.7612,0.1716,0.0672,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+951cf535-f6ae-4a82-bd5c-08dc8ad4730d,train,ALS,319,0.1185,0.0000,0.0628,0.0000,0.0907,low,251,49,19,0.7868,0.1536,0.0596,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+957c8030-a651-45ee-c2fc-08db67ba31e5,train,Parkinson's Disease,444,0.0506,0.0000,0.0216,0.0000,0.0361,low,417,21,6,0.9392,0.0473,0.0135,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+95883e20-cef7-4d5f-9872-08db8e06f7f8,train,Parkinson's Disease,448,0.0859,0.0000,0.0469,0.0000,0.0664,low,387,46,15,0.8638,0.1027,0.0335,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+95fbc887-4e56-4a81-57db-08dcbb9f64e1,train,Cerebral Palsy,440,0.9327,1.0000,0.7760,0.7857,0.8544,high,2,4,434,0.0045,0.0091,0.9864,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+960c7987-3bd9-4d6d-9afe-08dc13ee0eb9,train,Parkinson's Disease,450,0.1494,0.0646,0.0797,0.0232,0.1145,low,333,90,27,0.7400,0.2000,0.0600,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+962ac7d4-c6ab-49f3-1e2d-08dbe1ed2b7f,train,Down Syndrome,42,0.1956,0.0000,0.1255,0.0000,0.1606,middle,30,8,4,0.7143,0.1905,0.0952,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+962ef349-423c-4867-7c83-08dcc6cfbf82,train,Cerebral Palsy,430,0.0767,0.0000,0.0325,0.0000,0.0546,low,372,48,10,0.8651,0.1116,0.0233,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+969e5b34-f205-480f-1cd9-08dcd3e137e8,train,Cerebral Palsy,429,0.5474,0.5714,0.3856,0.3636,0.4665,high,82,100,247,0.1911,0.2331,0.5758,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+972c6e75-1fb1-470b-a1e1-08dc11dcc589,train,ALS,448,0.0845,0.0000,0.0437,0.0000,0.0641,low,386,50,12,0.8616,0.1116,0.0268,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+974e88e4-238d-4830-6198-08db2a271679,train,Parkinson's Disease,448,0.0370,0.0000,0.0147,0.0000,0.0258,low,430,13,5,0.9598,0.0290,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+97773f9b-69a2-4d43-ec8a-08dc52853440,train,Parkinson's Disease,315,0.0431,0.0000,0.0207,0.0000,0.0319,low,297,13,5,0.9429,0.0413,0.0159,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+97bedfe3-75cb-43a8-123c-08dc8ec52b92,train,Parkinson's Disease,82,0.2588,0.1726,0.1728,0.0936,0.2158,middle,43,22,17,0.5244,0.2683,0.2073,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9819c7bb-b76f-4920-2270-08dd5ceaf69c,train,Cerebral Palsy,441,0.6354,0.7500,0.4443,0.4545,0.5399,high,95,61,285,0.2154,0.1383,0.6463,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+987a5dad-44c2-4a6b-1184-08dba7fa5465,train,Parkinson's Disease,449,0.0699,0.0000,0.0339,0.0000,0.0519,low,395,47,7,0.8797,0.1047,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+98870e3b-2ca6-4216-8279-08dcdfc767fc,train,Cerebral Palsy,430,0.0866,0.0000,0.0460,0.0000,0.0663,low,372,35,23,0.8651,0.0814,0.0535,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9954f9a7-b55a-4981-46c2-08db82273f48,train,Parkinson's Disease,447,0.2613,0.2000,0.1705,0.1154,0.2159,middle,209,139,99,0.4676,0.3110,0.2215,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+99916464-7aed-4cbb-2e9e-08dc27684872,train,Parkinson's Disease,450,0.0580,0.0000,0.0291,0.0000,0.0436,low,415,23,12,0.9222,0.0511,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+99d161b1-b166-428b-d2c4-08db4723ec09,train,Parkinson's Disease,450,0.0521,0.0000,0.0201,0.0000,0.0361,low,421,26,3,0.9356,0.0578,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+99e8c247-55af-4979-6055-08dc274aba53,train,Parkinson's Disease,450,0.1849,0.1250,0.1064,0.0497,0.1457,middle,290,115,45,0.6444,0.2556,0.1000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+99fc8423-2c12-461b-62ac-08dbcc0db50c,train,Parkinson's Disease,448,0.1538,0.0488,0.0845,0.0217,0.1191,low,340,70,38,0.7589,0.1562,0.0848,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9ac0450f-e7a9-411b-1e30-08dbe1ed2b7f,train,Down Syndrome,321,0.8025,0.8000,0.7171,0.6923,0.7598,high,0,0,321,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9ad03d94-0c85-4d3c-982b-08dc7e56149c,train,Stroke,429,0.1089,0.0000,0.0592,0.0000,0.0840,low,342,72,15,0.7972,0.1678,0.0350,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9b2bb94e-ba9e-4a60-24a7-08dd018a3881,train,Down Syndrome,428,0.1662,0.0000,0.0995,0.0000,0.1328,low,295,84,49,0.6893,0.1963,0.1145,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9ba5ee09-2958-4d2c-69a3-08dc17913c94,train,ALS,448,0.5425,0.5000,0.3929,0.3603,0.4677,high,59,127,262,0.1317,0.2835,0.5848,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9bb4a8b3-27b1-4831-01ce-08dcfe7e7dfa,train,Stroke,449,0.3091,0.1667,0.1859,0.0741,0.2475,middle,237,101,111,0.5278,0.2249,0.2472,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9bd947ca-0c69-40e9-bd5a-08dc8ad4730d,train,Cerebral Palsy,373,0.5678,0.6000,0.4219,0.3939,0.4949,high,75,78,220,0.2011,0.2091,0.5898,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9bedec53-2cd5-47a7-7d3a-08dcd6a9c461,train,Parkinson's Disease,442,0.0831,0.0000,0.0431,0.0000,0.0631,low,372,58,12,0.8416,0.1312,0.0271,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9c010598-69af-424f-f872-08dcfdd86f8f,train,Parkinson's Disease,441,0.7203,0.8000,0.5246,0.5366,0.6224,high,31,68,342,0.0703,0.1542,0.7755,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9d8d2260-dfe9-4384-e137-08dbe55910bb,train,Parkinson's Disease,449,0.1568,0.0612,0.1073,0.0216,0.1321,middle,311,83,55,0.6927,0.1849,0.1225,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9e7aa4fd-7ec8-4ae7-c277-08db783c5d41,train,Parkinson's Disease,450,0.0346,0.0000,0.0140,0.0000,0.0243,low,436,11,3,0.9689,0.0244,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9e80a90e-b226-428f-c657-08db73ef9d1c,train,Parkinson's Disease,446,0.0344,0.0000,0.0134,0.0000,0.0239,low,429,12,5,0.9619,0.0269,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9e8b3e40-dc4b-41c3-a608-08db87a61cfc,train,Parkinson's Disease,450,0.0851,0.0000,0.0432,0.0000,0.0641,low,384,52,14,0.8533,0.1156,0.0311,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9ec977d9-1c8f-4374-d6eb-08db42d02878,train,Parkinson's Disease,449,0.0813,0.0000,0.0413,0.0000,0.0613,low,396,41,12,0.8820,0.0913,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9f03f9e5-ec8b-4893-7f91-08dc9f90df2f,train,Down Syndrome,429,0.2713,0.2000,0.1585,0.1111,0.2149,middle,200,154,75,0.4662,0.3590,0.1748,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9f1b16cf-09ce-475c-c2c0-08dc124f903c,train,ALS,85,0.0606,0.0000,0.0338,0.0000,0.0472,low,78,4,3,0.9176,0.0471,0.0353,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9f6dbe42-d5f4-4fc8-bc3e-08db7417355e,train,Parkinson's Disease,442,0.1438,0.0000,0.0880,0.0000,0.1159,low,332,69,41,0.7511,0.1561,0.0928,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9fb13376-b839-4cc4-2e66-08dc27684872,train,Parkinson's Disease,449,0.1283,0.0000,0.0709,0.0000,0.0996,low,346,70,33,0.7706,0.1559,0.0735,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+9fe1e8f9-c4dd-42fa-844b-08dce3a6cba6,train,ALS,446,0.4370,0.3750,0.3127,0.2609,0.3748,high,156,91,199,0.3498,0.2040,0.4462,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a0154efe-bf6b-4648-4987-08dcb4d7acba,train,Cerebral Palsy,430,0.7623,0.8571,0.6050,0.6667,0.6837,high,29,34,367,0.0674,0.0791,0.8535,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a0ee61cb-6b1e-420c-0518-08dcc0518fb9,train,Cerebral Palsy,429,0.2736,0.1667,0.1693,0.0833,0.2214,middle,225,109,95,0.5245,0.2541,0.2214,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a15bbc72-4ade-43dc-b89c-08db74d9e4d8,train,Parkinson's Disease,442,0.0322,0.0000,0.0121,0.0000,0.0222,low,432,9,1,0.9774,0.0204,0.0023,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a17cfb8c-c8bc-4c68-a4a1-08dca8fcd16b,train,Parkinson's Disease,443,0.0640,0.0000,0.0358,0.0000,0.0499,low,414,16,13,0.9345,0.0361,0.0293,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a1dec06a-a466-4786-b587-08dc5e199653,train,ALS,450,0.5514,0.5000,0.4043,0.3790,0.4778,high,55,120,275,0.1222,0.2667,0.6111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a20d5dbd-fac5-4989-c56e-08dc27c1bd26,train,Parkinson's Disease,448,0.0403,0.0000,0.0147,0.0000,0.0275,low,431,14,3,0.9621,0.0312,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a20dd80e-b535-4a31-244f-08dcb6eb1ff5,train,Cerebral Palsy,430,0.1472,0.0000,0.0841,0.0000,0.1156,low,302,95,33,0.7023,0.2209,0.0767,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a2113b66-e656-4204-2e5d-08dc27684872,train,Parkinson's Disease,446,0.0884,0.0000,0.0498,0.0000,0.0691,low,380,49,17,0.8520,0.1099,0.0381,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a2848a49-9eb3-44d8-2bf8-08dc9148fdda,train,ALS,447,0.6381,0.7000,0.4931,0.4848,0.5656,high,74,79,294,0.1655,0.1767,0.6577,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a29710b6-4f46-49e3-116f-08dba7fa5465,train,Parkinson's Disease,448,0.0558,0.0000,0.0295,0.0000,0.0426,low,412,29,7,0.9196,0.0647,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a2c69bed-0f4e-43d2-1174-08dba7fa5465,train,Parkinson's Disease,445,0.0648,0.0000,0.0289,0.0000,0.0469,low,410,27,8,0.9213,0.0607,0.0180,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a358b4db-04f6-4c40-3917-08dc358e2588,train,Cerebral Palsy,430,0.0942,0.0000,0.0454,0.0000,0.0698,low,354,63,13,0.8233,0.1465,0.0302,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a38ae187-f5cc-4414-2713-08dc18a4ec91,train,ALS,450,0.2005,0.0000,0.1353,0.0000,0.1679,middle,324,62,64,0.7200,0.1378,0.1422,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a44a52f3-a801-4458-15fa-08dbb62a2382,train,Parkinson's Disease,444,0.0766,0.0000,0.0386,0.0000,0.0576,low,388,43,13,0.8739,0.0968,0.0293,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a478bfcb-361c-496f-f187-08dd0e32d927,train,Parkinson's Disease,448,0.0488,0.0000,0.0241,0.0000,0.0365,low,413,31,4,0.9219,0.0692,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a49aba71-22f9-4377-8b31-08dc44f243ab,train,Cerebral Palsy,427,0.9189,0.9286,0.8621,0.8623,0.8905,high,0,0,427,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a4cd6747-9b78-4f59-a72f-08dc6486c600,train,Down Syndrome,430,0.1938,0.0000,0.1106,0.0000,0.1522,middle,265,111,54,0.6163,0.2581,0.1256,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a4f5f02e-63a1-4595-a17d-08dc11dcc589,train,ALS,180,0.6361,0.6667,0.4861,0.5000,0.5611,high,17,30,133,0.0944,0.1667,0.7389,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a5e1dc76-fb94-4590-2eaa-08dc27684872,train,Parkinson's Disease,45,0.2104,0.0000,0.1280,0.0000,0.1692,middle,28,8,9,0.6222,0.1778,0.2000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a68ea94f-8194-49e5-3c84-08dc4b8edc60,train,Cerebral Palsy,327,0.2735,0.1667,0.1769,0.1026,0.2252,middle,162,92,73,0.4954,0.2813,0.2232,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a72be9ca-a663-4f72-c230-08dbeba01fff,train,Parkinson's Disease,447,0.0855,0.0000,0.0490,0.0000,0.0673,low,379,52,16,0.8479,0.1163,0.0358,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a7e2add7-b9f4-46e9-9873-08db8e06f7f8,train,Parkinson's Disease,450,0.0479,0.0000,0.0198,0.0000,0.0339,low,430,12,8,0.9556,0.0267,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a8238cc0-9c3b-45a6-f9f6-08dc138a527b,train,ALS,449,0.0664,0.0000,0.0346,0.0000,0.0505,low,404,33,12,0.8998,0.0735,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a8728c20-ea2b-4a7d-717c-08db47ff8b9e,train,Parkinson's Disease,75,0.0367,0.0000,0.0156,0.0000,0.0261,low,71,3,1,0.9467,0.0400,0.0133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a8a4d633-2806-40d5-a32f-08db4c005d58,train,Parkinson's Disease,447,0.1873,0.1000,0.1112,0.0444,0.1493,middle,283,110,54,0.6331,0.2461,0.1208,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a9000ee1-d751-43d8-9bd7-08db4d814b6e,train,Parkinson's Disease,449,0.0289,0.0000,0.0108,0.0000,0.0198,low,437,11,1,0.9733,0.0245,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a94bf456-95e1-44ee-8f15-08dcdbd22259,train,Parkinson's Disease,448,0.0717,0.0000,0.0372,0.0000,0.0544,low,397,38,13,0.8862,0.0848,0.0290,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a94f44f1-aa52-4960-d2bd-08db4723ec09,train,Parkinson's Disease,450,0.0674,0.0000,0.0303,0.0000,0.0489,low,407,33,10,0.9044,0.0733,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+a98bac88-6fb4-4ead-fe58-08dd6266e2a3,train,Cerebral Palsy,263,0.8974,1.0000,0.7050,0.7500,0.8012,high,3,8,252,0.0114,0.0304,0.9582,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+aa0dc730-acf2-4e6f-cb5b-08dc840245ea,train,ALS,85,0.0268,0.0000,0.0111,0.0000,0.0190,low,81,4,0,0.9529,0.0471,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+aa0f2353-c7bb-44a9-bdbe-08dc6936e41a,train,ALS,450,0.0521,0.0000,0.0235,0.0000,0.0378,low,423,22,5,0.9400,0.0489,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+aa95597e-5e07-48b5-219c-08dc9072fb0e,train,ALS,446,0.2439,0.0000,0.1292,0.0000,0.1865,middle,308,66,72,0.6906,0.1480,0.1614,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+aadd3c34-1551-43f9-57f1-08dcbb9f64e1,train,ALS,450,0.1470,0.0000,0.0961,0.0000,0.1216,low,338,68,44,0.7511,0.1511,0.0978,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+aaf5a053-3319-4992-37c6-08dce6e2632a,train,Cerebral Palsy,430,0.5168,0.5000,0.3564,0.3333,0.4366,high,95,91,244,0.2209,0.2116,0.5674,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+abd640de-5589-4460-443e-08db780528b1,train,Parkinson's Disease,435,0.0561,0.0000,0.0269,0.0000,0.0415,low,408,19,8,0.9379,0.0437,0.0184,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+abec150e-4e8b-4be2-cf11-08dc89b72177,train,ALS,55,0.0523,0.0000,0.0258,0.0000,0.0391,low,51,2,2,0.9273,0.0364,0.0364,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+aca26181-40fd-4280-769e-08dc54a70eeb,train,Down Syndrome,339,0.3002,0.2500,0.1833,0.1250,0.2417,middle,147,113,79,0.4336,0.3333,0.2330,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ad160303-51b7-4ed3-1166-08dba7fa5465,train,Parkinson's Disease,450,0.0579,0.0000,0.0292,0.0000,0.0435,low,420,23,7,0.9333,0.0511,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ad7945d2-4d3a-4dc9-e7cf-08dcd9e31338,train,ALS,449,0.0564,0.0000,0.0286,0.0000,0.0425,low,408,33,8,0.9087,0.0735,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ae62cbfd-80e7-4bf8-9260-08dc7b82c294,train,Stroke,80,0.2473,0.0000,0.1279,0.0000,0.1876,middle,51,16,13,0.6375,0.2000,0.1625,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ae7673ac-8aea-4b5e-7f96-08dc9f90df2f,train,Cerebral Palsy,430,0.1705,0.0000,0.1023,0.0000,0.1364,middle,310,72,48,0.7209,0.1674,0.1116,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ae83d2f7-636f-43fa-33a1-08dc856a35ea,train,Stroke,426,0.1457,0.0000,0.0908,0.0000,0.1183,low,327,58,41,0.7676,0.1362,0.0962,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+af2f6fdb-6578-403f-2605-08dd2ae4ac9c,train,ALS,179,0.9670,1.0000,0.8758,0.9286,0.9214,high,0,1,178,0.0000,0.0056,0.9944,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+af6f951d-3697-4c5b-c5f8-08dc291fd57e,train,Parkinson's Disease,446,0.0718,0.0000,0.0308,0.0000,0.0513,low,400,40,6,0.8969,0.0897,0.0135,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+af9daf95-be36-4cb2-0515-08dcc0518fb9,train,Cerebral Palsy,430,0.2454,0.1640,0.1485,0.0886,0.1970,middle,226,134,70,0.5256,0.3116,0.1628,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+afbe9f1a-80f4-4d78-dde4-08dc9aac4c52,train,Cerebral Palsy,429,0.2666,0.2000,0.1577,0.1085,0.2122,middle,204,151,74,0.4755,0.3520,0.1725,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b03cb2c0-e39e-450a-e97a-08dc2e961576,train,Stroke,422,0.1230,0.0000,0.0637,0.0000,0.0934,low,318,89,15,0.7536,0.2109,0.0355,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b044cc61-1be8-4733-611e-08dcdb04185c,train,ALS,442,0.0618,0.0000,0.0268,0.0000,0.0443,low,410,22,10,0.9276,0.0498,0.0226,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b0519b26-50b6-4eb7-2ea0-08dc27684872,train,Parkinson's Disease,449,0.0340,0.0000,0.0127,0.0000,0.0233,low,436,9,4,0.9710,0.0200,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b06a8833-f395-40ac-7cdb-08dc8ba4f236,train,ALS,450,0.0736,0.0000,0.0410,0.0000,0.0573,low,400,35,15,0.8889,0.0778,0.0333,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b08e1264-1b1a-4edd-3e36-08dc895255bb,train,Cerebral Palsy,427,0.2114,0.0789,0.1210,0.0244,0.1662,middle,274,96,57,0.6417,0.2248,0.1335,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b094a2e5-1ebe-4345-ad9d-08dce09abeb4,train,ALS,90,0.9269,1.0000,0.8190,0.8571,0.8729,high,0,0,90,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b09e3d07-8df9-4958-5cae-08db25ba8c25,train,Parkinson's Disease,447,0.0707,0.0000,0.0385,0.0000,0.0546,low,400,36,11,0.8949,0.0805,0.0246,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b0ab3b58-fc9e-4f9b-87a9-08dc74e08a4e,train,Cerebral Palsy,430,0.0473,0.0000,0.0225,0.0000,0.0349,low,398,21,11,0.9256,0.0488,0.0256,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b104b92a-1ff9-4675-ccdf-08dc48edc242,train,Cerebral Palsy,384,0.0634,0.0000,0.0304,0.0000,0.0469,low,350,25,9,0.9115,0.0651,0.0234,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b16688d5-8a1a-459b-4f02-08dcacc27c9e,train,ALS,449,0.0634,0.0000,0.0251,0.0000,0.0443,low,413,29,7,0.9198,0.0646,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b171ad3c-5d86-4b56-dde8-08dc9aac4c52,train,ALS,449,0.0599,0.0000,0.0273,0.0000,0.0436,low,416,23,10,0.9265,0.0512,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b19e7255-5c4c-46e1-f354-08dd446c36bb,train,Cerebral Palsy,414,0.4218,0.3333,0.2921,0.1905,0.3569,middle,152,105,157,0.3671,0.2536,0.3792,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b1eec993-dcde-428b-c4ca-08dc21e8e305,train,ALS,448,0.0642,0.0000,0.0288,0.0000,0.0465,low,412,23,13,0.9196,0.0513,0.0290,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b23b4435-697e-4218-37c4-08dce6e2632a,train,ALS,449,0.0535,0.0000,0.0228,0.0000,0.0382,low,412,32,5,0.9176,0.0713,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b333b2de-a4df-4cee-2e90-08dc27684872,train,Parkinson's Disease,448,0.0352,0.0000,0.0125,0.0000,0.0239,low,431,16,1,0.9621,0.0357,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b3ca3b66-a7ff-486d-a17e-08dc11dcc589,train,ALS,450,0.0649,0.0000,0.0310,0.0000,0.0479,low,399,43,8,0.8867,0.0956,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b4911a96-9457-484c-9996-08dcab8095cf,train,ALS,354,0.0975,0.0000,0.0474,0.0000,0.0725,low,298,47,9,0.8418,0.1328,0.0254,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b4c68431-25ad-4a66-e59c-08dd187996f2,train,Cerebral Palsy,444,0.9908,1.0000,0.9435,1.0000,0.9671,high,0,0,444,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b4de2860-cbbc-4cb8-c2bf-08dc124f903c,train,ALS,450,0.2859,0.1667,0.1921,0.0822,0.2390,middle,242,103,105,0.5378,0.2289,0.2333,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b50d400a-fbe0-4e51-8df5-08dd4ae40880,train,ALS,300,0.0818,0.0000,0.0385,0.0000,0.0601,low,258,35,7,0.8600,0.1167,0.0233,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b5e1393c-f584-4c22-a39d-08dc14c0870b,train,ALS,165,0.2141,0.0769,0.1318,0.0263,0.1730,middle,103,35,27,0.6242,0.2121,0.1636,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b5ffc27c-d012-46ba-5bd0-08dcf1e988d8,train,Parkinson's Disease,449,0.0592,0.0000,0.0250,0.0000,0.0421,low,416,24,9,0.9265,0.0535,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b6b500af-6041-47da-b54d-08dd55fb2b87,train,Cerebral Palsy,382,0.1087,0.0000,0.0613,0.0000,0.0850,low,308,52,22,0.8063,0.1361,0.0576,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b6cd796c-433a-4387-bcd1-08db91c912c0,train,Parkinson's Disease,449,0.0975,0.0000,0.0501,0.0000,0.0738,low,366,70,13,0.8151,0.1559,0.0290,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b6dd8594-a18c-45c7-2a77-08dca1b962ee,train,Cerebral Palsy,430,0.8356,1.0000,0.6860,0.7143,0.7608,high,6,16,408,0.0140,0.0372,0.9488,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b71911dc-0c02-4ae0-7b85-08dd465f9f88,train,Cerebral Palsy,430,0.0809,0.0000,0.0401,0.0000,0.0605,low,383,29,18,0.8907,0.0674,0.0419,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b747b80a-ca00-4526-682b-08dd025ce1a9,train,Cerebral Palsy,429,0.4696,0.4286,0.3200,0.2727,0.3948,high,111,114,204,0.2587,0.2657,0.4755,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b7c2a941-a374-4a46-2199-08dc9072fb0e,train,ALS,113,0.2022,0.0175,0.1078,0.0058,0.1550,middle,76,21,16,0.6726,0.1858,0.1416,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b85874e1-4722-461c-091a-08dd454e7a98,train,ALS,449,0.0323,0.0000,0.0130,0.0000,0.0227,low,433,13,3,0.9644,0.0290,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b8be96ec-5298-4842-abaf-08dc5d6a38e4,train,ALS,448,0.0540,0.0000,0.0243,0.0000,0.0392,low,413,33,2,0.9219,0.0737,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b8c9640a-1617-48c2-1c1f-08dd195745b0,train,Down Syndrome,430,0.1493,0.0000,0.0814,0.0000,0.1154,low,309,87,34,0.7186,0.2023,0.0791,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b8c9a418-21f0-447f-a133-08db825e8b3c,train,Parkinson's Disease,174,0.0652,0.0000,0.0268,0.0000,0.0460,low,157,16,1,0.9023,0.0920,0.0057,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b933acaf-01a9-4441-034e-08dcd2d6e84e,train,Parkinson's Disease,449,0.0526,0.0000,0.0249,0.0000,0.0388,low,423,17,9,0.9421,0.0379,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b9c4420a-1096-4455-5fe5-08dc630c1396,train,Cerebral Palsy,425,0.8284,1.0000,0.7253,0.7879,0.7769,high,15,17,393,0.0353,0.0400,0.9247,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+b9c4efa6-b9a8-4ff8-1e99-08dd6fc1860d,train,Cerebral Palsy,252,0.9414,1.0000,0.8132,0.8261,0.8773,high,0,2,250,0.0000,0.0079,0.9921,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ba698f8b-bc3c-4416-cb5e-08dc840245ea,train,Cerebral Palsy,379,0.2386,0.1000,0.1356,0.0407,0.1871,middle,214,99,66,0.5646,0.2612,0.1741,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ba6febaf-25fc-4e8b-2e62-08dc27684872,train,Parkinson's Disease,445,0.0677,0.0000,0.0328,0.0000,0.0502,low,399,37,9,0.8966,0.0831,0.0202,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ba81400d-8291-415a-15e5-08dc16a43af2,train,Cerebral Palsy,428,0.6365,0.6667,0.4843,0.4892,0.5604,high,52,61,315,0.1215,0.1425,0.7360,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+babd4b3a-c40d-4e40-7f8b-08dc9f90df2f,train,Cerebral Palsy,430,0.4706,0.4286,0.2931,0.2593,0.3818,middle,104,138,188,0.2419,0.3209,0.4372,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bad3d922-d043-4323-1cd7-08dcd3e137e8,train,Parkinson's Disease,449,0.2329,0.0833,0.1454,0.0385,0.1892,middle,287,87,75,0.6392,0.1938,0.1670,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bc102d2c-eb51-41c3-b21c-08dc6a2b69be,train,Down Syndrome,430,0.6785,0.7500,0.4939,0.5000,0.5862,high,31,70,329,0.0721,0.1628,0.7651,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bc3d8166-b7e5-45df-94f2-08dbadaf11d8,train,Parkinson's Disease,449,0.1223,0.0000,0.0574,0.0000,0.0898,low,354,77,18,0.7884,0.1715,0.0401,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bc4f21e7-35a5-439a-1cd6-08dce2a2fe9b,train,Stroke,314,0.5971,0.6667,0.4138,0.3703,0.5054,high,66,63,185,0.2102,0.2006,0.5892,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bc8e23bf-86bf-476d-0fcb-08dcd99f98d3,train,ALS,450,0.0678,0.0000,0.0379,0.0000,0.0528,low,407,30,13,0.9044,0.0667,0.0289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bcfc8320-b900-4d74-61a7-08dbaec8caff,train,Parkinson's Disease,436,0.1709,0.0000,0.1069,0.0000,0.1389,middle,302,82,52,0.6927,0.1881,0.1193,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bd9c4f59-9245-4fae-9fe6-08db25c774fb,train,Parkinson's Disease,449,0.0501,0.0000,0.0254,0.0000,0.0377,low,417,24,8,0.9287,0.0535,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bdc32fc0-7ccb-4574-73f0-08db42074bf0,train,Parkinson's Disease,448,0.1448,0.1348,0.1402,0.1187,0.1425,middle,213,168,67,0.4754,0.3750,0.1496,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bdf351d7-2875-41fc-1c44-08db344ca254,train,Parkinson's Disease,450,0.0358,0.0000,0.0123,0.0000,0.0241,low,436,13,1,0.9689,0.0289,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+be731c5e-4bee-4993-72e0-08dd51fb5ebc,train,Down Syndrome,336,0.1634,0.0000,0.0920,0.0000,0.1277,low,231,71,34,0.6875,0.2113,0.1012,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+be9b5d21-718a-4346-27c2-08dc72e2a7b8,train,Parkinson's Disease,449,0.0488,0.0000,0.0221,0.0000,0.0354,low,425,17,7,0.9465,0.0379,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bed5668f-bae5-432e-bbff-08dd438c3c56,train,Down Syndrome,430,0.5817,0.6000,0.3939,0.3835,0.4878,high,68,84,278,0.1581,0.1953,0.6465,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bee3c346-3c69-425d-c923-08dd47c86be7,train,ALS,450,0.0674,0.0000,0.0301,0.0000,0.0487,low,409,31,10,0.9089,0.0689,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bf1a8016-6f44-4c69-8158-08dc15edb990,train,ALS,45,0.4206,0.3333,0.2703,0.1875,0.3454,middle,13,17,15,0.2889,0.3778,0.3333,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bf65084a-524b-458d-ac4c-08dc297d5492,train,Parkinson's Disease,308,0.0546,0.0000,0.0263,0.0000,0.0404,low,287,15,6,0.9318,0.0487,0.0195,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bfa24c09-2d2a-40d3-e165-08dc4555b94c,train,ALS,447,0.1397,0.0000,0.0784,0.0000,0.1090,low,340,73,34,0.7606,0.1633,0.0761,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bfc2ed2b-fec9-44f8-4988-08dcb4d7acba,train,Cerebral Palsy,423,0.5821,0.6250,0.4142,0.4118,0.4982,high,71,86,266,0.1678,0.2033,0.6288,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+bfdd87ed-10f0-46a4-b109-08dc2a4a210d,train,Parkinson's Disease,450,0.6100,0.6417,0.4752,0.4667,0.5426,high,49,82,319,0.1089,0.1822,0.7089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c0720941-9cc7-4ecb-4838-08dc666bf63e,train,Stroke,337,0.1419,0.0000,0.0734,0.0000,0.1076,low,250,67,20,0.7418,0.1988,0.0593,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c15f15a6-86af-4a94-760d-08dc47b40b59,train,Down Syndrome,106,0.6710,0.6937,0.4861,0.5189,0.5785,high,11,16,79,0.1038,0.1509,0.7453,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c16a656f-c885-4ab8-72db-08dd51fb5ebc,train,Down Syndrome,375,0.3016,0.2000,0.1799,0.1111,0.2408,middle,182,104,89,0.4853,0.2773,0.2373,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c1b57fac-44ea-4928-08e7-08db6f745978,train,Parkinson's Disease,135,0.0451,0.0000,0.0282,0.0000,0.0366,low,127,5,3,0.9407,0.0370,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c1cd3290-12bc-4cbb-978d-08dca810d500,train,ALS,428,0.1995,0.0909,0.1203,0.0374,0.1599,middle,280,84,64,0.6542,0.1963,0.1495,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c1d1e8b8-d852-470d-f345-08db39bf590b,train,Parkinson's Disease,224,0.0632,0.0000,0.0344,0.0000,0.0488,low,203,16,5,0.9062,0.0714,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c1e4b9c9-4b7a-4cb4-1cd8-08dce2a2fe9b,train,Stroke,214,0.2657,0.0000,0.1497,0.0000,0.2077,middle,140,35,39,0.6542,0.1636,0.1822,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c1fb56dd-977d-44a2-d2be-08db4723ec09,train,Parkinson's Disease,449,0.0395,0.0000,0.0159,0.0000,0.0277,low,431,15,3,0.9599,0.0334,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c2b6a53e-a301-4105-072c-08db6bc3d3c4,train,Parkinson's Disease,443,0.0458,0.0000,0.0176,0.0000,0.0317,low,418,23,2,0.9436,0.0519,0.0045,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c2f222c1-4c6a-4fcc-627b-08dcdcbbcec7,train,ALS,450,0.2384,0.0000,0.1494,0.0000,0.1939,middle,307,68,75,0.6822,0.1511,0.1667,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c2f4ea67-f6cb-4ad3-0bb8-08dcf9635df3,train,Down Syndrome,6,0.4750,0.4250,0.3724,0.3347,0.4237,high,1,2,3,0.1667,0.3333,0.5000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c35c82cd-4e97-4d47-1148-08db2b07b033,train,Parkinson's Disease,449,0.0469,0.0000,0.0202,0.0000,0.0335,low,425,17,7,0.9465,0.0379,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c37b3499-2a84-4371-c590-08dc27c1bd26,train,ALS,442,0.7062,0.7500,0.5444,0.5461,0.6253,high,13,56,373,0.0294,0.1267,0.8439,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c4b91392-9430-4ba4-3a1f-08dc5fadb5c5,train,ALS,436,0.9827,1.0000,0.9435,1.0000,0.9631,high,0,0,436,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c4b9b28e-5abc-4b38-22b5-08dc56b55882,train,Down Syndrome,430,0.2517,0.1818,0.1431,0.0988,0.1974,middle,215,148,67,0.5000,0.3442,0.1558,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c54119ad-5b47-41d9-4153-08dcddb9e4a3,train,Parkinson's Disease,443,0.0410,0.0000,0.0188,0.0000,0.0299,low,423,17,3,0.9549,0.0384,0.0068,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c55f7854-cee3-458a-b592-08dc5e199653,train,ALS,450,0.0662,0.0000,0.0306,0.0000,0.0484,low,418,20,12,0.9289,0.0444,0.0267,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c563bb85-cce2-475b-6280-08dcdcbbcec7,train,Parkinson's Disease,159,0.2385,0.1250,0.1379,0.0619,0.1882,middle,92,37,30,0.5786,0.2327,0.1887,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c5907823-602a-443c-1e31-08dbe1ed2b7f,train,Down Syndrome,423,0.1117,0.0000,0.0622,0.0000,0.0869,low,331,70,22,0.7825,0.1655,0.0520,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c640aa37-100e-4442-931a-08db7b2bf57b,train,Parkinson's Disease,448,0.0210,0.0000,0.0069,0.0000,0.0140,low,438,9,1,0.9777,0.0201,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c693af0b-103a-4ac2-cd49-08dd75e9cc8f,train,ALS,5,0.2000,0.0000,0.0981,0.0000,0.1490,low,3,1,1,0.6000,0.2000,0.2000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c6c49ecb-3f65-4366-fb5c-08db6d7755f1,train,Parkinson's Disease,443,0.0523,0.0000,0.0247,0.0000,0.0385,low,415,20,8,0.9368,0.0451,0.0181,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c6e71eca-f17f-4a75-2653-08db322ca5c4,train,Parkinson's Disease,448,0.0934,0.0000,0.0530,0.0000,0.0732,low,381,49,18,0.8504,0.1094,0.0402,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c7042143-15f2-43f3-4cd1-08dd0b23004e,train,ALS,249,0.1512,0.0000,0.0929,0.0000,0.1221,low,184,39,26,0.7390,0.1566,0.1044,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c762bb64-0df2-4549-abb0-08dc5d6a38e4,train,ALS,343,0.0761,0.0000,0.0469,0.0000,0.0615,low,302,26,15,0.8805,0.0758,0.0437,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c83a14dd-2c43-4a82-506d-08db74cd0e8d,train,Parkinson's Disease,450,0.0453,0.0000,0.0169,0.0000,0.0311,low,429,18,3,0.9533,0.0400,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c8a20349-2c7b-44f5-9829-08dc7e56149c,train,Cerebral Palsy,430,0.1112,0.0000,0.0593,0.0000,0.0852,low,345,65,20,0.8023,0.1512,0.0465,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c8af1f79-07ad-4aca-0fe7-08dcd99f98d3,train,ALS,403,0.0402,0.0000,0.0160,0.0000,0.0281,low,384,15,4,0.9529,0.0372,0.0099,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c8bc32fb-9c20-4abe-8df6-08dd4ae40880,train,ALS,443,0.3118,0.2250,0.1937,0.1290,0.2527,middle,190,147,106,0.4289,0.3318,0.2393,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c904ef6b-7796-4d27-db5e-08db263bd57d,train,Parkinson's Disease,447,0.0298,0.0000,0.0101,0.0000,0.0199,low,434,12,1,0.9709,0.0268,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c984ed88-2c76-46bf-abc7-08dc5d6a38e4,train,ALS,448,0.0940,0.0000,0.0493,0.0000,0.0717,low,379,52,17,0.8460,0.1161,0.0379,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c9b138ab-9c5a-4cc2-301a-08dcc11ab035,train,ALS,448,0.7489,0.8889,0.6602,0.7500,0.7046,high,30,41,377,0.0670,0.0915,0.8415,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c9b74d18-ed50-4b9b-d79f-08dc46c59895,train,Parkinson's Disease,449,0.2296,0.1429,0.1466,0.0750,0.1881,middle,256,120,73,0.5702,0.2673,0.1626,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+c9c02a22-1993-4686-8dfb-08dd4ae40880,train,ALS,179,0.0735,0.0000,0.0419,0.0000,0.0577,low,161,10,8,0.8994,0.0559,0.0447,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+caa14983-efb2-473c-a1ea-08dc11dcc589,train,ALS,450,0.5518,0.5714,0.3791,0.3153,0.4655,high,123,95,232,0.2733,0.2111,0.5156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cafede9d-42a3-473e-b12a-08dc804a93e8,train,Parkinson's Disease,446,0.0446,0.0000,0.0173,0.0000,0.0309,low,426,14,6,0.9552,0.0314,0.0135,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cb693c5c-57a2-4ca1-24a3-08dd018a3881,train,Parkinson's Disease,45,0.0209,0.0000,0.0060,0.0000,0.0135,low,44,1,0,0.9778,0.0222,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cb7eb82b-3e31-4d0f-3e37-08dc895255bb,train,Cerebral Palsy,428,0.5845,0.6000,0.4067,0.4000,0.4956,high,57,98,273,0.1332,0.2290,0.6379,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cbad75f3-581e-4269-7053-08dc2b1e26da,train,ALS,89,0.8903,1.0000,0.7605,0.8041,0.8254,high,0,4,85,0.0000,0.0449,0.9551,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cccfac5e-2ea1-42ee-3e6a-08dc863e36ec,train,Cerebral Palsy,89,0.0345,0.0000,0.0190,0.0000,0.0267,low,83,5,1,0.9326,0.0562,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cd10d137-3fd1-493a-8c35-08dc73c64297,train,ALS,85,0.8276,0.9444,0.6881,0.7006,0.7578,high,1,3,81,0.0118,0.0353,0.9529,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cd215cb2-46f5-4676-c557-08dc27c1bd26,train,Parkinson's Disease,430,0.2841,0.1993,0.1875,0.1053,0.2358,middle,207,129,94,0.4814,0.3000,0.2186,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cd7832fd-30a6-4c40-db63-08db263bd57d,train,Parkinson's Disease,433,0.0636,0.0000,0.0306,0.0000,0.0471,low,400,22,11,0.9238,0.0508,0.0254,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ceb93c6f-0b16-45e9-8096-08dc28b09bf9,train,Parkinson's Disease,448,0.0525,0.0000,0.0236,0.0000,0.0381,low,415,27,6,0.9263,0.0603,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cedf88b9-ada6-4d9f-e826-08dceaeac878,train,ALS,450,0.0776,0.0000,0.0408,0.0000,0.0592,low,398,36,16,0.8844,0.0800,0.0356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cef21a18-cfb1-47cb-32dd-08dc57db575d,train,Cerebral Palsy,429,0.8592,1.0000,0.6649,0.6875,0.7620,high,9,21,399,0.0210,0.0490,0.9301,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cf1907a1-3a7b-4d5a-1556-08dd13b9e946,train,Cerebral Palsy,450,0.8874,1.0000,0.7598,0.8000,0.8236,high,12,11,427,0.0267,0.0244,0.9489,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cf23e4d7-44a3-4c6a-c7cb-08dca9e51008,train,ALS,449,0.0601,0.0000,0.0229,0.0000,0.0415,low,418,25,6,0.9310,0.0557,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cf5a558a-4617-4d8a-3a6e-08dc183f4f57,train,Stroke,430,0.0841,0.0000,0.0391,0.0000,0.0616,low,369,46,15,0.8581,0.1070,0.0349,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cf8c8bbc-b76c-49e3-4cac-08db8189ae29,train,Parkinson's Disease,438,0.1598,0.0000,0.0937,0.0000,0.1268,low,308,92,38,0.7032,0.2100,0.0868,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cfafc3f7-cab9-48e2-d79c-08dc46c59895,train,ALS,450,0.0448,0.0000,0.0171,0.0000,0.0310,low,424,21,5,0.9422,0.0467,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+cfc6c40f-1390-4124-698d-08dc17913c94,train,ALS,450,0.5021,0.4286,0.3515,0.2236,0.4268,high,141,111,198,0.3133,0.2467,0.4400,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d05c8cc6-9039-4cc5-8f28-08dcdbd22259,train,ALS,135,0.4882,0.4000,0.3348,0.2174,0.4115,high,49,25,61,0.3630,0.1852,0.4519,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d0753161-5313-4593-8f22-08dcdbd22259,train,ALS,450,0.0399,0.0000,0.0164,0.0000,0.0281,low,434,11,5,0.9644,0.0244,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d0a6e016-ecc1-4c41-b5aa-08dc3f363c7d,train,Parkinson's Disease,449,0.1026,0.0000,0.0609,0.0000,0.0817,low,361,68,20,0.8040,0.1514,0.0445,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d0b51d79-c72c-4c4e-cb78-08dc45edfda4,train,ALS,156,0.6484,0.7750,0.4928,0.4832,0.5706,high,25,25,106,0.1603,0.1603,0.6795,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d10350f0-f36f-4d64-085f-08dcd1c0704e,train,ALS,447,0.1345,0.0000,0.0737,0.0000,0.1041,low,345,73,29,0.7718,0.1633,0.0649,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d11e48a9-f2e6-49d4-244a-08dcb6eb1ff5,train,Cerebral Palsy,430,0.1180,0.0000,0.0562,0.0000,0.0871,low,347,58,25,0.8070,0.1349,0.0581,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d17c31ee-2e4b-47a4-b5a9-08dc3f363c7d,train,Down Syndrome,430,0.5835,0.6190,0.4027,0.4211,0.4931,high,66,92,272,0.1535,0.2140,0.6326,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d18cc111-39bc-4e6e-f3bd-08db49b9f20e,train,Parkinson's Disease,450,0.0314,0.0000,0.0112,0.0000,0.0213,low,435,14,1,0.9667,0.0311,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d19f737f-9070-499c-5c23-08db7125e1cf,train,Parkinson's Disease,450,0.0496,0.0000,0.0227,0.0000,0.0362,low,419,23,8,0.9311,0.0511,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d27d1dfb-909f-4c9f-a190-08dc11dcc589,train,ALS,449,0.3304,0.2273,0.2226,0.1429,0.2765,middle,193,129,127,0.4298,0.2873,0.2829,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d314e258-097a-4d94-5766-08dcfa856e25,train,Parkinson's Disease,441,0.0611,0.0000,0.0287,0.0000,0.0449,low,399,33,9,0.9048,0.0748,0.0204,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d3170e74-099a-4e72-6987-08db566c029c,train,Parkinson's Disease,173,0.2924,0.1739,0.1910,0.0964,0.2417,middle,88,39,46,0.5087,0.2254,0.2659,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d31f3200-f36e-4502-dd39-08db6544cb87,train,Parkinson's Disease,439,0.0703,0.0000,0.0316,0.0000,0.0510,low,396,36,7,0.9021,0.0820,0.0159,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d365b0cf-1afc-4e37-a16d-08dc11dcc589,train,ALS,449,0.0568,0.0000,0.0258,0.0000,0.0413,low,417,26,6,0.9287,0.0579,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d38687af-30bd-4b6c-d8fe-08dcb01ba44a,train,ALS,445,0.0837,0.0000,0.0433,0.0000,0.0635,low,387,45,13,0.8697,0.1011,0.0292,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d3b31f8a-13a2-4ada-b954-08dc6eabb1a3,train,Parkinson's Disease,450,0.0355,0.0000,0.0158,0.0000,0.0257,low,435,8,7,0.9667,0.0178,0.0156,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d466cb1b-ade6-4cb6-e7bb-08dcd9e31338,train,ALS,450,0.0440,0.0000,0.0162,0.0000,0.0301,low,428,18,4,0.9511,0.0400,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d4a3472b-7002-4075-57d8-08dcbb9f64e1,train,Cerebral Palsy,438,0.5813,0.6667,0.4074,0.3880,0.4943,high,114,68,256,0.2603,0.1553,0.5845,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d4b0ccc0-6a22-4b2f-8b2f-08dc44f243ab,train,Parkinson's Disease,450,0.0223,0.0000,0.0084,0.0000,0.0153,low,444,5,1,0.9867,0.0111,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d4ffee7d-e424-4509-4cc3-08dd0b23004e,train,ALS,450,0.1443,0.0000,0.0747,0.0000,0.1095,low,331,97,22,0.7356,0.2156,0.0489,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d52cebbf-9977-4345-71f3-08dbb37cf835,train,Parkinson's Disease,354,0.3449,0.2500,0.2401,0.1667,0.2925,middle,128,112,114,0.3616,0.3164,0.3220,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d59c9675-314c-4e81-1f68-08db3dcbbd09,train,Parkinson's Disease,450,0.0262,0.0000,0.0084,0.0000,0.0173,low,441,8,1,0.9800,0.0178,0.0022,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d5a83a43-b9d3-404b-a186-08dc11dcc589,train,ALS,450,0.7299,0.8182,0.5680,0.5938,0.6490,high,20,57,373,0.0444,0.1267,0.8289,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d5fbd782-6354-4109-da7e-08dc75b20572,train,Cerebral Palsy,428,0.8039,0.8889,0.6647,0.6934,0.7343,high,10,26,392,0.0234,0.0607,0.9159,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d62398ed-4d13-408c-4401-08dc2f748b5c,train,Stroke,353,0.2080,0.1429,0.1072,0.0500,0.1576,middle,209,112,32,0.5921,0.3173,0.0907,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d66f55b5-0bd4-42fe-eca2-08dc9cb096c2,train,ALS,450,0.0761,0.0000,0.0394,0.0000,0.0577,low,403,33,14,0.8956,0.0733,0.0311,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d6d4e52a-87db-44b8-161d-08db89680dc1,train,Parkinson's Disease,448,0.0685,0.0000,0.0315,0.0000,0.0500,low,401,41,6,0.8951,0.0915,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d712c8e1-fbf0-482d-3d78-08dc325485f0,train,Stroke,450,0.1010,0.0000,0.0516,0.0000,0.0763,low,390,34,26,0.8667,0.0756,0.0578,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d72b0a76-9782-4404-3a1a-08dc5fadb5c5,train,Parkinson's Disease,450,0.1387,0.0000,0.0808,0.0000,0.1097,low,365,47,38,0.8111,0.1044,0.0844,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d72b9caa-b2bc-4191-15fe-08dbb62a2382,train,Parkinson's Disease,84,0.0808,0.0000,0.0384,0.0000,0.0596,low,74,7,3,0.8810,0.0833,0.0357,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d7ce7d5f-8c95-4569-cfa6-08db726500b4,train,Parkinson's Disease,450,0.1534,0.0400,0.0971,0.0145,0.1253,low,300,106,44,0.6667,0.2356,0.0978,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d7d0ae6d-9ca1-40f9-299b-08db848a8c45,train,Parkinson's Disease,449,0.0446,0.0000,0.0186,0.0000,0.0316,low,427,17,5,0.9510,0.0379,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d81a9ebb-3dec-4ce9-1830-08dd05aafcc9,train,Parkinson's Disease,424,0.2078,0.1000,0.1313,0.0430,0.1695,middle,267,88,69,0.6297,0.2075,0.1627,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d821fb61-b626-4e18-4284-08dc1d18fde3,train,Parkinson's Disease,450,0.1260,0.0000,0.0689,0.0000,0.0974,low,344,82,24,0.7644,0.1822,0.0533,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d847daf6-adac-4aaa-1f65-08db3dcbbd09,train,Parkinson's Disease,450,0.0924,0.0000,0.0465,0.0000,0.0694,low,386,48,16,0.8578,0.1067,0.0356,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d86d8a20-de2b-4c93-219b-08dc9072fb0e,train,Cerebral Palsy,239,0.5466,0.5000,0.4177,0.3690,0.4822,high,33,64,142,0.1381,0.2678,0.5941,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+d99bc28b-9740-46c7-d192-08dcc1fc9b7b,train,Stroke,133,0.8187,1.0000,0.7095,0.7500,0.7641,high,6,6,121,0.0451,0.0451,0.9098,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+da6dfde2-5658-4ed3-82ea-08db6cec1e82,train,Parkinson's Disease,450,0.0542,0.0000,0.0257,0.0000,0.0400,low,413,31,6,0.9178,0.0689,0.0133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+daa4500b-336a-4832-eca0-08dc9cb096c2,train,ALS,449,0.0803,0.0000,0.0423,0.0000,0.0613,low,392,43,14,0.8731,0.0958,0.0312,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+db444f11-e4c6-4df1-1171-08dba7fa5465,train,Parkinson's Disease,448,0.4594,0.4159,0.3045,0.2667,0.3819,high,102,149,197,0.2277,0.3326,0.4397,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+db462c08-94f3-4a07-5bcf-08dcf1e988d8,train,Parkinson's Disease,448,0.0542,0.0000,0.0223,0.0000,0.0383,low,422,18,8,0.9420,0.0402,0.0179,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+db5fac30-88e5-4585-1169-08dc623ec532,train,ALS,64,0.9554,1.0000,0.9120,1.0000,0.9337,high,0,0,64,0.0000,0.0000,1.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+db6fa9b3-538f-4467-8e58-08dc5f21978e,train,Down Syndrome,429,0.2024,0.0833,0.1193,0.0323,0.1608,middle,278,93,58,0.6480,0.2168,0.1352,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+db72a193-5788-4716-2cc5-08dc137c976d,train,Cerebral Palsy,429,0.3597,0.2500,0.2403,0.1613,0.3000,middle,147,156,126,0.3427,0.3636,0.2937,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+db83c1ba-3ccd-4939-c583-08dc27c1bd26,train,Parkinson's Disease,442,0.0404,0.0000,0.0144,0.0000,0.0274,low,426,13,3,0.9638,0.0294,0.0068,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+db8636a4-99d3-48d7-87ae-08dc74e08a4e,train,Cerebral Palsy,428,0.2840,0.1667,0.1712,0.0912,0.2276,middle,221,107,100,0.5164,0.2500,0.2336,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dc159e25-3cfe-411c-dbf4-08dc00c9c16a,train,Cerebral Palsy,328,0.2985,0.2111,0.1842,0.1250,0.2414,middle,154,92,82,0.4695,0.2805,0.2500,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dc1f1a85-496d-467f-d253-08dc20f4e593,train,ALS,44,0.4484,0.3810,0.3564,0.3225,0.4024,high,11,10,23,0.2500,0.2273,0.5227,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dc389cd1-a322-4bb5-125b-08dc55a2762d,train,Stroke,237,0.3959,0.2727,0.2689,0.1471,0.3324,middle,100,62,75,0.4219,0.2616,0.3165,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dcc44a0e-a2d1-4a07-5312-08dc95210be1,train,Cerebral Palsy,303,0.0844,0.0000,0.0443,0.0000,0.0643,low,266,22,15,0.8779,0.0726,0.0495,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dcd189c6-e814-4561-698a-08dc17913c94,train,Cerebral Palsy,429,0.5447,0.5000,0.3915,0.3667,0.4681,high,50,105,274,0.1166,0.2448,0.6387,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dd039cb7-0415-44ad-8e01-08dd4ae40880,train,ALS,450,0.2078,0.0769,0.1320,0.0392,0.1699,middle,294,94,62,0.6533,0.2089,0.1378,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dd0a734d-909d-42ba-3d72-08dc325485f0,train,Parkinson's Disease,447,0.0886,0.0000,0.0508,0.0000,0.0697,low,368,66,13,0.8233,0.1477,0.0291,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dd89491c-3d54-43ec-4282-08dc308d407c,train,Parkinson's Disease,449,0.2020,0.0870,0.1205,0.0396,0.1613,middle,294,87,68,0.6548,0.1938,0.1514,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+de0d6982-ae31-43fd-cce0-08dc48edc242,train,ALS,444,0.1038,0.0000,0.0528,0.0000,0.0783,low,378,48,18,0.8514,0.1081,0.0405,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+df01c071-8ac2-4b48-72e1-08dd51fb5ebc,train,ALS,358,0.0360,0.0000,0.0198,0.0000,0.0279,low,340,13,5,0.9497,0.0363,0.0140,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+df423c83-0671-4d45-e7a4-08dcd9e31338,train,ALS,447,0.2054,0.1000,0.1287,0.0459,0.1670,middle,275,103,69,0.6152,0.2304,0.1544,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+dfd81053-dc6e-440d-3e69-08dc863e36ec,train,Cerebral Palsy,428,0.0787,0.0000,0.0371,0.0000,0.0579,low,378,36,14,0.8832,0.0841,0.0327,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e01d8f1d-602e-4155-4839-08dc666bf63e,train,Cerebral Palsy,222,0.8967,1.0000,0.7691,0.8000,0.8329,high,1,3,218,0.0045,0.0135,0.9820,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e025613c-33b0-4d16-1c5a-08dd1b697db6,train,Parkinson's Disease,406,0.0847,0.0000,0.0536,0.0000,0.0692,low,348,30,28,0.8571,0.0739,0.0690,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e02e013d-808d-42b8-0349-08dcd2d6e84e,train,Parkinson's Disease,449,0.0512,0.0000,0.0216,0.0000,0.0364,low,417,28,4,0.9287,0.0624,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e12d07cc-b73a-4c62-6ad8-08dbe30077ee,train,Parkinson's Disease,441,0.2113,0.0588,0.1279,0.0227,0.1696,middle,277,93,71,0.6281,0.2109,0.1610,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e1445001-72f7-46eb-0f80-08db40377d80,train,Parkinson's Disease,443,0.1221,0.0000,0.0662,0.0000,0.0941,low,349,64,30,0.7878,0.1445,0.0677,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e1ba230d-d2d0-4c90-327c-08dccddb15fe,train,ALS,450,0.2255,0.0000,0.1412,0.0000,0.1834,middle,322,49,79,0.7156,0.1089,0.1756,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e1d2e9c2-6a5f-461d-9b9f-08dd3ffcc9ff,train,ALS,397,0.0962,0.0000,0.0472,0.0000,0.0717,low,331,53,13,0.8338,0.1335,0.0327,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e23a6dfd-caf0-4927-c02e-08dc605e0191,train,ALS,180,0.1370,0.0000,0.0781,0.0000,0.1076,low,143,24,13,0.7944,0.1333,0.0722,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e2490a80-1f67-4b3e-b12e-08dc804a93e8,train,Parkinson's Disease,448,0.1187,0.0000,0.0623,0.0000,0.0905,low,341,90,17,0.7612,0.2009,0.0379,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e284430e-a76d-434a-e67a-08db2d6a5da8,train,Parkinson's Disease,448,0.0916,0.0000,0.0497,0.0000,0.0706,low,385,44,19,0.8594,0.0982,0.0424,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e2c37f0f-15de-4fbb-244d-08dcb6eb1ff5,train,Down Syndrome,43,0.1754,0.0000,0.0875,0.0000,0.1315,low,30,10,3,0.6977,0.2326,0.0698,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e38e67c1-2373-4578-6992-08dc17913c94,train,ALS,450,0.0550,0.0000,0.0241,0.0000,0.0396,low,430,11,9,0.9556,0.0244,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e403c1ba-243b-4735-c2f7-08db4a8e24c0,train,Parkinson's Disease,447,0.0524,0.0000,0.0207,0.0000,0.0366,low,418,24,5,0.9351,0.0537,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e45c7af3-ab45-401b-87b3-08dc74e08a4e,train,Cerebral Palsy,430,0.1331,0.0000,0.0736,0.0000,0.1034,low,337,61,32,0.7837,0.1419,0.0744,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e464695c-72b9-4299-ab99-08dc0d884980,train,Down Syndrome,412,0.6347,0.6667,0.4593,0.4697,0.5470,high,46,64,302,0.1117,0.1553,0.7330,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e63a1e84-df39-4949-a1cb-08dc11dcc589,train,ALS,101,0.9392,1.0000,0.8603,0.9333,0.8998,high,1,1,99,0.0099,0.0099,0.9802,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e7295175-4edb-4d5c-a1e9-08dc11dcc589,train,Parkinson's Disease,450,0.0322,0.0000,0.0138,0.0000,0.0230,low,435,11,4,0.9667,0.0244,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e73f0ce2-a354-4e73-c3a8-08dcf87380a2,train,ALS,436,0.9642,1.0000,0.8823,0.9048,0.9233,high,2,1,433,0.0046,0.0023,0.9931,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e7d7e0b6-1bba-45f7-2e99-08dc27684872,train,Parkinson's Disease,450,0.0330,0.0000,0.0119,0.0000,0.0225,low,434,13,3,0.9644,0.0289,0.0067,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e7fc7fc5-ec6f-4c4e-8f06-08dc7f6a721b,train,Cerebral Palsy,429,0.2187,0.0820,0.1457,0.0419,0.1822,middle,264,85,80,0.6154,0.1981,0.1865,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e83926cc-57c5-43ae-5bb9-08dbeaf7b07f,train,Down Syndrome,42,0.6534,0.6667,0.4502,0.4295,0.5518,high,2,12,28,0.0476,0.2857,0.6667,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e85ef8b6-1b8a-44f1-9736-08dca59f2b1c,train,Stroke,443,0.3290,0.1667,0.1982,0.0556,0.2636,middle,247,84,112,0.5576,0.1896,0.2528,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e86387f3-77e0-4345-9f67-08db28bb85b0,train,Parkinson's Disease,448,0.1348,0.0000,0.0838,0.0000,0.1093,low,333,80,35,0.7433,0.1786,0.0781,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e8867921-1973-4339-c3a6-08dcf87380a2,train,Parkinson's Disease,117,0.1663,0.0000,0.0956,0.0000,0.1310,low,82,25,10,0.7009,0.2137,0.0855,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e8900fce-8187-47f3-2a7a-08dca1b962ee,train,Parkinson's Disease,450,0.1879,0.1250,0.1127,0.0603,0.1503,middle,265,136,49,0.5889,0.3022,0.1089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e8c8369b-9093-4547-d891-08db4be65c62,train,Parkinson's Disease,444,0.0655,0.0000,0.0324,0.0000,0.0490,low,396,39,9,0.8919,0.0878,0.0203,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e9189423-0b1f-4e22-57d9-08dcbb9f64e1,train,Cerebral Palsy,448,0.3513,0.1125,0.2366,0.0455,0.2939,middle,243,64,141,0.5424,0.1429,0.3147,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e927403b-f387-4e59-cf35-08dc89b72177,train,ALS,448,0.2906,0.2042,0.1722,0.1211,0.2314,middle,203,164,81,0.4531,0.3661,0.1808,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e92aac78-9175-48b2-33ee-08dbad6081c5,train,Parkinson's Disease,449,0.0562,0.0000,0.0248,0.0000,0.0405,low,417,26,6,0.9287,0.0579,0.0134,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+e9594e84-3837-4c23-d3f1-08db43eacc94,train,Parkinson's Disease,446,0.0466,0.0000,0.0203,0.0000,0.0335,low,422,18,6,0.9462,0.0404,0.0135,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ea46a62e-39f9-4db8-af77-08dd5030482b,train,Stroke,444,0.3580,0.2000,0.2093,0.0930,0.2836,middle,223,108,113,0.5023,0.2432,0.2545,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+eafe4e3a-173b-415a-3321-08dca05f46a7,train,Cerebral Palsy,206,0.2118,0.0829,0.1292,0.0278,0.1705,middle,129,48,29,0.6262,0.2330,0.1408,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+eb809662-1690-4df6-8ac7-08dc93ad1e1c,train,ALS,436,0.6007,0.6450,0.4478,0.4286,0.5243,high,49,92,295,0.1124,0.2110,0.6766,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+eb90a6df-9b21-49bb-bb95-08db2f9d9555,train,Parkinson's Disease,450,0.1010,0.0000,0.0559,0.0000,0.0785,low,378,47,25,0.8400,0.1044,0.0556,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ebc937e1-edac-49b8-14b3-08dcbf756c98,train,Cerebral Palsy,430,0.1845,0.0000,0.1137,0.0000,0.1491,middle,284,88,58,0.6605,0.2047,0.1349,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ec1dbe7d-140d-4248-219e-08dc9072fb0e,train,Cerebral Palsy,428,0.2098,0.0000,0.1290,0.0000,0.1694,middle,274,87,67,0.6402,0.2033,0.1565,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ec7835ce-2057-49e5-a18a-08dc11dcc589,train,ALS,450,0.0567,0.0000,0.0277,0.0000,0.0422,low,418,22,10,0.9289,0.0489,0.0222,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ec8650b8-631f-485a-ee43-08dc502eceb5,train,Down Syndrome,322,0.1958,0.1429,0.1133,0.0445,0.1545,middle,192,94,36,0.5963,0.2919,0.1118,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ecaceb57-d890-46d2-769c-08dc54a70eeb,train,Down Syndrome,427,0.1183,0.0000,0.0650,0.0000,0.0917,low,337,68,22,0.7892,0.1593,0.0515,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ecbe385b-1b5c-45aa-bc3c-08db7417355e,train,Parkinson's Disease,449,0.0409,0.0000,0.0171,0.0000,0.0290,low,425,19,5,0.9465,0.0423,0.0111,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ecfe53e2-1780-4eab-6052-08dbc2f1ba22,train,Parkinson's Disease,450,0.0661,0.0000,0.0340,0.0000,0.0501,low,413,26,11,0.9178,0.0578,0.0244,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+edb44a5e-e452-4713-a965-08dcfc3ef562,train,Cerebral Palsy,367,0.3567,0.2500,0.2328,0.1429,0.2947,middle,159,94,114,0.4332,0.2561,0.3106,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+edbcc1e7-2fe7-41cf-7c8e-08dcc6cfbf82,train,Cerebral Palsy,429,0.0952,0.0000,0.0489,0.0000,0.0721,low,359,52,18,0.8368,0.1212,0.0420,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+edc855c9-4e06-4163-43da-08dc13e54ff5,train,Cerebral Palsy,429,0.1053,0.0000,0.0625,0.0000,0.0839,low,345,59,25,0.8042,0.1375,0.0583,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+edd079b3-50a6-48d3-30bf-08db6d06498f,train,Parkinson's Disease,426,0.2433,0.1589,0.1573,0.0873,0.2003,middle,230,116,80,0.5399,0.2723,0.1878,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+edeaf033-ba86-46a5-4a52-08dc3c7b3134,train,ALS,444,0.2490,0.1429,0.1512,0.0747,0.2001,middle,246,110,88,0.5541,0.2477,0.1982,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ee6453f7-892a-4979-eca1-08dc9cb096c2,train,Cerebral Palsy,421,0.4855,0.5000,0.3448,0.2917,0.4151,high,103,112,206,0.2447,0.2660,0.4893,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ee9330d0-5ae2-4123-8cf4-08dcff4f47ae,train,Cerebral Palsy,423,0.2150,0.1111,0.1251,0.0333,0.1701,middle,266,93,64,0.6288,0.2199,0.1513,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+eed7a92d-bbd8-49e7-0fa6-08dcd99f98d3,train,ALS,264,0.0521,0.0000,0.0282,0.0000,0.0402,low,245,14,5,0.9280,0.0530,0.0189,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ef9ef2f9-663c-4b75-9d07-08dd3773226f,train,Down Syndrome,430,0.2341,0.1381,0.1442,0.0566,0.1891,middle,243,114,73,0.5651,0.2651,0.1698,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+efa8810e-a911-493d-09f1-08db87b19e27,train,Parkinson's Disease,448,0.0417,0.0000,0.0162,0.0000,0.0290,low,427,16,5,0.9531,0.0357,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f052038d-97f1-4124-ad68-08dc7885788f,train,Cerebral Palsy,404,0.1389,0.0000,0.0740,0.0000,0.1065,low,313,62,29,0.7748,0.1535,0.0718,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f0d2679d-2929-4281-2f6c-08dbdd83a37e,train,Parkinson's Disease,443,0.2286,0.1429,0.1438,0.0784,0.1862,middle,234,140,69,0.5282,0.3160,0.1558,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f10f76ad-650c-4f1b-db5d-08db263bd57d,train,Parkinson's Disease,443,0.0306,0.0000,0.0113,0.0000,0.0210,low,433,7,3,0.9774,0.0158,0.0068,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f12fabe9-9bf5-4baa-75ed-08dc5951d476,train,ALS,448,0.0704,0.0000,0.0339,0.0000,0.0521,low,406,32,10,0.9062,0.0714,0.0223,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f15effc2-f0a7-442b-ce36-08dca6823a12,train,ALS,450,0.7918,1.0000,0.6315,0.6667,0.7116,high,17,42,391,0.0378,0.0933,0.8689,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f3575077-1763-443c-0fe0-08dcd99f98d3,train,ALS,447,0.1222,0.0000,0.0661,0.0000,0.0942,low,363,58,26,0.8121,0.1298,0.0582,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f384ec19-a3e8-4c8a-87b0-08dc74e08a4e,train,Cerebral Palsy,430,0.1533,0.0000,0.0882,0.0000,0.1207,low,322,66,42,0.7488,0.1535,0.0977,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f3c74cb8-cc12-4cc0-02a0-08dcaa8c3d9d,train,ALS,450,0.0517,0.0000,0.0181,0.0000,0.0349,low,420,26,4,0.9333,0.0578,0.0089,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f41ace9e-58d1-45d3-6fbb-08dc10671a10,train,ALS,450,0.2930,0.1543,0.1917,0.0796,0.2424,middle,248,89,113,0.5511,0.1978,0.2511,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f4291b85-744e-41f6-9d02-08db701e3a54,train,Parkinson's Disease,450,0.1399,0.1144,0.0841,0.0625,0.1120,low,298,138,14,0.6622,0.3067,0.0311,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f449429b-9798-48b6-4ccf-08dd0b23004e,train,ALS,437,0.0961,0.0000,0.0497,0.0000,0.0729,low,369,51,17,0.8444,0.1167,0.0389,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f46b3335-0d95-48ec-7f98-08dc9f90df2f,train,ALS,450,0.0515,0.0000,0.0285,0.0000,0.0400,low,417,24,9,0.9267,0.0533,0.0200,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f4977957-ef08-4173-cf2b-08dc89b72177,train,ALS,444,0.0520,0.0000,0.0260,0.0000,0.0390,low,416,18,10,0.9369,0.0405,0.0225,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f5394c87-9584-4986-b6b2-08dc8d7bb350,train,ALS,449,0.0580,0.0000,0.0262,0.0000,0.0421,low,416,25,8,0.9265,0.0557,0.0178,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f5aa375b-c5eb-43e3-b06b-08db3156ae3a,train,Parkinson's Disease,449,0.1152,0.0000,0.0610,0.0000,0.0881,low,366,60,23,0.8151,0.1336,0.0512,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f5cfee85-0110-474a-6dab-08db348aa35d,train,Parkinson's Disease,447,0.0739,0.0000,0.0400,0.0000,0.0569,low,387,48,12,0.8658,0.1074,0.0268,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f60008c4-fe6e-4a38-aa58-08dbfc00603a,train,Cerebral Palsy,430,0.1072,0.0000,0.0619,0.0000,0.0846,low,348,55,27,0.8093,0.1279,0.0628,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f6132f61-4179-43f5-abbd-08dc5d6a38e4,train,ALS,45,0.1906,0.0000,0.1415,0.0000,0.1660,middle,32,6,7,0.7111,0.1333,0.1556,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f65d47c1-0216-450c-67d2-08dbe21c871c,train,Down Syndrome,430,0.3434,0.2500,0.2116,0.1613,0.2775,middle,167,143,120,0.3884,0.3326,0.2791,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f6616ff1-176f-477d-1cda-08dce2a2fe9b,train,Stroke,374,0.4026,0.3333,0.2602,0.1905,0.3314,middle,126,122,126,0.3369,0.3262,0.3369,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f6b0d559-4f91-4f93-3a9c-08dc315aff7e,train,Parkinson's Disease,449,0.0585,0.0000,0.0285,0.0000,0.0435,low,419,17,13,0.9332,0.0379,0.0290,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f6d82e47-e44c-44f9-e96b-08dc2e961576,train,Stroke,430,0.6591,0.6667,0.4489,0.4385,0.5540,high,20,90,320,0.0465,0.2093,0.7442,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f791828b-76cb-4b63-f355-08dd446c36bb,train,Cerebral Palsy,415,0.4511,0.4000,0.3157,0.2647,0.3834,high,136,95,184,0.3277,0.2289,0.4434,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f7d0127d-f0a0-442a-1e9c-08dcf50074d6,train,ALS,127,0.8804,1.0000,0.7495,0.7647,0.8150,high,0,4,123,0.0000,0.0315,0.9685,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f8531e5f-2979-4250-182e-08dd05aafcc9,train,Down Syndrome,349,0.2240,0.1111,0.1389,0.0455,0.1814,middle,208,75,66,0.5960,0.2149,0.1891,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f94acb02-fbbd-4e7b-e7b8-08dcd9e31338,train,ALS,450,0.4997,0.4286,0.3592,0.2657,0.4295,high,135,103,212,0.3000,0.2289,0.4711,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f981df16-1db1-40d9-2ecf-08dc27684872,train,Parkinson's Disease,433,0.0602,0.0000,0.0278,0.0000,0.0440,low,400,26,7,0.9238,0.0600,0.0162,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f9d0c68b-a81e-4068-ac4f-08dc297d5492,train,Down Syndrome,430,0.3150,0.2500,0.2002,0.1437,0.2576,middle,186,125,119,0.4326,0.2907,0.2767,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+f9d24399-f2a7-4662-3de8-08dd04d8f6c9,train,Cerebral Palsy,449,0.9830,1.0000,0.8397,0.8400,0.9114,high,0,2,447,0.0000,0.0045,0.9955,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fa9f4370-e85f-4629-0c4a-08db33bf801f,train,Parkinson's Disease,447,0.0242,0.0000,0.0079,0.0000,0.0161,low,438,9,0,0.9799,0.0201,0.0000,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+faf7f194-a739-4478-e597-08dd187996f2,train,Cerebral Palsy,349,0.2512,0.1429,0.1504,0.0357,0.2008,middle,204,76,69,0.5845,0.2178,0.1977,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fb369f36-9306-4322-3de6-08dd04d8f6c9,train,Cerebral Palsy,431,0.0994,0.0000,0.0523,0.0000,0.0759,low,361,52,18,0.8376,0.1206,0.0418,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fb433483-7b5a-471d-0fe2-08dcd99f98d3,train,ALS,43,0.1419,0.0000,0.0903,0.0000,0.1161,low,34,5,4,0.7907,0.1163,0.0930,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fb9386d2-b64c-4706-37ca-08dce6e2632a,train,ALS,450,0.0399,0.0000,0.0185,0.0000,0.0292,low,435,9,6,0.9667,0.0200,0.0133,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fb997ed6-f5f5-4736-e95c-08dc2e961576,train,Stroke,406,0.4047,0.3333,0.2453,0.1404,0.3250,middle,181,104,121,0.4458,0.2562,0.2980,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fbc3e16c-6fad-47b7-7695-08dc54a70eeb,train,Down Syndrome,98,0.4582,0.4643,0.2920,0.2500,0.3751,middle,28,32,38,0.2857,0.3265,0.3878,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fc246a09-cac1-4830-3014-08dcc11ab035,train,ALS,450,0.1105,0.0000,0.0586,0.0000,0.0846,low,364,65,21,0.8089,0.1444,0.0467,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fc3cb82b-198f-466d-19cd-08dc2c44c8f4,train,Parkinson's Disease,446,0.0434,0.0000,0.0169,0.0000,0.0302,low,422,19,5,0.9462,0.0426,0.0112,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fc50dfee-95ab-4d71-f1e6-08dc2cf36e15,train,Cerebral Palsy,429,0.0745,0.0000,0.0373,0.0000,0.0559,low,379,36,14,0.8834,0.0839,0.0326,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fc9a1978-865e-49a8-0b8f-08dc12b452f6,train,Cerebral Palsy,428,0.4972,0.4444,0.3553,0.3134,0.4262,high,105,101,222,0.2453,0.2360,0.5187,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+fded1a12-e747-41a2-0fe6-08dcd99f98d3,train,ALS,245,0.5788,0.6250,0.4148,0.4000,0.4968,high,50,41,154,0.2041,0.1673,0.6286,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+feddb247-8741-4c98-c55c-08dc27c1bd26,train,Parkinson's Disease,450,0.1100,0.0000,0.0614,0.0000,0.0857,low,359,68,23,0.7978,0.1511,0.0511,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
+ffbb560c-78e1-4dc2-aa21-08db7f28d1f2,train,Parkinson's Disease,449,0.5254,0.5000,0.3690,0.3077,0.4472,high,86,136,227,0.1915,0.3029,0.5056,0.1000,0.3000,parakeet_baseline_speaker_mean_cer
