@@ -133,6 +133,10 @@ class FeatureExtractor:
     @torch.no_grad()
     def extract(self, wav_path: str):
         audio, sr = torchaudio.load(wav_path)
+        return self.extract_audio(audio, sr)
+
+    @torch.no_grad()
+    def extract_audio(self, audio: torch.Tensor, sr: int):
         audio = audio[:1]  # mono
         if sr != 24000:
             audio = torchaudio.transforms.Resample(sr, 24000)(audio)

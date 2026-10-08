@@ -472,7 +472,8 @@ class Trainer:
 
         # Prepare output directories and logging.
         self.finetune_dir = self.config.train.finetune_model_dir
-        self.checkpoint_dir = os.path.join(self.finetune_dir, "checkpoints_dys_spk_grl_exp1")
+        self.output_dir = self.config.train.get("output_dir", self.finetune_dir)
+        self.checkpoint_dir = os.path.join(self.output_dir, "checkpoints_dys_spk_grl_exp1")
         os.makedirs(self.checkpoint_dir, exist_ok=True)
         self._setup_logging()
 
@@ -971,9 +972,9 @@ class Trainer:
         self._save_checkpoint("gpt_finetuned.pth", merge_lora=True, unload_after_merge=True)
 
         # Save the configuration used for the final checkpoint.
-        final_config_path = os.path.join(self.finetune_dir, "config_finetuned.yaml")
+        final_config_path = os.path.join(self.output_dir, "config_finetuned.yaml")
         final_config = self.config.copy()
-        final_config.gpt_checkpoint = "checkpoints/gpt_finetuned.pth"
+        final_config.gpt_checkpoint = os.path.join(self.checkpoint_dir, "gpt_finetuned.pth")
         OmegaConf.save(final_config, final_config_path)
         logger.info(f"Final config saved to {final_config_path}")
 
@@ -987,6 +988,7 @@ def main():
         default=os.path.join(REPO_ROOT, "configs", "controllable_dysarthric_speech_synthesis.yaml"),
     )
     parser.add_argument("--model-dir", help="Directory containing gpt.pth, dvae.pth and bpe.model")
+    parser.add_argument("--output-dir", help="Directory for training logs and checkpoints; defaults to model-dir")
     parser.add_argument("--data-dir", help="Prepared dataset directory containing speaker_info.json")
     parser.add_argument("--embedding-dir", help="Directory containing mean_pathology_condition_*.npy")
     parser.add_argument("--epochs", type=int)
@@ -1004,6 +1006,8 @@ def main():
     config = OmegaConf.load(config_path)
     if args.model_dir:
         config.train.finetune_model_dir = os.path.abspath(args.model_dir)
+    if args.output_dir:
+        config.train.output_dir = os.path.abspath(args.output_dir)
     if args.data_dir:
         config.train.data_path = os.path.abspath(args.data_dir)
     if args.embedding_dir:

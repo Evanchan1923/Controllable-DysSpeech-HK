@@ -1,0 +1,40 @@
+# SAPC_full is loaded from a Hugging Face DatasetDict, as in SAPC-Qwen.
+dataset:
+  path: /srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full
+  text_column: norm_text_with_disfluency_team
+  pairing_text_column: norm_text_without_disfluency_team
+  # Fill after deciding how SAPC Category/speaker values map to six conditions.
+  pathology_labels:
+    by_speaker: {}
+    by_category: {}
+
+model:
+  # Directory containing bpe.model, dvae.pth, gpt.pth, bigvgan_generator.pth.
+  pretrained_dir: /srv/scratch/speechdata/Jinghao_shared/IndexTTS-Model
+
+run:
+  root: /srv/scratch/z5327748/dys-gen-runs
+  name: run_sapc_full_v1
+  stages: [prepare, train]
+  # Optional inference inputs if the infer stage is selected.
+  prompt_wav: null
+  text: null
+  pathology: 0
+
+generate:
+  num_shards: 1
+  shard: 0
+  seed: 1234
+  # At most one donor class per target utterance, to limit GPU work.
+  max_source_labels_per_target: 1
+
+prepare:
+  valid_ratio: 0.02
+
+train:
+  epochs: 20
+  batch_size: 2
+  num_workers: 4
+
+inference:
+  output_name: example.wav
