@@ -33,14 +33,18 @@ All commands below are run from the repository root unless stated otherwise.
 
 For the Katana setup using `SAPC_full` from the SAPC-Qwen repository, see
 [`KATANA_IMPLEMENTATION.md`](KATANA_IMPLEMENTATION.md). The Katana runner uses
-the Hugging Face `audio` column and the existing `train`/`dev` splits. Fill the
-six-class pathology mapping in [`configs/katana.yaml`](configs/katana.yaml)
-before running feature extraction or training.
+the Hugging Face `audio` column and the existing `train`/`dev` splits. SAPC
+conditioning uses its five `etiology` values; the exact ID mapping is in
+[`configs/katana.yaml`](configs/katana.yaml).
 Run `python scripts/inspect_sapc_metadata.py --out sapc_dataset_report.txt`
 on Katana to collect the speaker, Category, and etiology values without
 reading audio.
 
 ## Step 1: Generate counterfactual audio with Seed-VC
+
+The original TORGO design, including the distinction between six conditioning
+IDs and its binary auxiliary classifier, is summarized in
+[`scripts/torgo/README.md`](scripts/torgo/README.md).
 
 Input: the original TORGO folder.
 Output: voice-converted WAV files.

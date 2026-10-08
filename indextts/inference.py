@@ -35,13 +35,22 @@ from indextts.utils.front import TextNormalizer, TextTokenizer
 from indextts.utils.typical_sampling import TypicalLogitsWarper
 from transformers import LogitsProcessorList
 
-# per-patient condition index (k): 0 = healthy control condition
-pathology_map = {
+# Legacy TORGO per-patient condition IDs. SAPC uses the etiology mapping in
+# configs/katana.yaml instead.
+TORGO_PATHOLOGY_MAP = {
     "FC01": 0, "FC02": 0, "FC03": 0,
     "MC01": 0, "MC02": 0, "MC03": 0, "MC04": 0,
     "F03": 0, "F04": 0, "M03": 0,
     "F01": 1, "M01": 2, "M02": 3, "M04": 4, "M05": 5,
 }
+SAPC_ETIOLOGY_MAP = {
+    "ALS": 0,
+    "Cerebral Palsy": 1,
+    "Down Syndrome": 2,
+    "Parkinson's Disease": 3,
+    "Stroke": 4,
+}
+pathology_map = TORGO_PATHOLOGY_MAP
 
 
 def _upgrade_legacy_pathology_keys(state_dict):
@@ -198,7 +207,7 @@ class MyUnifiedVoice(UnifiedVoice):
 
 class IndexTTS:
     def __init__(self, cfg_path="checkpoints/config.yaml", model_dir="checkpoints", is_fp16=False, device=None,
-                 use_cuda_kernel=None, gpt_checkpoint=None):
+                 use_cuda_kernel=None, gpt_checkpoint=None, pathology_num_classes=None):
         """
         Args:
             gpt_checkpoint: explicit path to the finetuned gpt_best.pth; overrides cfg.gpt_checkpoint.
@@ -218,6 +227,8 @@ class IndexTTS:
             print(">> Be patient, it may take a while to run in CPU mode.")
 
         self.cfg = OmegaConf.load(cfg_path)
+        if pathology_num_classes is not None:
+            self.cfg.pathology.num_classes = int(pathology_num_classes)
         self.model_dir = model_dir
         self.dtype = torch.float16 if self.is_fp16 else None
         self.stop_mel_token = self.cfg.gpt.stop_mel_token
@@ -440,12 +451,16 @@ if __name__ == "__main__":
     ap.add_argument("--model-dir", required=True,
                     help="directory containing BigVGAN, DVAE and tokenizer files")
     ap.add_argument("--gpt-ckpt", required=True, help="path to the trained gpt_best.pth")
+    ap.add_argument("--num-pathology-classes", type=int,
+                    help="override the number of pathology conditions")
     ap.add_argument("--prompt", required=True, help="timbre prompt wav")
     ap.add_argument("--text", required=True)
-    ap.add_argument("--pathology", type=int, default=0, help="condition index k (0=healthy, 1=F01, 2=M01, 3=M02, 4=M04, 5=M05)")
+    ap.add_argument("--pathology", type=int, default=0,
+                    help="condition index; meanings depend on the training dataset config")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
     tts = IndexTTS(cfg_path=args.cfg, model_dir=args.model_dir, is_fp16=False,
-                   use_cuda_kernel=False, gpt_checkpoint=args.gpt_ckpt)
+                   use_cuda_kernel=False, gpt_checkpoint=args.gpt_ckpt,
+                   pathology_num_classes=args.num_pathology_classes)
     tts.infer(audio_prompt=args.prompt, text=args.text, output_path=args.out, pathology_ids=args.pathology)

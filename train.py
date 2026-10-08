@@ -584,10 +584,11 @@ class Trainer:
             logger.debug(f"Registered {param_name} with shape {tuple(param.shape)}")
 
         # ---------- 4. pathology classifier ----------
-        self.model.pathology_classifier_sum = nn.Linear(model_dim, 2).to(self.device)
+        classifier_num_classes = int(getattr(self.config.pathology, "classifier_num_classes", 2))
+        self.model.pathology_classifier_sum = nn.Linear(model_dim, classifier_num_classes).to(self.device)
         for p in self.model.pathology_classifier_sum.parameters():
             p.requires_grad = True
-        self.model.pathology_classifier_spk = nn.Linear(model_dim, 2).to(self.device)
+        self.model.pathology_classifier_spk = nn.Linear(model_dim, classifier_num_classes).to(self.device)
         for p in self.model.pathology_classifier_spk.parameters():
             p.requires_grad = True
         logger.info(
@@ -730,9 +731,14 @@ class Trainer:
             embedding_spk = embedding_spk.mean(dim=1)            # [B, D]
             logits_sum = self.model.pathology_classifier_sum(embedding_sum)  # [B, num_classes]
             logits_spk = self.model.pathology_classifier_spk(grl(embedding_spk, grl_lambda))    # [B, num_classes]
-            binary_labels = (pathology_ids > 0).long().to(logits_sum.device)
-            sum_cls_loss = F.cross_entropy(logits_sum, binary_labels)
-            spk_cls_loss = F.cross_entropy(logits_spk, binary_labels)
+            classifier_num_classes = logits_sum.shape[-1]
+            configured_num_classes = int(getattr(self.config.pathology, "num_classes", 2))
+            if classifier_num_classes == 2 and configured_num_classes != 2:
+                classifier_labels = (pathology_ids > 0).long().to(logits_sum.device)
+            else:
+                classifier_labels = pathology_ids.long().to(logits_sum.device)
+            sum_cls_loss = F.cross_entropy(logits_sum, classifier_labels)
+            spk_cls_loss = F.cross_entropy(logits_spk, classifier_labels)
 
 
         return loss_text, loss_mel, sum_cls_loss, spk_cls_loss,mel_accuracy
@@ -991,6 +997,8 @@ def main():
     parser.add_argument("--output-dir", help="Directory for training logs and checkpoints; defaults to model-dir")
     parser.add_argument("--data-dir", help="Prepared dataset directory containing speaker_info.json")
     parser.add_argument("--embedding-dir", help="Directory containing mean_pathology_condition_*.npy")
+    parser.add_argument("--num-pathology-classes", type=int,
+                        help="Override pathology condition and classifier class counts")
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--batch-size", type=int, default=100)
     parser.add_argument("--num-workers", type=int, default=20)
@@ -1012,6 +1020,11 @@ def main():
         config.train.data_path = os.path.abspath(args.data_dir)
     if args.embedding_dir:
         config.pathology.embedding_dir = os.path.abspath(args.embedding_dir)
+    if args.num_pathology_classes is not None:
+        if args.num_pathology_classes < 2:
+            parser.error("--num-pathology-classes must be at least 2")
+        config.pathology.num_classes = args.num_pathology_classes
+        config.pathology.classifier_num_classes = args.num_pathology_classes
     if args.epochs is not None:
         config.train.epochs = args.epochs
     bpe_model_path = os.path.join(config.train.finetune_model_dir, config.dataset.bpe_model)

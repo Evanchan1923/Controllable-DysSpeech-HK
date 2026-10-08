@@ -3,10 +3,16 @@ dataset:
   path: /srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full
   text_column: norm_text_with_disfluency_team
   pairing_text_column: norm_text_without_disfluency_team
-  # Fill after deciding how SAPC Category/speaker values map to six conditions.
+  # SAPC contains five dysarthria etiologies and no healthy/control class.
   pathology_labels:
-    by_speaker: {}
-    by_category: {}
+    column: etiology
+    num_classes: 5
+    mapping:
+      ALS: 0
+      Cerebral Palsy: 1
+      Down Syndrome: 2
+      Parkinson's Disease: 3
+      Stroke: 4
 
 model:
   # Directory containing bpe.model, dvae.pth, gpt.pth, bigvgan_generator.pth.

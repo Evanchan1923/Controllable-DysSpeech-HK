@@ -10,15 +10,25 @@ The chosen run directory is
 `/srv/scratch/z5327748/dys-gen-runs/run_sapc_full_v1`. It contains
 `converted_audio/`, `prepared_data/`, `training/`, and `outputs/`.
 
-## One remaining data decision
+## SAPC pathology conditions
 
-The SAPC schema has `speaker`, `etiology`, and `Category`, but it does not
-identify the six pathology conditions used by this model. Fill
-`dataset.pathology_labels.by_speaker` or `by_category` in `configs/katana.yaml`
-with integer values 0–5. The loader requires every included row to be mapped,
-and preparation checks that all six classes have training samples. It will
-raise a clear error rather than silently assign classes. To inspect actual
-values on Katana, run this metadata-only report:
+The metadata report shows that `Category` describes prompt types, while
+`etiology` contains the five disease groups used as controllable conditions.
+SAPC_full contains no healthy/control class. The configured IDs are:
+
+| ID | Etiology |
+|---:|---|
+| 0 | ALS |
+| 1 | Cerebral Palsy |
+| 2 | Down Syndrome |
+| 3 | Parkinson's Disease |
+| 4 | Stroke |
+
+Both train and dev contain every etiology. Each speaker belongs to exactly one
+etiology, and the 836 train speakers and 126 dev speakers do not overlap. The
+preparation code therefore preserves dev-only speakers and creates a five-way
+etiology classifier. To regenerate the metadata-only report without reading
+audio:
 
 ```bash
 source /srv/scratch/z5327748/venv/controll-dys-gen/bin/activate
@@ -29,8 +39,10 @@ The text for training is `norm_text_with_disfluency_team`, matching Qwen's
 training config. Seed-VC pairs use `norm_text_without_disfluency_team` for
 same-text matching and use the source's disfluency text as the generated
 utterance transcript. Generation uses only `train` rows and selects at most
-one different pathology class per target utterance by default. The `dev`
-split is never converted.
+one different etiology per target utterance by default, keeping the already
+large generation set bounded. Set `generate.max_source_labels_per_target` to
+`4` to generate every other etiology for each target. The `dev` split is never
+converted.
 
 ## Model files
 
@@ -55,8 +67,7 @@ pip install -e .
 pip install -r requirements-seed-vc.txt
 ```
 
-After the pathology mapping is filled in, check paths
-with `python scripts/run_katana.py --check`, then run `qsub katana.pbs`.
+Check paths with `python scripts/run_katana.py --check`, then run `qsub katana.pbs`.
 The default stages are `prepare` and `train` on original SAPC audio. If
 Seed-VC augmentation is wanted, set `run.stages` to
 `[generate, prepare, train]`; for long generation jobs, submit stages

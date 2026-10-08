@@ -48,8 +48,8 @@ def main():
         ap.error(f"SAPC DatasetDict/train split not found at {dataset}")
     if any(s in stages for s in ("generate", "prepare")):
         labels = cfg["dataset"].get("pathology_labels") or {}
-        if not labels.get("by_speaker") and not labels.get("by_category"):
-            ap.error("Set dataset.pathology_labels mapping after inspecting SAPC speaker/Category values")
+        if not labels.get("mapping") and not labels.get("by_speaker") and not labels.get("by_category"):
+            ap.error("Set dataset.pathology_labels mapping")
 
     model_dir = required_path(cfg["model"]["pretrained_dir"], "model.pretrained_dir") if any(s in stages for s in ("prepare", "train", "infer")) else None
     if model_dir is not None:
@@ -67,6 +67,7 @@ def main():
         ap.error(f"Prepared data missing: {prepared / 'speaker_info.json'}")
 
     python = sys.executable
+    pathology_num_classes = int(cfg["dataset"]["pathology_labels"]["num_classes"])
     commands = []
     if "cache_models" in stages:
         commands.append((ROOT, [python, "scripts/cache_seedvc_models.py"]))
@@ -77,7 +78,7 @@ def main():
         commands.append((ROOT, [python, "scripts/prepare_sapc.py", "--settings", str(settings), "--out-dir", str(prepared), "--model-dir", str(model_dir), "--config", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--converted-dir", str(converted)]))
     if "train" in stages:
         tr = cfg["train"]
-        commands.append((ROOT, [python, "train.py", "--config", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--model-dir", str(model_dir), "--output-dir", str(training), "--data-dir", str(prepared), "--embedding-dir", str(prepared / "pathology_embedding"), "--epochs", str(tr["epochs"]), "--batch-size", str(tr["batch_size"]), "--num-workers", str(tr["num_workers"])]))
+        commands.append((ROOT, [python, "train.py", "--config", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--model-dir", str(model_dir), "--output-dir", str(training), "--data-dir", str(prepared), "--embedding-dir", str(prepared / "pathology_embedding"), "--num-pathology-classes", str(pathology_num_classes), "--epochs", str(tr["epochs"]), "--batch-size", str(tr["batch_size"]), "--num-workers", str(tr["num_workers"])]))
     if "infer" in stages:
         prompt = required_path(cfg["run"].get("prompt_wav"), "run.prompt_wav")
         if not prompt.is_file():
@@ -88,7 +89,7 @@ def main():
         checkpoint = training / "checkpoints_dys_spk_grl_exp1/gpt_best.pth"
         if "train" not in stages and not checkpoint.is_file():
             ap.error(f"Trained checkpoint missing: {checkpoint}")
-        commands.append((ROOT, [python, "-m", "indextts.inference", "--cfg", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--model-dir", str(model_dir), "--gpt-ckpt", str(checkpoint), "--prompt", str(prompt), "--text", str(text), "--pathology", str(cfg["run"]["pathology"]), "--out", str(outputs / cfg["inference"]["output_name"])]))
+        commands.append((ROOT, [python, "-m", "indextts.inference", "--cfg", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--model-dir", str(model_dir), "--gpt-ckpt", str(checkpoint), "--num-pathology-classes", str(pathology_num_classes), "--prompt", str(prompt), "--text", str(text), "--pathology", str(cfg["run"]["pathology"]), "--out", str(outputs / cfg["inference"]["output_name"])]))
 
     print(f"Run directory: {run_dir}", flush=True)
     for cwd, command in commands:

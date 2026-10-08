@@ -25,7 +25,13 @@ def main():
         settings = yaml.safe_load(f)
     data_cfg = settings["dataset"]
     ds_by_split = {split: load_split(data_cfg["path"], split) for split in ("train", "dev")}
-    required = ("id", "speaker", "Category", data_cfg["text_column"], "audio")
+    label_cfg = data_cfg.get("pathology_labels") or {}
+    label_column = label_cfg.get("column")
+    required = ["id", "speaker", data_cfg["text_column"], "audio"]
+    if label_column:
+        required.append(label_column)
+    else:
+        required.append("Category")
     for split, ds in ds_by_split.items():
         missing = [name for name in required if name not in ds.column_names]
         if missing:
@@ -45,15 +51,16 @@ def main():
     from loguru import logger
     from feature_extractor import FeatureExtractor
 
-    labels = data_cfg.get("pathology_labels") or {}
-    if not labels.get("by_speaker") and not labels.get("by_category"):
-        ap.error("Set dataset.pathology_labels.by_speaker or by_category after inspecting SAPC labels")
-    arch = yaml.safe_load(Path(args.config).read_text())
-    num_classes = int(arch["pathology"]["num_classes"])
+    labels = label_cfg
+    if not labels.get("mapping") and not labels.get("by_speaker") and not labels.get("by_category"):
+        ap.error("Set dataset.pathology_labels mapping in the Katana config")
+    num_classes = int(labels["num_classes"])
     # Validate the full mapping before loading checkpoints or running GPU work.
     preflight_counts = Counter()
     for split, ds in ds_by_split.items():
-        for row in ds.select_columns(["speaker", "Category", data_cfg["text_column"]]):
+        preflight_columns = ["speaker", data_cfg["text_column"]]
+        preflight_columns.append(label_column or "Category")
+        for row in ds.select_columns(preflight_columns):
             if str(row.get(data_cfg["text_column"]) or "").strip():
                 label = pathology_label(row, labels)
                 if not 0 <= label < num_classes:
@@ -62,8 +69,9 @@ def main():
     absent = [label for label in range(num_classes) if not preflight_counts[("train", label)]]
     if absent:
         raise ValueError(f"SAPC train has no rows for pathology classes {absent}; check the mapping")
-    if not any(preflight_counts[("dev", label)] for label in range(num_classes)):
-        raise ValueError("SAPC dev has no labeled rows with text")
+    absent_dev = [label for label in range(num_classes) if not preflight_counts[("dev", label)]]
+    if absent_dev:
+        raise ValueError(f"SAPC dev has no rows for pathology classes {absent_dev}; check the mapping")
     logger.info(f"Preflight rows by split/pathology class: {dict(preflight_counts)}")
     out = Path(args.out_dir).expanduser().resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -169,16 +177,15 @@ def main():
     class_sums = {}
     class_counts = Counter()
     for speaker_key, splits in sorted(items_by_speaker.items()):
-        if not splits["train"]:
-            logger.warning(f"Speaker {speaker_key} has dev only; omitting from training manifests")
-            continue
         speaker_out = out / speaker_key
+        speaker_out.mkdir(parents=True, exist_ok=True)
         for split, manifest_name in (("train", "metadata_train.jsonl"), ("dev", "metadata_valid.jsonl")):
             with (speaker_out / manifest_name).open("w", encoding="utf-8") as f:
                 for item in splits[split]:
                     f.write(json.dumps(item, ensure_ascii=False) + "\n")
         # Same summary shape used by the TORGO preparer.
-        sample = splits["train"][::max(1, len(splits["train"]) // 200)]
+        condition_items = splits["train"] or splits["dev"]
+        sample = condition_items[::max(1, len(condition_items) // 200)]
         speaker_conditions = np.stack([np.load(it["condition"])[0] for it in sample])
         medoid = speaker_out / "medoid_condition.npy"
         np.save(medoid, speaker_conditions.mean(axis=0, keepdims=True).astype(np.float32))

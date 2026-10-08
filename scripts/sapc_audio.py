@@ -15,7 +15,16 @@ def speaker_dir_name(speaker):
 
 
 def pathology_label(row, label_cfg):
-    speaker = str(row["speaker"]).strip()
+    column = str(label_cfg.get("column") or "").strip()
+    mapping = label_cfg.get("mapping") or {}
+    if column and mapping:
+        value = str(row.get(column) or "").strip()
+        if value in mapping:
+            return int(mapping[value])
+        raise ValueError(f"No pathology label for {column}={value!r}")
+
+    # Compatibility with the first Katana config format.
+    speaker = str(row.get("speaker") or "").strip()
     category = str(row.get("Category") or "").strip()
     by_speaker = label_cfg.get("by_speaker") or {}
     by_category = label_cfg.get("by_category") or {}

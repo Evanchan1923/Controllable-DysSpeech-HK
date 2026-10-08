@@ -16,7 +16,8 @@ from sapc_audio import decode_audio, load_split, pathology_label, speaker_dir_na
 def plan_pairs(dataset, data_cfg, max_labels, seed):
     if max_labels < 1:
         raise ValueError("generate.max_source_labels_per_target must be >= 1")
-    required = ("id", "speaker", "Category", data_cfg["text_column"], data_cfg["pairing_text_column"])
+    label_column = data_cfg["pathology_labels"].get("column") or "Category"
+    required = ("id", "speaker", label_column, data_cfg["text_column"], data_cfg["pairing_text_column"])
     missing = [col for col in required if col not in dataset.column_names]
     if missing:
         raise ValueError(f"SAPC train missing {missing}")
@@ -31,8 +32,9 @@ def plan_pairs(dataset, data_cfg, max_labels, seed):
         if not speaker or not text or not pairing_text:
             continue
         label = pathology_label(row, labels)
-        if not 0 <= label < 6:
-            raise ValueError(f"Pathology label {label} for speaker {speaker!r} must be 0..5")
+        num_classes = int(labels["num_classes"])
+        if not 0 <= label < num_classes:
+            raise ValueError(f"Pathology label {label} for speaker {speaker!r} must be 0..{num_classes - 1}")
         rec = {"index": index, "id": str(row["id"] or index), "speaker": speaker,
                "text": text, "pairing_text": pairing_text, "pathology_label": label}
         records.append(rec)
