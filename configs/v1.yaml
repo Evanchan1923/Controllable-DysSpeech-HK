@@ -1,6 +1,9 @@
 # Full SAPC v1: severity-aware Seed-VC augmentation, feature preparation,
 # and IndexTTS fine-tuning. The model uses 15 joint condition IDs:
 # etiology_id * 3 + severity_id.
+pipeline:
+  type: full_training
+
 dataset:
   path: /srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full
   text_column: norm_text_with_disfluency_team
@@ -54,4 +57,3 @@ train:
 
 inference:
   output_name: example.wav
-

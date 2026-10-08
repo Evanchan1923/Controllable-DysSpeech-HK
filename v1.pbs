@@ -37,5 +37,5 @@ echo "Job started at: $(date)  Job ID: ${PBS_JOBID:-unknown}  Host: $(hostname)"
 args=(--config "$CONFIG_PATH")
 if [[ -n "${STAGE:-}" ]]; then args+=(--stage "$STAGE"); fi
 if [[ "${CHECK_ONLY:-0}" == "1" ]]; then args+=(--check); fi
-python scripts/run_katana.py "${args[@]}"
+python scripts/run_pipeline.py "${args[@]}"
 echo "Job finished at: $(date)"

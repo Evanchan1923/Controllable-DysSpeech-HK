@@ -1,3 +1,7 @@
+pipeline:
+  type: vc_validation
+  stages: [generate, debug]
+
 experiment:
   name: Park_v1
   seed: 1234
@@ -14,7 +18,8 @@ dataset:
   audio_column: audio
   text_column: norm_text_with_disfluency_team
   pairing_text_column: norm_text_without_disfluency_team
-  speaker_severity_csv: configs/utterance_research_v1_noFTModel/severity-speaker-labelling.csv
+  condition_labels:
+    speaker_csv: configs/utterance_research_v1_noFTModel/severity-speaker-labelling.csv
 
 selection:
   low_label: low
@@ -24,9 +29,7 @@ selection:
   high_speaker: null
 
 seed_vc:
-  bidirectional: true
   diffusion_steps: 30
   length_adjust: 1.0
   inference_cfg_rate: 0.7
   fp16: true
-

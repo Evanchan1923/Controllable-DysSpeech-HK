@@ -1,5 +1,10 @@
 # Katana SAPC_full implementation notes
 
+Both Katana jobs use `scripts/run_pipeline.py` as the only pipeline entry
+point. The YAML `pipeline.type` selects `vc_validation` or `full_training`.
+Stage implementations remain reusable (`generate_sapc.py`, `prepare_sapc.py`,
+and `train.py`), while `debug_vc.py` is the separate debug utility.
+
 The SAPC code reads the Hugging Face DatasetDict at
 `/srv/scratch/speechdata/speech-corpora/dysarthric/SAPC_HF/SAPC_full`, using
 `train` for training and `dev` for validation. The audio reader follows

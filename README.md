@@ -45,6 +45,9 @@ the Parkinson's low/high Seed-VC check in
 [`configs/Park_v1.yaml`](configs/Park_v1.yaml) and [`Park_v1.pbs`](Park_v1.pbs).
 The full severity-aware VC, preparation, and IndexTTS training workflow is
 defined by [`configs/v1.yaml`](configs/v1.yaml) and [`v1.pbs`](v1.pbs).
+Both PBS files call the universal `scripts/run_pipeline.py` entry point; the
+YAML `pipeline.type` determines whether it runs the focused VC validation or
+the full training workflow.
 
 ## Etiology conditions
 
