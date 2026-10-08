@@ -47,7 +47,7 @@ Output: voice-converted WAV files.
 
 ```bash
 cd third_party/seed-vc
-python generate_data.py \
+python ../../scripts/torgo/generate_data.py \
   --mode both \
   --torgo_root /path/to/TORGO \
   --output /path/to/converted_audio
@@ -62,7 +62,7 @@ Input: original TORGO audio, Step 1 output, and IndexTTS-1.5 files.
 Output: mel features, codec tokens, conditioning features, manifests, and pathology embeddings.
 
 ```bash
-python scripts/prepare_torgo.py \
+python scripts/torgo/prepare_torgo.py \
   --torgo_root /path/to/TORGO \
   --converted_root /path/to/converted_audio \
   --out_dir /path/to/prepared_data \
@@ -117,3 +117,9 @@ python -m indextts.inference \
 ```
 
 Use the same prompt with different pathology IDs to change the articulation condition while retaining the prompt speaker's timbre.
+
+## License and disclaimer
+
+The [license directory](license/) contains the English and Chinese model
+licenses, the disclaimer, and a copy of the Seed-VC license. The original
+Seed-VC license also remains with its third-party source code.

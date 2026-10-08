@@ -43,7 +43,7 @@ def main():
         ap.error("--out-dir, --model-dir and --config are required for feature extraction")
     import torch
     from loguru import logger
-    from prepare_torgo import FeatureExtractor
+    from feature_extractor import FeatureExtractor
 
     labels = data_cfg.get("pathology_labels") or {}
     if not labels.get("by_speaker") and not labels.get("by_category"):
@@ -177,7 +177,7 @@ def main():
             with (speaker_out / manifest_name).open("w", encoding="utf-8") as f:
                 for item in splits[split]:
                     f.write(json.dumps(item, ensure_ascii=False) + "\n")
-        # Same summary shape used by prepare_torgo.py.
+        # Same summary shape used by the TORGO preparer.
         sample = splits["train"][::max(1, len(splits["train"]) // 200)]
         speaker_conditions = np.stack([np.load(it["condition"])[0] for it in sample])
         medoid = speaker_out / "medoid_condition.npy"

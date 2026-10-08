@@ -19,7 +19,7 @@ MODE old  -> X_converted  (5 dirs, X in the 5 modeled patients)
     (healthy content in patient timbre -> pathology_label 0)
 
 Run from the seed-vc repo root:
-    python generate_data.py --mode new --torgo_root /path/to/TORGO \
+    python ../../scripts/torgo/generate_data.py --mode new --torgo_root /path/to/TORGO \
         --output /path/to/generated
 VC params match the originals: diffusion-steps 30, length-adjust 1.0,
 inference-cfg-rate 0.7, f0-condition False, seed 1234, fp16 True.
@@ -34,7 +34,9 @@ import librosa
 import torch
 import torchaudio
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+SEED_VC_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                            "third_party", "seed-vc")
+sys.path.insert(0, SEED_VC_ROOT)
 
 DYS = ["F01", "F03", "F04", "M01", "M02", "M03", "M04", "M05"]
 CONTROL = ["FC01", "FC02", "FC03", "MC01", "MC02", "MC03", "MC04"]

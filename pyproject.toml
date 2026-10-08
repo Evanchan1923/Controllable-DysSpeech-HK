@@ -3,7 +3,12 @@ name = "controllable-dysarthric-speech-synthesis"
 version = "1.0.0"
 description = "Training and inference for pathology-conditioned controllable dysarthric speech synthesis"
 license = "LicenseRef-Bilibili-IndexTTS"
-license-files = ["LICEN[CS]E*", "INDEX_MODEL_LICENSE*"]
+license-files = [
+  "license/LICENSE",
+  "license/LICENSE_ZH.txt",
+  "license/DISCLAIMER",
+  "license/seed-vc/LICENSE",
+]
 readme = "README.md"
 classifiers = [
   "Development Status :: 5 - Production/Stable",

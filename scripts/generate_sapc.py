@@ -91,7 +91,7 @@ def main():
     import torch
     import types
     import inference as seed_inference
-    from generate_data import convert_one
+    from torgo.generate_data import convert_one
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed_inference.device = device
