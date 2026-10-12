@@ -1,0 +1,45 @@
+Job started at: Thu Oct  8 17:46:18 AEDT 2026  Job ID: 9475589.kman.restech.unsw.edu.au  Host: k102
+Pipeline type: vc_validation
+Output directory: /srv/scratch/z5327748/dys-gen-runs/Park_v1
+[/home/z5327748/Controllable-DysSpeech-HK] /srv/scratch/z5327748/venv/controll-dys-gen/bin/python scripts/generate_sapc.py --settings /home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml --out-dir /srv/scratch/z5327748/dys-gen-runs/Park_v1 --validation-pair
+Traceback (most recent call last):
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 14, in <module>
+    from sapc_audio import condition_label, decode_audio, load_speaker_severity, load_split, speaker_dir_name
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/sapc_audio.py", line 10, in <module>
+    from datasets import Audio, Dataset, DatasetDict, load_from_disk
+ModuleNotFoundError: No module named 'datasets'
+Traceback (most recent call last):
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/run_pipeline.py", line 210, in <module>
+    main()
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/run_pipeline.py", line 205, in main
+    subprocess.run(command, cwd=cwd, check=True, env=os.environ.copy())
+  File "/apps/z_install_tree/linux-rocky8-ivybridge/gcc-12.2.0/python-3.10.8-pmtwsrrmcmrs6olvgx5xhepgh7gl5vro/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/srv/scratch/z5327748/venv/controll-dys-gen/bin/python', 'scripts/generate_sapc.py', '--settings', '/home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml', '--out-dir', '/srv/scratch/z5327748/dys-gen-runs/Park_v1', '--validation-pair']' returned non-zero exit status 1.
+
+================================================================================
+                     Resource Usage on 08/10/2026 17:46:29                      
+
+Job Id: 9475589 
+Queue: SIMI
+Walltime: 00:00:09  (requested 02:00:00)
+Job unsuccessful. Exit Status 1 - Exit status refers to the exit value of the
+top process in the job, typically the shell.
+This may be the exit value of the last command executed in the shell.
+See job output error.
+
+--------------------------------------------------------------------------------
+|              |             GPUs              |            Memory             |
+--------------------------------------------------------------------------------
+| Node  GPU ID | Requested   Used   Efficiency | Available   Used              |
+| k102    1    |     1        0.0       0%     | 32768 MiB   0.0B              |
+--------------------------------------------------------------------------------
+|Total         |     1        0.0      0.0%    |                               |
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+|              |             CPUs              |            Memory             |
+--------------------------------------------------------------------------------
+| Node         | Requested   Used   Efficiency | Requested   Used   Efficiency |
+| k102         |     2       0.11      6.0%    |  32.0gb    0.04gb     0.1%    |
+--------------------------------------------------------------------------------
