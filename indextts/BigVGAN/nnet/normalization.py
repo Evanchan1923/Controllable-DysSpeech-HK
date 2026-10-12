@@ -44,17 +44,7 @@ class BatchNorm1d(nn.Module):
     torch.Size([100, 10])
     """
 
-    def __init__(
-        self,
-        input_shape=None,
-        input_size=None,
-        eps=1e-05,
-        momentum=0.1,
-        affine=True,
-        track_running_stats=True,
-        combine_batch_time=False,
-        skip_transpose=False,
-    ):
+    def __init__(self, input_shape=None, input_size=None, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True, combine_batch_time=False, skip_transpose=False):
         super().__init__()
         self.combine_batch_time = combine_batch_time
         self.skip_transpose = skip_transpose
@@ -64,13 +54,7 @@ class BatchNorm1d(nn.Module):
         elif input_size is None:
             input_size = input_shape[-1]
 
-        self.norm = nn.BatchNorm1d(
-            input_size,
-            eps=eps,
-            momentum=momentum,
-            affine=affine,
-            track_running_stats=track_running_stats,
-        )
+        self.norm = nn.BatchNorm1d(input_size, eps=eps, momentum=momentum, affine=affine, track_running_stats=track_running_stats)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -91,9 +75,7 @@ class BatchNorm1d(nn.Module):
             if x.ndim == 3:
                 x = x.reshape(shape_or[0] * shape_or[1], shape_or[2])
             else:
-                x = x.reshape(
-                    shape_or[0] * shape_or[1], shape_or[3], shape_or[2]
-                )
+                x = x.reshape(shape_or[0] * shape_or[1], shape_or[3], shape_or[2])
 
         elif not self.skip_transpose:
             x = x.transpose(-1, 1)
@@ -137,15 +119,7 @@ class BatchNorm2d(nn.Module):
     torch.Size([100, 10, 5, 20])
     """
 
-    def __init__(
-        self,
-        input_shape=None,
-        input_size=None,
-        eps=1e-05,
-        momentum=0.1,
-        affine=True,
-        track_running_stats=True,
-    ):
+    def __init__(self, input_shape=None, input_size=None, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True):
         super().__init__()
 
         if input_shape is None and input_size is None:
@@ -154,13 +128,7 @@ class BatchNorm2d(nn.Module):
         if input_size is None:
             input_size = input_shape[-1]
 
-        self.norm = nn.BatchNorm2d(
-            input_size,
-            eps=eps,
-            momentum=momentum,
-            affine=affine,
-            track_running_stats=track_running_stats,
-        )
+        self.norm = nn.BatchNorm2d(input_size, eps=eps, momentum=momentum, affine=affine, track_running_stats=track_running_stats)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -207,13 +175,7 @@ class LayerNorm(nn.Module):
     torch.Size([100, 101, 128])
     """
 
-    def __init__(
-        self,
-        input_size=None,
-        input_shape=None,
-        eps=1e-05,
-        elementwise_affine=True,
-    ):
+    def __init__(self, input_size=None, input_shape=None, eps=1e-05, elementwise_affine=True):
         super().__init__()
         self.eps = eps
         self.elementwise_affine = elementwise_affine
@@ -221,11 +183,7 @@ class LayerNorm(nn.Module):
         if input_shape is not None:
             input_size = input_shape[2:]
 
-        self.norm = torch.nn.LayerNorm(
-            input_size,
-            eps=self.eps,
-            elementwise_affine=self.elementwise_affine,
-        )
+        self.norm = torch.nn.LayerNorm(input_size, eps=self.eps, elementwise_affine=self.elementwise_affine)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -273,15 +231,7 @@ class InstanceNorm1d(nn.Module):
     torch.Size([100, 10, 20])
     """
 
-    def __init__(
-        self,
-        input_shape=None,
-        input_size=None,
-        eps=1e-05,
-        momentum=0.1,
-        track_running_stats=True,
-        affine=False,
-    ):
+    def __init__(self, input_shape=None, input_size=None, eps=1e-05, momentum=0.1, track_running_stats=True, affine=False):
         super().__init__()
 
         if input_shape is None and input_size is None:
@@ -290,13 +240,7 @@ class InstanceNorm1d(nn.Module):
         if input_size is None:
             input_size = input_shape[-1]
 
-        self.norm = nn.InstanceNorm1d(
-            input_size,
-            eps=eps,
-            momentum=momentum,
-            track_running_stats=track_running_stats,
-            affine=affine,
-        )
+        self.norm = nn.InstanceNorm1d(input_size, eps=eps, momentum=momentum, track_running_stats=track_running_stats, affine=affine)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -349,15 +293,7 @@ class InstanceNorm2d(nn.Module):
     torch.Size([100, 10, 20, 2])
     """
 
-    def __init__(
-        self,
-        input_shape=None,
-        input_size=None,
-        eps=1e-05,
-        momentum=0.1,
-        track_running_stats=True,
-        affine=False,
-    ):
+    def __init__(self, input_shape=None, input_size=None, eps=1e-05, momentum=0.1, track_running_stats=True, affine=False):
         super().__init__()
 
         if input_shape is None and input_size is None:
@@ -366,13 +302,7 @@ class InstanceNorm2d(nn.Module):
         if input_size is None:
             input_size = input_shape[-1]
 
-        self.norm = nn.InstanceNorm2d(
-            input_size,
-            eps=eps,
-            momentum=momentum,
-            track_running_stats=track_running_stats,
-            affine=affine,
-        )
+        self.norm = nn.InstanceNorm2d(input_size, eps=eps, momentum=momentum, track_running_stats=track_running_stats, affine=affine)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -421,14 +351,7 @@ class GroupNorm(nn.Module):
     torch.Size([100, 101, 128])
     """
 
-    def __init__(
-        self,
-        input_shape=None,
-        input_size=None,
-        num_groups=None,
-        eps=1e-05,
-        affine=True,
-    ):
+    def __init__(self, input_shape=None, input_size=None, num_groups=None, eps=1e-05, affine=True):
         super().__init__()
         self.eps = eps
         self.affine = affine
@@ -442,12 +365,7 @@ class GroupNorm(nn.Module):
         if input_shape is not None:
             input_size = input_shape[-1]
 
-        self.norm = torch.nn.GroupNorm(
-            num_groups,
-            input_size,
-            eps=self.eps,
-            affine=self.affine,
-        )
+        self.norm = torch.nn.GroupNorm(num_groups, input_size, eps=self.eps, affine=self.affine)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -497,31 +415,14 @@ class ExponentialMovingAverage(nn.Module):
     torch.Size([10, 50, 40])
     """
 
-    def __init__(
-        self,
-        input_size: int,
-        coeff_init: float = 0.04,
-        per_channel: bool = False,
-        trainable: bool = True,
-        skip_transpose: bool = False,
-    ):
+    def __init__(self, input_size: int, coeff_init: float = 0.04, per_channel: bool = False, trainable: bool = True, skip_transpose: bool = False):
         super().__init__()
         self._coeff_init = coeff_init
         self._per_channel = per_channel
         self.skip_transpose = skip_transpose
         self.trainable = trainable
-        weights = (
-            torch.ones(
-                input_size,
-            )
-            if self._per_channel
-            else torch.ones(
-                1,
-            )
-        )
-        self._weights = nn.Parameter(
-            weights * self._coeff_init, requires_grad=trainable
-        )
+        weights = torch.ones(input_size) if self._per_channel else torch.ones(1)
+        self._weights = nn.Parameter(weights * self._coeff_init, requires_grad=trainable)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -599,40 +500,17 @@ class PCEN(nn.Module):
     torch.Size([10, 50, 40])
     """
 
-    def __init__(
-        self,
-        input_size,
-        alpha: float = 0.96,
-        smooth_coef: float = 0.04,
-        delta: float = 2.0,
-        root: float = 2.0,
-        floor: float = 1e-12,
-        trainable: bool = True,
-        per_channel_smooth_coef: bool = True,
-        skip_transpose: bool = False,
-    ):
+    def __init__(self, input_size, alpha: float = 0.96, smooth_coef: float = 0.04, delta: float = 2.0, root: float = 2.0, floor: float = 1e-12, trainable: bool = True, per_channel_smooth_coef: bool = True, skip_transpose: bool = False):
         super().__init__()
         self._smooth_coef = smooth_coef
         self._floor = floor
         self._per_channel_smooth_coef = per_channel_smooth_coef
         self.skip_transpose = skip_transpose
-        self.alpha = nn.Parameter(
-            torch.ones(input_size) * alpha, requires_grad=trainable
-        )
-        self.delta = nn.Parameter(
-            torch.ones(input_size) * delta, requires_grad=trainable
-        )
-        self.root = nn.Parameter(
-            torch.ones(input_size) * root, requires_grad=trainable
-        )
+        self.alpha = nn.Parameter(torch.ones(input_size) * alpha, requires_grad=trainable)
+        self.delta = nn.Parameter(torch.ones(input_size) * delta, requires_grad=trainable)
+        self.root = nn.Parameter(torch.ones(input_size) * root, requires_grad=trainable)
 
-        self.ema = ExponentialMovingAverage(
-            input_size,
-            coeff_init=self._smooth_coef,
-            per_channel=self._per_channel_smooth_coef,
-            skip_transpose=True,
-            trainable=trainable,
-        )
+        self.ema = ExponentialMovingAverage(input_size, coeff_init=self._smooth_coef, per_channel=self._per_channel_smooth_coef, skip_transpose=True, trainable=trainable)
 
     def forward(self, x):
         """Returns the normalized input tensor.
@@ -649,22 +527,11 @@ class PCEN(nn.Module):
         """
         if not self.skip_transpose:
             x = x.transpose(1, -1)
-        alpha = torch.min(
-            self.alpha, torch.tensor(1.0, dtype=x.dtype, device=x.device)
-        )
-        root = torch.max(
-            self.root, torch.tensor(1.0, dtype=x.dtype, device=x.device)
-        )
+        alpha = torch.min(self.alpha, torch.tensor(1.0, dtype=x.dtype, device=x.device))
+        root = torch.max(self.root, torch.tensor(1.0, dtype=x.dtype, device=x.device))
         ema_smoother = self.ema(x)
         one_over_root = 1.0 / root
-        output = (
-            x / (self._floor + ema_smoother) ** alpha.view(1, -1, 1)
-            + self.delta.view(1, -1, 1)
-        ) ** one_over_root.view(1, -1, 1) - self.delta.view(
-            1, -1, 1
-        ) ** one_over_root.view(
-            1, -1, 1
-        )
+        output = (x / (self._floor + ema_smoother) ** alpha.view(1, -1, 1) + self.delta.view(1, -1, 1)) ** one_over_root.view(1, -1, 1) - self.delta.view(1, -1, 1) ** one_over_root.view(1, -1, 1)
         if not self.skip_transpose:
             output = output.transpose(1, -1)
         return output

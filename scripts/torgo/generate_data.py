@@ -24,6 +24,7 @@ Run from the seed-vc repo root:
 VC params match the originals: diffusion-steps 30, length-adjust 1.0,
 inference-cfg-rate 0.7, f0-condition False, seed 1234, fp16 True.
 """
+
 import argparse
 import os
 import sys
@@ -34,13 +35,12 @@ import librosa
 import torch
 import torchaudio
 
-SEED_VC_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-                            "third_party", "seed-vc")
+SEED_VC_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "third_party", "seed-vc")
 sys.path.insert(0, SEED_VC_ROOT)
 
 DYS = ["F01", "F03", "F04", "M01", "M02", "M03", "M04", "M05"]
 CONTROL = ["FC01", "FC02", "FC03", "MC01", "MC02", "MC03", "MC04"]
-SOURCES = ["F01", "M01", "M02", "M04", "M05"]                 # pathology/content donors
+SOURCES = ["F01", "M01", "M02", "M04", "M05"]  # pathology/content donors
 TARGETS_NEW = ["F03", "F04", "FC01", "FC02", "FC03", "M03", "MC01", "MC02", "MC03", "MC04"]
 
 
@@ -81,8 +81,7 @@ def scan_torgo(torgo_root):
                     text = prompts.get(uid)
                     if text is None:
                         continue
-                    rows.append({"wav": os.path.join(mdir, f), "spk": spk, "session": session,
-                                 "mic": mic, "uid": uid, "text": text})
+                    rows.append({"wav": os.path.join(mdir, f), "spk": spk, "session": session, "mic": mic, "uid": uid, "text": text})
     return rows
 
 
@@ -106,8 +105,7 @@ def build_pairs_new(rows, output_dir, rng):
                 if not cands:
                     continue
                 src = cands[int(rng.integers(0, len(cands)))]
-                out = os.path.join(output_dir, f"{x}_converted_from_{y}",
-                                   tr["session"], tr["mic"], tr["uid"] + ".wav")
+                out = os.path.join(output_dir, f"{x}_converted_from_{y}", tr["session"], tr["mic"], tr["uid"] + ".wav")
                 pairs.append((src["wav"], tr["wav"], out))
     return pairs
 
@@ -118,22 +116,20 @@ def build_pairs_old(rows, output_dir, rng):
     by_text = {}
     for r in rows:
         by_text.setdefault(r["text"], []).append(r)
-    for x in SOURCES:                      # X = timbre target (patient)
+    for x in SOURCES:  # X = timbre target (patient)
         tgt_rows = [r for r in rows if r["spk"] == x]
         for tr in tgt_rows:
             cands = [r for r in by_text.get(tr["text"], []) if get_group(r["spk"]) != get_group(x)]
             if not cands:
                 continue
             src = cands[int(rng.integers(0, len(cands)))]
-            out = os.path.join(output_dir, f"{x}_converted",
-                               tr["session"], tr["mic"], tr["uid"] + ".wav")
+            out = os.path.join(output_dir, f"{x}_converted", tr["session"], tr["mic"], tr["uid"] + ".wav")
             pairs.append((src["wav"], tr["wav"], out))
     return pairs
 
 
 @torch.no_grad()
-def convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, fp16,
-                src_wav, ref_wav, out_path, diffusion_steps=30, length_adjust=1.0, inference_cfg_rate=0.7):
+def convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, fp16, src_wav, ref_wav, out_path, diffusion_steps=30, length_adjust=1.0, inference_cfg_rate=0.7):
     sr = 22050
     hop_length = 256
     max_context_window = sr // hop_length * 30
@@ -143,7 +139,7 @@ def convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, 
     source_audio = librosa.load(src_wav, sr=sr)[0]
     ref_audio = librosa.load(ref_wav, sr=sr)[0]
     source_audio = torch.tensor(source_audio).unsqueeze(0).float().to(device)
-    ref_audio = torch.tensor(ref_audio[:sr * 25]).unsqueeze(0).float().to(device)
+    ref_audio = torch.tensor(ref_audio[: sr * 25]).unsqueeze(0).float().to(device)
 
     converted_waves_16k = torchaudio.functional.resample(source_audio, sr, 16000)
     S_alt = semantic_fn(converted_waves_16k)
@@ -167,15 +163,12 @@ def convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, 
     generated_wave_chunks = []
     previous_chunk = None
     while processed_frames < cond.size(1):
-        chunk_cond = cond[:, processed_frames:processed_frames + max_source_window]
+        chunk_cond = cond[:, processed_frames : processed_frames + max_source_window]
         is_last_chunk = processed_frames + max_source_window >= cond.size(1)
         cat_condition = torch.cat([prompt_condition, chunk_cond], dim=1)
         with torch.autocast(device_type=device.type, dtype=torch.float16 if fp16 else torch.float32):
-            vc_target = model.cfm.inference(cat_condition,
-                                            torch.LongTensor([cat_condition.size(1)]).to(mel2.device),
-                                            mel2, style2, None, diffusion_steps,
-                                            inference_cfg_rate=inference_cfg_rate)
-            vc_target = vc_target[:, :, mel2.size(-1):]
+            vc_target = model.cfm.inference(cat_condition, torch.LongTensor([cat_condition.size(1)]).to(mel2.device), mel2, style2, None, diffusion_steps, inference_cfg_rate=inference_cfg_rate)
+            vc_target = vc_target[:, :, mel2.size(-1) :]
         vc_wave = vocoder_fn(vc_target.float()).squeeze()[None, :]
         if processed_frames == 0:
             if is_last_chunk:
@@ -188,8 +181,7 @@ def convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, 
             generated_wave_chunks.append(_crossfade(previous_chunk.cpu().numpy(), vc_wave[0].cpu().numpy(), overlap_wave_len))
             break
         else:
-            generated_wave_chunks.append(
-                _crossfade(previous_chunk.cpu().numpy(), vc_wave[0, :-overlap_wave_len].cpu().numpy(), overlap_wave_len))
+            generated_wave_chunks.append(_crossfade(previous_chunk.cpu().numpy(), vc_wave[0, :-overlap_wave_len].cpu().numpy(), overlap_wave_len))
             previous_chunk = vc_wave[0, -overlap_wave_len:]
             processed_frames += vc_target.size(2) - overlap_frame_len
     vc_wave = torch.tensor(np.concatenate(generated_wave_chunks))[None, :].float()
@@ -201,7 +193,7 @@ def _crossfade(chunk1, chunk2, overlap):
     fade_out = np.cos(np.linspace(0, np.pi / 2, overlap)) ** 2
     fade_in = np.cos(np.linspace(np.pi / 2, 0, overlap)) ** 2
     if len(chunk2) < overlap:
-        chunk2[:overlap] = chunk2[:overlap] * fade_in[:len(chunk2)] + (chunk1[-overlap:] * fade_out)[:len(chunk2)]
+        chunk2[:overlap] = chunk2[:overlap] * fade_in[: len(chunk2)] + (chunk1[-overlap:] * fade_out)[: len(chunk2)]
     else:
         chunk2[:overlap] = chunk2[:overlap] * fade_in + chunk1[-overlap:] * fade_out
     return chunk2
@@ -238,7 +230,7 @@ def main():
 
     todo = [p for i, p in enumerate(pairs) if i % args.num_shards == args.shard and not os.path.exists(p[2])]
     if args.max_items is not None:
-        todo = todo[:args.max_items]
+        todo = todo[: args.max_items]
     print(f"shard {args.shard}/{args.num_shards}: {len(todo)} to do")
     if args.dry_run:
         for src, ref, out in todo[:5]:
@@ -249,10 +241,12 @@ def main():
     # Load the f0-less Whisper-small Seed-VC model only after pair validation.
     import types as _types
     from inference import load_models
+
     la = _types.SimpleNamespace(f0_condition=False, checkpoint=None, config=None, fp16=args.fp16)
     global device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     import inference as _inf
+
     _inf.device = device
     _inf.fp16 = args.fp16
     model, semantic_fn, f0_fn, vocoder_fn, campplus_model, mel_fn, mel_fn_args = load_models(la)
@@ -260,8 +254,7 @@ def main():
     t0 = time.time()
     for i, (src, ref, out) in enumerate(todo, 1):
         try:
-            convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, args.fp16,
-                        src, ref, out, args.diffusion_steps, args.length_adjust, args.inference_cfg_rate)
+            convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, args.fp16, src, ref, out, args.diffusion_steps, args.length_adjust, args.inference_cfg_rate)
         except Exception as e:
             print(f"[{i}/{len(todo)}] FAILED src={src} ref={ref} err={repr(e)}")
         if i % 100 == 0:

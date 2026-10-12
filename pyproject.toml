@@ -77,6 +77,10 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["indextts"]
 
+[tool.black]
+line-length = 300
+skip-magic-trailing-comma = true
+
 [tool.uv.sources]
 # Install PyTorch with CUDA support on Linux/Windows (CUDA doesn't exist for Mac).
 # NOTE: We must explicitly request them as `dependencies` above. These improved

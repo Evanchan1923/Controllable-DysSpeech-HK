@@ -41,61 +41,22 @@ class AMPBlock1(torch.nn.Module):
         activation (str): Activation function type. Should be either 'snake' or 'snakebeta'. Default is None.
     """
 
-    def __init__(
-            self,
-            h: AttrDict,
-            channels: int,
-            kernel_size: int = 3,
-            dilation: tuple = (1, 3, 5),
-            activation: str = None,
-    ):
+    def __init__(self, h: AttrDict, channels: int, kernel_size: int = 3, dilation: tuple = (1, 3, 5), activation: str = None):
         super().__init__()
 
         self.h = h
 
-        self.convs1 = nn.ModuleList(
-            [
-                weight_norm(
-                    Conv1d(
-                        channels,
-                        channels,
-                        kernel_size,
-                        stride=1,
-                        dilation=d,
-                        padding=get_padding(kernel_size, d),
-                    )
-                )
-                for d in dilation
-            ]
-        )
+        self.convs1 = nn.ModuleList([weight_norm(Conv1d(channels, channels, kernel_size, stride=1, dilation=d, padding=get_padding(kernel_size, d))) for d in dilation])
         self.convs1.apply(init_weights)
 
-        self.convs2 = nn.ModuleList(
-            [
-                weight_norm(
-                    Conv1d(
-                        channels,
-                        channels,
-                        kernel_size,
-                        stride=1,
-                        dilation=1,
-                        padding=get_padding(kernel_size, 1),
-                    )
-                )
-                for _ in range(len(dilation))
-            ]
-        )
+        self.convs2 = nn.ModuleList([weight_norm(Conv1d(channels, channels, kernel_size, stride=1, dilation=1, padding=get_padding(kernel_size, 1))) for _ in range(len(dilation))])
         self.convs2.apply(init_weights)
 
-        self.num_layers = len(self.convs1) + len(
-            self.convs2
-        )  # Total number of conv layers
+        self.num_layers = len(self.convs1) + len(self.convs2)  # Total number of conv layers
 
         # Select which Activation1d, lazy-load cuda version to ensure backward compatibility
         if self.h.get("use_cuda_kernel", False):
-            from .alias_free_activation.cuda.activation1d import (
-                Activation1d as CudaActivation1d,
-            )
+            from .alias_free_activation.cuda.activation1d import Activation1d as CudaActivation1d
 
             Activation1d = CudaActivation1d
         else:
@@ -103,31 +64,11 @@ class AMPBlock1(torch.nn.Module):
 
         # Activation functions
         if activation == "snake":
-            self.activations = nn.ModuleList(
-                [
-                    Activation1d(
-                        activation=activations.Snake(
-                            channels, alpha_logscale=h.snake_logscale
-                        )
-                    )
-                    for _ in range(self.num_layers)
-                ]
-            )
+            self.activations = nn.ModuleList([Activation1d(activation=activations.Snake(channels, alpha_logscale=h.snake_logscale)) for _ in range(self.num_layers)])
         elif activation == "snakebeta":
-            self.activations = nn.ModuleList(
-                [
-                    Activation1d(
-                        activation=activations.SnakeBeta(
-                            channels, alpha_logscale=h.snake_logscale
-                        )
-                    )
-                    for _ in range(self.num_layers)
-                ]
-            )
+            self.activations = nn.ModuleList([Activation1d(activation=activations.SnakeBeta(channels, alpha_logscale=h.snake_logscale)) for _ in range(self.num_layers)])
         else:
-            raise NotImplementedError(
-                "activation incorrectly specified. check the config file and look for 'activation'."
-            )
+            raise NotImplementedError("activation incorrectly specified. check the config file and look for 'activation'.")
 
     def forward(self, x):
         acts1, acts2 = self.activations[::2], self.activations[1::2]
@@ -160,42 +101,19 @@ class AMPBlock2(torch.nn.Module):
         activation (str): Activation function type. Should be either 'snake' or 'snakebeta'. Default is None.
     """
 
-    def __init__(
-            self,
-            h: AttrDict,
-            channels: int,
-            kernel_size: int = 3,
-            dilation: tuple = (1, 3, 5),
-            activation: str = None,
-    ):
+    def __init__(self, h: AttrDict, channels: int, kernel_size: int = 3, dilation: tuple = (1, 3, 5), activation: str = None):
         super().__init__()
 
         self.h = h
 
-        self.convs = nn.ModuleList(
-            [
-                weight_norm(
-                    Conv1d(
-                        channels,
-                        channels,
-                        kernel_size,
-                        stride=1,
-                        dilation=d,
-                        padding=get_padding(kernel_size, d),
-                    )
-                )
-                for d in dilation
-            ]
-        )
+        self.convs = nn.ModuleList([weight_norm(Conv1d(channels, channels, kernel_size, stride=1, dilation=d, padding=get_padding(kernel_size, d))) for d in dilation])
         self.convs.apply(init_weights)
 
         self.num_layers = len(self.convs)  # Total number of conv layers
 
         # Select which Activation1d, lazy-load cuda version to ensure backward compatibility
         if self.h.get("use_cuda_kernel", False):
-            from .alias_free_activation.cuda.activation1d import (
-                Activation1d as CudaActivation1d,
-            )
+            from .alias_free_activation.cuda.activation1d import Activation1d as CudaActivation1d
 
             Activation1d = CudaActivation1d
         else:
@@ -203,31 +121,11 @@ class AMPBlock2(torch.nn.Module):
 
         # Activation functions
         if activation == "snake":
-            self.activations = nn.ModuleList(
-                [
-                    Activation1d(
-                        activation=activations.Snake(
-                            channels, alpha_logscale=h.snake_logscale
-                        )
-                    )
-                    for _ in range(self.num_layers)
-                ]
-            )
+            self.activations = nn.ModuleList([Activation1d(activation=activations.Snake(channels, alpha_logscale=h.snake_logscale)) for _ in range(self.num_layers)])
         elif activation == "snakebeta":
-            self.activations = nn.ModuleList(
-                [
-                    Activation1d(
-                        activation=activations.SnakeBeta(
-                            channels, alpha_logscale=h.snake_logscale
-                        )
-                    )
-                    for _ in range(self.num_layers)
-                ]
-            )
+            self.activations = nn.ModuleList([Activation1d(activation=activations.SnakeBeta(channels, alpha_logscale=h.snake_logscale)) for _ in range(self.num_layers)])
         else:
-            raise NotImplementedError(
-                "activation incorrectly specified. check the config file and look for 'activation'."
-            )
+            raise NotImplementedError("activation incorrectly specified. check the config file and look for 'activation'.")
 
     def forward(self, x):
         for c, a in zip(self.convs, self.activations):
@@ -240,16 +138,7 @@ class AMPBlock2(torch.nn.Module):
             remove_weight_norm(l)
 
 
-class BigVGAN(
-    torch.nn.Module,
-    PyTorchModelHubMixin,
-    library_name="bigvgan",
-    repo_url="https://github.com/NVIDIA/BigVGAN",
-    docs_url="https://github.com/NVIDIA/BigVGAN/blob/main/README.md",
-    pipeline_tag="audio-to-audio",
-    license="mit",
-    tags=["neural-vocoder", "audio-generation", "arxiv:2206.04658"],
-):
+class BigVGAN(torch.nn.Module, PyTorchModelHubMixin, library_name="bigvgan", repo_url="https://github.com/NVIDIA/BigVGAN", docs_url="https://github.com/NVIDIA/BigVGAN/blob/main/README.md", pipeline_tag="audio-to-audio", license="mit", tags=["neural-vocoder", "audio-generation", "arxiv:2206.04658"]):
     """
     BigVGAN is a neural vocoder model that applies anti-aliased periodic activation for residual blocks (resblocks).
     New in BigVGAN-v2: it can optionally use optimized CUDA kernels for AMP (anti-aliased multi-periodicity) blocks.
@@ -270,9 +159,7 @@ class BigVGAN(
 
         # Select which Activation1d, lazy-load cuda version to ensure backward compatibility
         if self.h.get("use_cuda_kernel", False):
-            from .alias_free_activation.cuda.activation1d import (
-                Activation1d as CudaActivation1d,
-            )
+            from .alias_free_activation.cuda.activation1d import Activation1d as CudaActivation1d
 
             Activation1d = CudaActivation1d
         else:
@@ -282,9 +169,7 @@ class BigVGAN(
         self.num_upsamples = len(h.upsample_rates)
 
         # Pre-conv
-        self.conv_pre = weight_norm(
-            Conv1d(h.num_mels, h.upsample_initial_channel, 7, 1, padding=3)
-        )
+        self.conv_pre = weight_norm(Conv1d(h.num_mels, h.upsample_initial_channel, 7, 1, padding=3))
 
         # Define which AMPBlock to use. BigVGAN uses AMPBlock1 as default
         if h.resblock == "1":
@@ -292,62 +177,30 @@ class BigVGAN(
         elif h.resblock == "2":
             resblock_class = AMPBlock2
         else:
-            raise ValueError(
-                f"Incorrect resblock class specified in hyperparameters. Got {h.resblock}"
-            )
+            raise ValueError(f"Incorrect resblock class specified in hyperparameters. Got {h.resblock}")
 
         # Transposed conv-based upsamplers. does not apply anti-aliasing
         self.ups = nn.ModuleList()
         for i, (u, k) in enumerate(zip(h.upsample_rates, h.upsample_kernel_sizes)):
-            self.ups.append(
-                nn.ModuleList(
-                    [
-                        weight_norm(
-                            ConvTranspose1d(
-                                h.upsample_initial_channel // (2 ** i),
-                                h.upsample_initial_channel // (2 ** (i + 1)),
-                                k,
-                                u,
-                                padding=(k - u) // 2,
-                            )
-                        )
-                    ]
-                )
-            )
+            self.ups.append(nn.ModuleList([weight_norm(ConvTranspose1d(h.upsample_initial_channel // (2**i), h.upsample_initial_channel // (2 ** (i + 1)), k, u, padding=(k - u) // 2))]))
 
         # Residual blocks using anti-aliased multi-periodicity composition modules (AMP)
         self.resblocks = nn.ModuleList()
         for i in range(len(self.ups)):
             ch = h.upsample_initial_channel // (2 ** (i + 1))
-            for j, (k, d) in enumerate(
-                    zip(h.resblock_kernel_sizes, h.resblock_dilation_sizes)
-            ):
-                self.resblocks.append(
-                    resblock_class(h, ch, k, d, activation=h.activation)
-                )
+            for j, (k, d) in enumerate(zip(h.resblock_kernel_sizes, h.resblock_dilation_sizes)):
+                self.resblocks.append(resblock_class(h, ch, k, d, activation=h.activation))
 
         # Post-conv
-        activation_post = (
-            activations.Snake(ch, alpha_logscale=h.snake_logscale)
-            if h.activation == "snake"
-            else (
-                activations.SnakeBeta(ch, alpha_logscale=h.snake_logscale)
-                if h.activation == "snakebeta"
-                else None
-            )
-        )
+        activation_post = activations.Snake(ch, alpha_logscale=h.snake_logscale) if h.activation == "snake" else (activations.SnakeBeta(ch, alpha_logscale=h.snake_logscale) if h.activation == "snakebeta" else None)
         if activation_post is None:
-            raise NotImplementedError(
-                "activation incorrectly specified. check the config file and look for 'activation'."
-            )
+            raise NotImplementedError("activation incorrectly specified. check the config file and look for 'activation'.")
 
         self.activation_post = Activation1d(activation=activation_post)
 
         # Whether to use bias for the final conv_post. Default to True for backward compatibility
         self.use_bias_at_final = h.get("use_bias_at_final", True)
-        self.conv_post = weight_norm(
-            Conv1d(ch, 1, 7, 1, padding=3, bias=self.use_bias_at_final)
-        )
+        self.conv_post = weight_norm(Conv1d(ch, 1, 7, 1, padding=3, bias=self.use_bias_at_final))
 
         # Weight initialization
         for i in range(len(self.ups)):
@@ -412,20 +265,20 @@ class BigVGAN(
 
     @classmethod
     def _from_pretrained(
-            cls,
-            *,
-            model_id: str,
-            revision: str,
-            cache_dir: str,
-            force_download: bool,
-            proxies: Optional[Dict],
-            resume_download: bool,
-            local_files_only: bool,
-            token: Union[str, bool, None],
-            map_location: str = "cpu",  # Additional argument
-            strict: bool = False,  # Additional argument
-            use_cuda_kernel: bool = False,
-            **model_kwargs,
+        cls,
+        *,
+        model_id: str,
+        revision: str,
+        cache_dir: str,
+        force_download: bool,
+        proxies: Optional[Dict],
+        resume_download: bool,
+        local_files_only: bool,
+        token: Union[str, bool, None],
+        map_location: str = "cpu",  # Additional argument
+        strict: bool = False,  # Additional argument
+        use_cuda_kernel: bool = False,
+        **model_kwargs,
     ):
         """Load Pytorch pretrained weights and return the loaded model."""
 
@@ -434,30 +287,14 @@ class BigVGAN(
             print("Loading config.json from local directory")
             config_file = os.path.join(model_id, "config.json")
         else:
-            config_file = hf_hub_download(
-                repo_id=model_id,
-                filename="config.json",
-                revision=revision,
-                cache_dir=cache_dir,
-                force_download=force_download,
-                proxies=proxies,
-                resume_download=resume_download,
-                token=token,
-                local_files_only=local_files_only,
-            )
+            config_file = hf_hub_download(repo_id=model_id, filename="config.json", revision=revision, cache_dir=cache_dir, force_download=force_download, proxies=proxies, resume_download=resume_download, token=token, local_files_only=local_files_only)
         h = load_hparams_from_json(config_file)
 
         # instantiate BigVGAN using h
         if use_cuda_kernel:
-            print(
-                f"[WARNING] You have specified use_cuda_kernel=True during BigVGAN.from_pretrained(). Only inference is supported (training is not implemented)!"
-            )
-            print(
-                f"[WARNING] You need nvcc and ninja installed in your system that matches your PyTorch build is using to build the kernel. If not, the model will fail to initialize or generate incorrect waveform!"
-            )
-            print(
-                f"[WARNING] For detail, see the official GitHub repository: https://github.com/NVIDIA/BigVGAN?tab=readme-ov-file#using-custom-cuda-kernel-for-synthesis"
-            )
+            print(f"[WARNING] You have specified use_cuda_kernel=True during BigVGAN.from_pretrained(). Only inference is supported (training is not implemented)!")
+            print(f"[WARNING] You need nvcc and ninja installed in your system that matches your PyTorch build is using to build the kernel. If not, the model will fail to initialize or generate incorrect waveform!")
+            print(f"[WARNING] For detail, see the official GitHub repository: https://github.com/NVIDIA/BigVGAN?tab=readme-ov-file#using-custom-cuda-kernel-for-synthesis")
         model = cls(h, use_cuda_kernel=use_cuda_kernel)
 
         # Download and load pretrained generator weight
@@ -466,26 +303,14 @@ class BigVGAN(
             model_file = os.path.join(model_id, "bigvgan_generator.pt")
         else:
             print(f"Loading weights from {model_id}")
-            model_file = hf_hub_download(
-                repo_id=model_id,
-                filename="bigvgan_generator.pt",
-                revision=revision,
-                cache_dir=cache_dir,
-                force_download=force_download,
-                proxies=proxies,
-                resume_download=resume_download,
-                token=token,
-                local_files_only=local_files_only,
-            )
+            model_file = hf_hub_download(repo_id=model_id, filename="bigvgan_generator.pt", revision=revision, cache_dir=cache_dir, force_download=force_download, proxies=proxies, resume_download=resume_download, token=token, local_files_only=local_files_only)
 
         checkpoint_dict = torch.load(model_file, map_location=map_location)
 
         try:
             model.load_state_dict(checkpoint_dict["generator"])
         except RuntimeError:
-            print(
-                f"[INFO] the pretrained checkpoint does not contain weight norm. Loading the checkpoint after removing weight norm!"
-            )
+            print(f"[INFO] the pretrained checkpoint does not contain weight norm. Loading the checkpoint after removing weight norm!")
             model.remove_weight_norm()
             model.load_state_dict(checkpoint_dict["generator"])
 

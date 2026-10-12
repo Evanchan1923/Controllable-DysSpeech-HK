@@ -29,46 +29,18 @@ def load():
 
     # Helper function to build the kernels.
     def _cpp_extention_load_helper(name, sources, extra_cuda_flags):
-        return cpp_extension.load(
-            name=name,
-            sources=sources,
-            build_directory=buildpath,
-            extra_cflags=[
-                "-O3",
-            ],
-            extra_cuda_cflags=[
-                "-O3",
-                "-gencode",
-                "arch=compute_70,code=sm_70",
-                "--use_fast_math",
-            ]
-            + extra_cuda_flags
-            + cc_flag,
-            verbose=True,
-        )
+        return cpp_extension.load(name=name, sources=sources, build_directory=buildpath, extra_cflags=["-O3"], extra_cuda_cflags=["-O3", "-gencode", "arch=compute_70,code=sm_70", "--use_fast_math"] + extra_cuda_flags + cc_flag, verbose=True)
 
-    extra_cuda_flags = [
-        "-U__CUDA_NO_HALF_OPERATORS__",
-        "-U__CUDA_NO_HALF_CONVERSIONS__",
-        "--expt-relaxed-constexpr",
-        "--expt-extended-lambda",
-    ]
+    extra_cuda_flags = ["-U__CUDA_NO_HALF_OPERATORS__", "-U__CUDA_NO_HALF_CONVERSIONS__", "--expt-relaxed-constexpr", "--expt-extended-lambda"]
 
-    sources = [
-        srcpath / "anti_alias_activation.cpp",
-        srcpath / "anti_alias_activation_cuda.cu",
-    ]
-    anti_alias_activation_cuda = _cpp_extention_load_helper(
-        "anti_alias_activation_cuda", sources, extra_cuda_flags
-    )
+    sources = [srcpath / "anti_alias_activation.cpp", srcpath / "anti_alias_activation_cuda.cu"]
+    anti_alias_activation_cuda = _cpp_extention_load_helper("anti_alias_activation_cuda", sources, extra_cuda_flags)
 
     return anti_alias_activation_cuda
 
 
 def _get_cuda_bare_metal_version(cuda_dir):
-    raw_output = subprocess.check_output(
-        [cuda_dir + "/bin/nvcc", "-V"], universal_newlines=True
-    )
+    raw_output = subprocess.check_output([cuda_dir + "/bin/nvcc", "-V"], universal_newlines=True)
     output = raw_output.split()
     release_idx = output.index("release") + 1
     release = output[release_idx].split(".")

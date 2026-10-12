@@ -13,7 +13,6 @@ finetune_models/
 data/
 outputs/
 samples*/
-logs/
 runs/
 *.wav
 *.flac
@@ -21,7 +20,6 @@ runs/
 *.npy
 *.npz
 *.jsonl
-*.log
 
 # Local audit/download material
 server_snapshot/

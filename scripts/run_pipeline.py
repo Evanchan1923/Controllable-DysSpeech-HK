@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Universal config-driven entry point for SAPC VC checks and full training."""
+
 from __future__ import annotations
 
 import argparse
@@ -10,7 +11,6 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-
 
 ROOT = Path(__file__).resolve().parents[1]
 FULL_STAGES = ("cache_models", "generate", "prepare", "train", "infer")
@@ -38,9 +38,7 @@ def validate_dataset(path: Path) -> None:
         raise ValueError(f"SAPC DatasetDict/train split not found at {path}")
 
 
-def full_training_commands(
-    cfg: dict[str, Any], settings: Path, requested_stage: str | None
-) -> tuple[Path, list[tuple[Path, list[str]]]]:
+def full_training_commands(cfg: dict[str, Any], settings: Path, requested_stage: str | None) -> tuple[Path, list[tuple[Path, list[str]]]]:
     stages = selected_stages(cfg["run"]["stages"], requested_stage, FULL_STAGES)
     run_root = required_path(cfg["run"]["root"], "run.root")
     name = str(cfg["run"]["name"])
@@ -60,18 +58,13 @@ def full_training_commands(
             raise ValueError("Set dataset.pathology_labels mapping")
         condition_cfg = cfg["dataset"].get("condition_labels") or {}
         if condition_cfg.get("mode") == "joint_etiology_severity":
-            severity_csv = required_path(
-                condition_cfg.get("speaker_csv"), "dataset.condition_labels.speaker_csv"
-            )
+            severity_csv = required_path(condition_cfg.get("speaker_csv"), "dataset.condition_labels.speaker_csv")
             if not severity_csv.is_file():
                 raise ValueError(f"Speaker severity CSV missing: {severity_csv}")
             severity_mapping = condition_cfg.get("severity_mapping") or {}
             expected_classes = len(labels.get("mapping") or {}) * len(severity_mapping)
             if int(condition_cfg.get("num_classes", -1)) != expected_classes:
-                raise ValueError(
-                    "dataset.condition_labels.num_classes must equal "
-                    f"etiologies x severities ({expected_classes})"
-                )
+                raise ValueError("dataset.condition_labels.num_classes must equal " f"etiologies x severities ({expected_classes})")
 
     model_dir = None
     if any(stage in stages for stage in ("prepare", "train", "infer")):
@@ -90,38 +83,45 @@ def full_training_commands(
         raise ValueError(f"Prepared data missing: {prepared / 'speaker_info.json'}")
 
     condition_cfg = cfg["dataset"].get("condition_labels") or {}
-    num_classes = int(
-        condition_cfg.get("num_classes", cfg["dataset"]["pathology_labels"]["num_classes"])
-    )
+    num_classes = int(condition_cfg.get("num_classes", cfg["dataset"]["pathology_labels"]["num_classes"]))
     python = sys.executable
     commands: list[tuple[Path, list[str]]] = []
     if "cache_models" in stages:
         commands.append((ROOT, [python, "scripts/cache_seedvc_models.py"]))
     if "generate" in stages:
         generation = cfg["generate"]
-        commands.append((ROOT, [
-            python, "scripts/generate_sapc.py", "--settings", str(settings),
-            "--out-dir", str(converted), "--num-shards", str(generation["num_shards"]),
-            "--shard", str(generation["shard"]),
-        ]))
+        commands.append((ROOT, [python, "scripts/generate_sapc.py", "--settings", str(settings), "--out-dir", str(converted), "--num-shards", str(generation["num_shards"]), "--shard", str(generation["shard"])]))
     if "prepare" in stages:
-        commands.append((ROOT, [
-            python, "scripts/prepare_sapc.py", "--settings", str(settings),
-            "--out-dir", str(prepared), "--model-dir", str(model_dir),
-            "--config", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"),
-            "--converted-dir", str(converted),
-        ]))
+        commands.append((ROOT, [python, "scripts/prepare_sapc.py", "--settings", str(settings), "--out-dir", str(prepared), "--model-dir", str(model_dir), "--config", str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"), "--converted-dir", str(converted)]))
     if "train" in stages:
         training_cfg = cfg["train"]
-        commands.append((ROOT, [
-            python, "train.py", "--config",
-            str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"),
-            "--model-dir", str(model_dir), "--output-dir", str(training),
-            "--data-dir", str(prepared), "--embedding-dir", str(prepared / "pathology_embedding"),
-            "--num-pathology-classes", str(num_classes), "--epochs", str(training_cfg["epochs"]),
-            "--batch-size", str(training_cfg["batch_size"]),
-            "--num-workers", str(training_cfg["num_workers"]),
-        ]))
+        commands.append(
+            (
+                ROOT,
+                [
+                    python,
+                    "train.py",
+                    "--config",
+                    str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"),
+                    "--model-dir",
+                    str(model_dir),
+                    "--output-dir",
+                    str(training),
+                    "--data-dir",
+                    str(prepared),
+                    "--embedding-dir",
+                    str(prepared / "pathology_embedding"),
+                    "--num-pathology-classes",
+                    str(num_classes),
+                    "--epochs",
+                    str(training_cfg["epochs"]),
+                    "--batch-size",
+                    str(training_cfg["batch_size"]),
+                    "--num-workers",
+                    str(training_cfg["num_workers"]),
+                ],
+            )
+        )
     if "infer" in stages:
         prompt = required_path(cfg["run"].get("prompt_wav"), "run.prompt_wav")
         if not prompt.is_file():
@@ -135,44 +135,52 @@ def full_training_commands(
         condition_id = cfg["run"].get("condition_id", cfg["run"].get("pathology"))
         if condition_id is None:
             raise ValueError("Set run.condition_id for inference")
-        commands.append((ROOT, [
-            python, "-m", "indextts.inference", "--cfg",
-            str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"),
-            "--model-dir", str(model_dir), "--gpt-ckpt", str(checkpoint),
-            "--num-pathology-classes", str(num_classes), "--prompt", str(prompt),
-            "--text", str(text), "--pathology", str(condition_id),
-            "--out", str(outputs / cfg["inference"]["output_name"]),
-        ]))
+        commands.append(
+            (
+                ROOT,
+                [
+                    python,
+                    "-m",
+                    "indextts.inference",
+                    "--cfg",
+                    str(ROOT / "configs/controllable_dysarthric_speech_synthesis.yaml"),
+                    "--model-dir",
+                    str(model_dir),
+                    "--gpt-ckpt",
+                    str(checkpoint),
+                    "--num-pathology-classes",
+                    str(num_classes),
+                    "--prompt",
+                    str(prompt),
+                    "--text",
+                    str(text),
+                    "--pathology",
+                    str(condition_id),
+                    "--out",
+                    str(outputs / cfg["inference"]["output_name"]),
+                ],
+            )
+        )
     return run_dir, commands
 
 
-def vc_validation_commands(
-    cfg: dict[str, Any], settings: Path, requested_stage: str | None, dry_run: bool
-) -> tuple[Path, list[tuple[Path, list[str]]]]:
+def vc_validation_commands(cfg: dict[str, Any], settings: Path, requested_stage: str | None, dry_run: bool) -> tuple[Path, list[tuple[Path, list[str]]]]:
     stages = selected_stages(cfg["pipeline"]["stages"], requested_stage, VC_VALIDATION_STAGES)
     dataset = required_path(cfg["dataset"]["path"], "dataset.path")
     validate_dataset(dataset)
-    severity_csv = required_path(
-        cfg["dataset"]["condition_labels"].get("speaker_csv"),
-        "dataset.condition_labels.speaker_csv",
-    )
+    severity_csv = required_path(cfg["dataset"]["condition_labels"].get("speaker_csv"), "dataset.condition_labels.speaker_csv")
     if not severity_csv.is_file():
         raise ValueError(f"Speaker severity CSV missing: {severity_csv}")
     output_dir = required_path(cfg["experiment"]["output_dir"], "experiment.output_dir")
     python = sys.executable
     commands: list[tuple[Path, list[str]]] = []
     if "generate" in stages:
-        command = [
-            python, "scripts/generate_sapc.py", "--settings", str(settings),
-            "--out-dir", str(output_dir), "--validation-pair",
-        ]
+        command = [python, "scripts/generate_sapc.py", "--settings", str(settings), "--out-dir", str(output_dir), "--validation-pair"]
         if dry_run:
             command.append("--plan")
         commands.append((ROOT, command))
     if "debug" in stages and not dry_run:
-        commands.append((ROOT, [
-            python, "scripts/debug_vc.py", "--experiment-dir", str(output_dir),
-        ]))
+        commands.append((ROOT, [python, "scripts/debug_vc.py", "--experiment-dir", str(output_dir)]))
     return output_dir, commands
 
 
@@ -193,9 +201,7 @@ def main() -> None:
     elif pipeline_type == "vc_validation":
         output_dir, commands = vc_validation_commands(cfg, settings, args.stage, args.dry_run)
     else:
-        raise ValueError(
-            "pipeline.type must be 'vc_validation' or 'full_training'"
-        )
+        raise ValueError("pipeline.type must be 'vc_validation' or 'full_training'")
     print(f"Pipeline type: {pipeline_type}")
     print(f"Output directory: {output_dir}")
     for cwd, command in commands:

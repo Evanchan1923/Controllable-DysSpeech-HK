@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Aggregate SAPC utterance WER/CER into one severity row per speaker."""
+
 from __future__ import annotations
 
 import argparse
@@ -7,7 +8,6 @@ import csv
 from collections import Counter, defaultdict
 from pathlib import Path
 from statistics import median
-
 
 OUTPUT_COLUMNS = [
     "speaker",
@@ -34,33 +34,10 @@ OUTPUT_COLUMNS = [
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--utterance-csv",
-        type=Path,
-        default=Path(
-            "configs/utterance_research_v1_noFTModel/"
-            "severity-utterance-labelling.csv"
-        ),
-    )
-    parser.add_argument(
-        "--output-csv",
-        type=Path,
-        default=Path(
-            "configs/utterance_research_v1_noFTModel/"
-            "severity-speaker-labelling.csv"
-        ),
-    )
-    parser.add_argument(
-        "--metadata-report",
-        type=Path,
-        default=Path("sapc_dataset_report.txt"),
-        help="Metadata-only report produced by inspect_sapc_metadata.py.",
-    )
-    parser.add_argument(
-        "--dataset",
-        type=Path,
-        help="Optional SAPC DatasetDict; takes precedence over --metadata-report.",
-    )
+    parser.add_argument("--utterance-csv", type=Path, default=Path("configs/utterance_research_v1_noFTModel/" "severity-utterance-labelling.csv"))
+    parser.add_argument("--output-csv", type=Path, default=Path("configs/utterance_research_v1_noFTModel/" "severity-speaker-labelling.csv"))
+    parser.add_argument("--metadata-report", type=Path, default=Path("sapc_dataset_report.txt"), help="Metadata-only report produced by inspect_sapc_metadata.py.")
+    parser.add_argument("--dataset", type=Path, help="Optional SAPC DatasetDict; takes precedence over --metadata-report.")
     parser.add_argument("--low-cer", type=float, default=0.10)
     parser.add_argument("--high-cer", type=float, default=0.30)
     return parser.parse_args()
@@ -97,10 +74,7 @@ def etiologies_from_report(path: Path) -> dict[tuple[str, str], str]:
         key = (split, speaker)
         previous = result.setdefault(key, etiology)
         if previous != etiology:
-            raise ValueError(
-                f"Speaker {speaker!r} has multiple etiologies in {split}: "
-                f"{previous!r}, {etiology!r}"
-            )
+            raise ValueError(f"Speaker {speaker!r} has multiple etiologies in {split}: " f"{previous!r}, {etiology!r}")
     if not result:
         raise ValueError(f"No per-speaker etiology rows found in {path}")
     return result
@@ -128,10 +102,7 @@ def etiologies_from_dataset(path: Path) -> dict[tuple[str, str], str]:
             key = (split, speaker)
             previous = result.setdefault(key, etiology)
             if previous != etiology:
-                raise ValueError(
-                    f"Speaker {speaker!r} has multiple etiologies in {split}: "
-                    f"{previous!r}, {etiology!r}"
-                )
+                raise ValueError(f"Speaker {speaker!r} has multiple etiologies in {split}: " f"{previous!r}, {etiology!r}")
     return result
 
 
@@ -152,9 +123,7 @@ def main() -> None:
         speaker_etiology = etiologies_from_report(report)
         metadata_source = f"report:{report}"
 
-    grouped: dict[tuple[str, str], dict[str, object]] = defaultdict(
-        lambda: {"wers": [], "cers": [], "ids": set()}
-    )
+    grouped: dict[tuple[str, str], dict[str, object]] = defaultdict(lambda: {"wers": [], "cers": [], "ids": set()})
     utterance_csv = args.utterance_csv.expanduser().resolve()
     with utterance_csv.open(encoding="utf-8", newline="") as input_file:
         reader = csv.DictReader(input_file)
@@ -179,9 +148,7 @@ def main() -> None:
     missing_metadata = sorted(set(grouped) - set(speaker_etiology))
     if missing_metadata:
         preview = ", ".join(f"{split}/{speaker}" for split, speaker in missing_metadata[:5])
-        raise KeyError(
-            f"Missing etiology metadata for {len(missing_metadata)} speakers: {preview}"
-        )
+        raise KeyError(f"Missing etiology metadata for {len(missing_metadata)} speakers: {preview}")
 
     output_rows = []
     for (split, speaker), values in sorted(grouped.items()):
@@ -190,9 +157,7 @@ def main() -> None:
         count = len(cers)
         avg_wer = sum(wers) / count
         avg_cer = sum(cers) / count
-        utterance_counts = Counter(
-            severity(cer, args.low_cer, args.high_cer) for cer in cers
-        )
+        utterance_counts = Counter(severity(cer, args.low_cer, args.high_cer) for cer in cers)
         output_rows.append(
             {
                 "speaker": speaker,

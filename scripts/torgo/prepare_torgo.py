@@ -19,6 +19,7 @@ pathology_label classes (per-patient, ground truth from the original metadata):
 Item fields (as consumed by data_utils_pathology_disentangle_embedding.FinetuneDataset):
   text, codes, mels, condition, duration, pathology_label, patient_id
 """
+
 import argparse
 import json
 import os
@@ -35,12 +36,9 @@ from feature_extractor import FeatureExtractor
 # ----------------------------------------------------------------------------
 # Per-patient pathology classes defined by the dataset metadata.
 PATHOLOGY_CLASS = {"F01": 1, "M01": 2, "M02": 3, "M04": 4, "M05": 5}
-REAL_SPEAKERS = ["F01", "F03", "F04", "FC01", "FC02", "FC03",
-                 "M01", "M02", "M03", "M04", "M05",
-                 "MC01", "MC02", "MC03", "MC04"]
-CONTENT_SOURCES = ["F01", "M01", "M02", "M04", "M05"]           # the 5 modeled patients
-TIMBRE_TARGETS = ["F03", "F04", "FC01", "FC02", "FC03",
-                  "M03", "MC01", "MC02", "MC03", "MC04"]        # VC timbre targets
+REAL_SPEAKERS = ["F01", "F03", "F04", "FC01", "FC02", "FC03", "M01", "M02", "M03", "M04", "M05", "MC01", "MC02", "MC03", "MC04"]
+CONTENT_SOURCES = ["F01", "M01", "M02", "M04", "M05"]  # the 5 modeled patients
+TIMBRE_TARGETS = ["F03", "F04", "FC01", "FC02", "FC03", "M03", "MC01", "MC02", "MC03", "MC04"]  # VC timbre targets
 
 
 def pathology_of_dir(speaker_dir: str) -> int:
@@ -49,7 +47,7 @@ def pathology_of_dir(speaker_dir: str) -> int:
         src = speaker_dir.split("_converted_from_")[1]
         return PATHOLOGY_CLASS[src]
     if speaker_dir.endswith("_converted"):
-        return 0                       # healthy content in patient timbre
+        return 0  # healthy content in patient timbre
     return PATHOLOGY_CLASS.get(speaker_dir, 0)
 
 
@@ -103,16 +101,12 @@ def main():
     ap.add_argument("--converted_root", required=True)
     ap.add_argument("--out_dir", required=True)
     ap.add_argument("--finetune_dir", required=True)
-    ap.add_argument(
-        "--config",
-        default=os.path.join(REPO, "configs", "controllable_dysarthric_speech_synthesis.yaml"),
-    )
+    ap.add_argument("--config", default=os.path.join(REPO, "configs", "controllable_dysarthric_speech_synthesis.yaml"))
     ap.add_argument("--valid_ratio", type=float, default=0.02)
     ap.add_argument("--seed", type=int, default=91)
     ap.add_argument("--only_speaker", default=None, help="process a single speaker dir (for parallel/partial runs)")
     ap.add_argument("--skip-existing", action=argparse.BooleanOptionalAction, default=True)
-    ap.add_argument("--max-items-per-speaker", type=int,
-                    help="Limit items for a fast pipeline smoke test")
+    ap.add_argument("--max-items-per-speaker", type=int, help="Limit items for a fast pipeline smoke test")
     args = ap.parse_args()
 
     os.makedirs(args.out_dir, exist_ok=True)
@@ -126,10 +120,10 @@ def main():
     speaker_dirs = []
     for spk in REAL_SPEAKERS:
         speaker_dirs.append((spk, os.path.join(args.torgo_root, spk), spk))
-    for x in CONTENT_SOURCES:                       # X_converted mirrors X's own layout
+    for x in CONTENT_SOURCES:  # X_converted mirrors X's own layout
         d = f"{x}_converted"
         speaker_dirs.append((d, os.path.join(args.converted_root, d), x))
-    for x in TIMBRE_TARGETS:                        # X_converted_from_Y mirrors X's (target) layout
+    for x in TIMBRE_TARGETS:  # X_converted_from_Y mirrors X's (target) layout
         for y in CONTENT_SOURCES:
             d = f"{x}_converted_from_{y}"
             speaker_dirs.append((d, os.path.join(args.converted_root, d), x))
@@ -174,16 +168,7 @@ def main():
                 np.save(codes_p, codes)
                 np.save(cond_p, cond)
                 json.dump({"duration": duration}, open(dur_p, "w"))
-            items.append({
-                "text": text,
-                "codes": codes_p,
-                "mels": mel_p,
-                "condition": cond_p,
-                "duration": duration,
-                "pathology_label": pathology,
-                "patient_id": dir_name,
-                "wav": wav_path,
-            })
+            items.append({"text": text, "codes": codes_p, "mels": mel_p, "condition": cond_p, "duration": duration, "pathology_label": pathology, "patient_id": dir_name, "wav": wav_path})
 
         if not items:
             logger.warning(f"no items for {dir_name}")
@@ -195,25 +180,17 @@ def main():
         # Keep at least one training item; a one-item split is useful for smoke tests.
         n_valid = 0 if len(items) == 1 else min(len(items) - 1, max(1, int(round(len(items) * args.valid_ratio))))
         valid_set = set(idx[:n_valid].tolist())
-        with open(os.path.join(out_spk, "metadata_train.jsonl"), "w", encoding="utf-8") as ftr, \
-             open(os.path.join(out_spk, "metadata_valid.jsonl"), "w", encoding="utf-8") as fva:
+        with open(os.path.join(out_spk, "metadata_train.jsonl"), "w", encoding="utf-8") as ftr, open(os.path.join(out_spk, "metadata_valid.jsonl"), "w", encoding="utf-8") as fva:
             for i, it in enumerate(items):
                 line = json.dumps(it, ensure_ascii=False) + "\n"
                 (fva if i in valid_set else ftr).write(line)
 
         # medoid condition = mean condition of the speaker (kept for speaker_info completeness)
-        conds = np.stack([np.load(it["condition"])[0] for it in items[:: max(1, len(items)//200)]])
+        conds = np.stack([np.load(it["condition"])[0] for it in items[:: max(1, len(items) // 200)]])
         medoid_p = os.path.join(out_spk, "medoid_condition.npy")
         np.save(medoid_p, conds.mean(axis=0, keepdims=True).astype(np.float32))
 
-        speaker_info.append({
-            "speaker": dir_name,
-            "train_jsonl": os.path.join(out_spk, "metadata_train.jsonl"),
-            "valid_jsonl": os.path.join(out_spk, "metadata_valid.jsonl"),
-            "medoid_condition": medoid_p,
-            "pathology_label": pathology,
-            "n_items": len(items),
-        })
+        speaker_info.append({"speaker": dir_name, "train_jsonl": os.path.join(out_spk, "metadata_train.jsonl"), "valid_jsonl": os.path.join(out_spk, "metadata_valid.jsonl"), "medoid_condition": medoid_p, "pathology_label": pathology, "n_items": len(items)})
         logger.info(f"[{dir_name}] items={len(items)} pathology={pathology}")
 
     if args.only_speaker:
@@ -240,14 +217,14 @@ def main():
                 it = json.loads(line)
                 label = it.get("pathology_label", it.get("severity_label"))
                 k = int(label)
-                c = np.load(it["condition"])[0]          # (32, 1280)
+                c = np.load(it["condition"])[0]  # (32, 1280)
                 sums[k] = c if sums[k] is None else sums[k] + c
                 counts[k] += 1
     for k in range(6):
         if counts[k] == 0:
             logger.warning(f"class {k} empty — skipping embedding")
             continue
-        mean_c = (sums[k] / counts[k]).astype(np.float32)[None]   # (1, 32, 1280)
+        mean_c = (sums[k] / counts[k]).astype(np.float32)[None]  # (1, 32, 1280)
         np.save(os.path.join(emb_dir, f"mean_pathology_condition_{k}.npy"), mean_c)
         logger.info(f"mean_pathology_condition_{k}: n={counts[k]}")
 

@@ -7,6 +7,7 @@ from munch import Munch
 import json
 import argparse
 
+
 def str2bool(v):
     if isinstance(v, bool):
         return v
@@ -16,6 +17,7 @@ def str2bool(v):
         return False
     else:
         raise argparse.ArgumentTypeError("Boolean value expected.")
+
 
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
@@ -48,9 +50,7 @@ def intersperse(lst, item):
 def kl_divergence(m_p, logs_p, m_q, logs_q):
     """KL(P||Q)"""
     kl = (logs_q - logs_p) - 0.5
-    kl += (
-        0.5 * (torch.exp(2.0 * logs_p) + ((m_p - m_q) ** 2)) * torch.exp(-2.0 * logs_q)
-    )
+    kl += 0.5 * (torch.exp(2.0 * logs_p) + ((m_p - m_q) ** 2)) * torch.exp(-2.0 * logs_q)
     return kl
 
 
@@ -88,9 +88,7 @@ def rand_slice_segments(x, x_lengths=None, segment_size=4):
     if x_lengths is None:
         x_lengths = t
     ids_str_max = x_lengths - segment_size + 1
-    ids_str = ((torch.rand([b]).to(device=x.device) * ids_str_max).clip(0)).to(
-        dtype=torch.long
-    )
+    ids_str = ((torch.rand([b]).to(device=x.device) * ids_str_max).clip(0)).to(dtype=torch.long)
     ret = slice_segments(x, ids_str, segment_size)
     return ret, ids_str
 
@@ -98,12 +96,8 @@ def rand_slice_segments(x, x_lengths=None, segment_size=4):
 def get_timing_signal_1d(length, channels, min_timescale=1.0, max_timescale=1.0e4):
     position = torch.arange(length, dtype=torch.float)
     num_timescales = channels // 2
-    log_timescale_increment = math.log(float(max_timescale) / float(min_timescale)) / (
-        num_timescales - 1
-    )
-    inv_timescales = min_timescale * torch.exp(
-        torch.arange(num_timescales, dtype=torch.float) * -log_timescale_increment
-    )
+    log_timescale_increment = math.log(float(max_timescale) / float(min_timescale)) / (num_timescales - 1)
+    inv_timescales = min_timescale * torch.exp(torch.arange(num_timescales, dtype=torch.float) * -log_timescale_increment)
     scaled_time = position.unsqueeze(0) * inv_timescales.unsqueeze(1)
     signal = torch.cat([torch.sin(scaled_time), torch.cos(scaled_time)], 0)
     signal = F.pad(signal, [0, 0, 0, channels % 2])
@@ -233,34 +227,19 @@ def modify_w2v_forward(self, output_layer=15):
     """
     from transformers.modeling_outputs import BaseModelOutput
 
-    def forward(
-        hidden_states,
-        attention_mask=None,
-        output_attentions=False,
-        output_hidden_states=False,
-        return_dict=True,
-    ):
+    def forward(hidden_states, attention_mask=None, output_attentions=False, output_hidden_states=False, return_dict=True):
         all_hidden_states = () if output_hidden_states else None
         all_self_attentions = () if output_attentions else None
 
         conv_attention_mask = attention_mask
         if attention_mask is not None:
             # make sure padded tokens output 0
-            hidden_states = hidden_states.masked_fill(
-                ~attention_mask.bool().unsqueeze(-1), 0.0
-            )
+            hidden_states = hidden_states.masked_fill(~attention_mask.bool().unsqueeze(-1), 0.0)
 
             # extend attention_mask
-            attention_mask = 1.0 - attention_mask[:, None, None, :].to(
-                dtype=hidden_states.dtype
-            )
+            attention_mask = 1.0 - attention_mask[:, None, None, :].to(dtype=hidden_states.dtype)
             attention_mask = attention_mask * torch.finfo(hidden_states.dtype).min
-            attention_mask = attention_mask.expand(
-                attention_mask.shape[0],
-                1,
-                attention_mask.shape[-1],
-                attention_mask.shape[-1],
-            )
+            attention_mask = attention_mask.expand(attention_mask.shape[0], 1, attention_mask.shape[-1], attention_mask.shape[-1])
 
         hidden_states = self.dropout(hidden_states)
 
@@ -278,30 +257,13 @@ def modify_w2v_forward(self, output_layer=15):
             # add LayerDrop (see https://arxiv.org/abs/1909.11556 for description)
             dropout_probability = torch.rand([])
 
-            skip_the_layer = (
-                True
-                if self.training and (dropout_probability < self.config.layerdrop)
-                else False
-            )
+            skip_the_layer = True if self.training and (dropout_probability < self.config.layerdrop) else False
             if not skip_the_layer or deepspeed_zero3_is_enabled:
                 # under deepspeed zero3 all gpus must run in sync
                 if self.gradient_checkpointing and self.training:
-                    layer_outputs = self._gradient_checkpointing_func(
-                        layer.__call__,
-                        hidden_states,
-                        attention_mask,
-                        relative_position_embeddings,
-                        output_attentions,
-                        conv_attention_mask,
-                    )
+                    layer_outputs = self._gradient_checkpointing_func(layer.__call__, hidden_states, attention_mask, relative_position_embeddings, output_attentions, conv_attention_mask)
                 else:
-                    layer_outputs = layer(
-                        hidden_states,
-                        attention_mask=attention_mask,
-                        relative_position_embeddings=relative_position_embeddings,
-                        output_attentions=output_attentions,
-                        conv_attention_mask=conv_attention_mask,
-                    )
+                    layer_outputs = layer(hidden_states, attention_mask=attention_mask, relative_position_embeddings=relative_position_embeddings, output_attentions=output_attentions, conv_attention_mask=conv_attention_mask)
                 hidden_states = layer_outputs[0]
 
             if skip_the_layer:
@@ -317,16 +279,8 @@ def modify_w2v_forward(self, output_layer=15):
             all_hidden_states = all_hidden_states + (hidden_states,)
 
         if not return_dict:
-            return tuple(
-                v
-                for v in [hidden_states, all_hidden_states, all_self_attentions]
-                if v is not None
-            )
-        return BaseModelOutput(
-            last_hidden_state=hidden_states,
-            hidden_states=all_hidden_states,
-            attentions=all_self_attentions,
-        )
+            return tuple(v for v in [hidden_states, all_hidden_states, all_self_attentions] if v is not None)
+        return BaseModelOutput(last_hidden_state=hidden_states, hidden_states=all_hidden_states, attentions=all_self_attentions)
 
     return forward
 
@@ -369,25 +323,14 @@ def build_model(args, stage="DiT"):
             n_f0_bins=args.length_regulator.n_f0_bins if hasattr(args.length_regulator, "n_f0_bins") else 512,
         )
         cfm = CFM(args)
-        nets = Munch(
-            cfm=cfm,
-            length_regulator=length_regulator,
-        )
+        nets = Munch(cfm=cfm, length_regulator=length_regulator)
     else:
         raise ValueError(f"Unknown stage: {stage}")
 
     return nets
 
 
-def load_checkpoint(
-    model,
-    optimizer,
-    path,
-    load_only_params=True,
-    ignore_modules=[],
-    is_distributed=False,
-    load_ema=False,
-):
+def load_checkpoint(model, optimizer, path, load_only_params=True, ignore_modules=[], is_distributed=False, load_ema=False):
     state = torch.load(path, map_location="cpu")
     params = state["net"]
     if load_ema and "ema" in state:
@@ -410,16 +353,10 @@ def load_checkpoint(
                         del params[key][k]
             model_state_dict = model[key].state_dict()
             # 过滤出形状匹配的键值对
-            filtered_state_dict = {
-                k: v
-                for k, v in params[key].items()
-                if k in model_state_dict and v.shape == model_state_dict[k].shape
-            }
+            filtered_state_dict = {k: v for k, v in params[key].items() if k in model_state_dict and v.shape == model_state_dict[k].shape}
             skipped_keys = set(params[key].keys()) - set(filtered_state_dict.keys())
             if skipped_keys:
-                print(
-                    f"Warning: Skipped loading some keys due to shape mismatch: {skipped_keys}"
-                )
+                print(f"Warning: Skipped loading some keys due to shape mismatch: {skipped_keys}")
             print("%s loaded" % key)
             model[key].load_state_dict(filtered_state_dict, strict=False)
     _ = [model[key].eval() for key in model]

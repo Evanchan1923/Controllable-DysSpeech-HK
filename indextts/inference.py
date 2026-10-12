@@ -12,6 +12,7 @@ Usage:
     tts = IndexTTS(cfg_path=..., model_dir=..., is_fp16=False, use_cuda_kernel=False)
     tts.infer(audio_prompt="FC02.wav", text="...", output_path="out.wav", pathology_ids=1)
 """
+
 import os
 import time
 import warnings
@@ -37,28 +38,14 @@ from transformers import LogitsProcessorList
 
 # Legacy TORGO per-patient condition IDs. SAPC uses the etiology mapping in
 # the selected SAPC experiment config instead.
-TORGO_PATHOLOGY_MAP = {
-    "FC01": 0, "FC02": 0, "FC03": 0,
-    "MC01": 0, "MC02": 0, "MC03": 0, "MC04": 0,
-    "F03": 0, "F04": 0, "M03": 0,
-    "F01": 1, "M01": 2, "M02": 3, "M04": 4, "M05": 5,
-}
-SAPC_ETIOLOGY_MAP = {
-    "ALS": 0,
-    "Cerebral Palsy": 1,
-    "Down Syndrome": 2,
-    "Parkinson's Disease": 3,
-    "Stroke": 4,
-}
+TORGO_PATHOLOGY_MAP = {"FC01": 0, "FC02": 0, "FC03": 0, "MC01": 0, "MC02": 0, "MC03": 0, "MC04": 0, "F03": 0, "F04": 0, "M03": 0, "F01": 1, "M01": 2, "M02": 3, "M04": 4, "M05": 5}
+SAPC_ETIOLOGY_MAP = {"ALS": 0, "Cerebral Palsy": 1, "Down Syndrome": 2, "Parkinson's Disease": 3, "Stroke": 4}
 pathology_map = TORGO_PATHOLOGY_MAP
 
 
 def _upgrade_legacy_pathology_keys(state_dict):
     """Translate parameter names stored by legacy checkpoints."""
-    replacements = (
-        ("mean_Sevcondition_", "mean_pathology_condition_"),
-        ("severity_classifier_", "pathology_classifier_"),
-    )
+    replacements = (("mean_Sevcondition_", "mean_pathology_condition_"), ("severity_classifier_", "pathology_classifier_"))
     upgraded = dict(state_dict)
     for old_key in list(state_dict):
         new_key = old_key
@@ -75,12 +62,11 @@ class MyUnifiedVoice(UnifiedVoice):
 
     def get_conditioning(self, speech_conditioning_input, cond_mel_lengths=None, pathology_ids=None, speaker_id=None):
         if speaker_id is None:
-            spk_conditioning_input, mask = self.conditioning_encoder(
-                speech_conditioning_input.transpose(1, 2), cond_mel_lengths)  # (b, s, d), (b, 1, s)
+            spk_conditioning_input, mask = self.conditioning_encoder(speech_conditioning_input.transpose(1, 2), cond_mel_lengths)  # (b, s, d), (b, 1, s)
             spk_conds_mask = self.cond_mask_pad(mask.squeeze(1))
             spk_conds = self.perceiver_encoder(spk_conditioning_input, spk_conds_mask)  # (b, 32, d)
         else:
-            param_name = f'speaker_{speaker_id}_center'
+            param_name = f"speaker_{speaker_id}_center"
             spk_conds = getattr(self, param_name)
 
         device = speech_conditioning_input.device if speech_conditioning_input is not None else next(self.parameters()).device
@@ -92,7 +78,7 @@ class MyUnifiedVoice(UnifiedVoice):
         for pathology_id in pathology_ids:
             if torch.is_tensor(pathology_id):
                 pathology_id = int(pathology_id.item())
-            param_name = f'mean_pathology_condition_{pathology_id}'
+            param_name = f"mean_pathology_condition_{pathology_id}"
             if not hasattr(self, param_name):
                 raise ValueError(f"Unknown pathology condition {pathology_id}; missing {param_name}")
             pathology_condition = getattr(self, param_name)
@@ -108,17 +94,13 @@ class MyUnifiedVoice(UnifiedVoice):
         conds = spk_conds + pathology_conds.to(spk_conds.dtype)
         return conds, spk_conds
 
-    def inference_speech(self, speech_conditioning_mel, text_inputs, cond_mel_lengths=None, input_tokens=None,
-                         num_return_sequences=1, max_generate_length=None, typical_sampling=False, typical_mass=.9,
-                         speaker_id=None, pathology_ids=None, **hf_generate_kwargs):
+    def inference_speech(self, speech_conditioning_mel, text_inputs, cond_mel_lengths=None, input_tokens=None, num_return_sequences=1, max_generate_length=None, typical_sampling=False, typical_mass=0.9, speaker_id=None, pathology_ids=None, **hf_generate_kwargs):
         if speech_conditioning_mel.ndim == 2:
             speech_conditioning_mel = speech_conditioning_mel.unsqueeze(0)
         if cond_mel_lengths is None:
             cond_mel_lengths = torch.tensor([speech_conditioning_mel.shape[-1]], device=speech_conditioning_mel.device)
 
-        conds_latent, spk_conds = self.get_conditioning(
-            speech_conditioning_input=speech_conditioning_mel, cond_mel_lengths=cond_mel_lengths,
-            pathology_ids=pathology_ids, speaker_id=speaker_id)
+        conds_latent, spk_conds = self.get_conditioning(speech_conditioning_input=speech_conditioning_mel, cond_mel_lengths=cond_mel_lengths, pathology_ids=pathology_ids, speaker_id=speaker_id)
         input_ids, inputs_embeds, attention_mask = self.prepare_gpt_inputs(conds_latent, text_inputs)
         self.inference_model.store_mel_emb(inputs_embeds)
         if input_tokens is None:
@@ -139,24 +121,17 @@ class MyUnifiedVoice(UnifiedVoice):
             min_tokens_to_keep = 2 if hf_generate_kwargs.get("num_beams", 1) > 1 else 1
             logits_processor.append(TypicalLogitsWarper(mass=typical_mass, min_tokens_to_keep=min_tokens_to_keep))
         max_length = (trunc_index + self.max_mel_tokens - 1) if max_generate_length is None else trunc_index + max_generate_length
-        output = self.inference_model.generate(inputs,
-                                               bos_token_id=self.start_mel_token, pad_token_id=self.stop_mel_token,
-                                               eos_token_id=self.stop_mel_token, attention_mask=attention_mask,
-                                               max_length=max_length, logits_processor=logits_processor,
-                                               num_return_sequences=num_return_sequences,
-                                               **hf_generate_kwargs)
+        output = self.inference_model.generate(
+            inputs, bos_token_id=self.start_mel_token, pad_token_id=self.stop_mel_token, eos_token_id=self.stop_mel_token, attention_mask=attention_mask, max_length=max_length, logits_processor=logits_processor, num_return_sequences=num_return_sequences, **hf_generate_kwargs
+        )
         if isinstance(output, torch.Tensor):
             return output[:, trunc_index:]
         output.sequences = output.sequences[:, trunc_index:]
         return output
 
-    def forward(self, speech_conditioning_latent, text_inputs, text_lengths, mel_codes, wav_lengths,
-                cond_mel_lengths=None, types=None, text_first=True, raw_mels=None, return_attentions=False,
-                return_latent=False, clip_inputs=False, pathology_ids=None, speaker_id=None):
+    def forward(self, speech_conditioning_latent, text_inputs, text_lengths, mel_codes, wav_lengths, cond_mel_lengths=None, types=None, text_first=True, raw_mels=None, return_attentions=False, return_latent=False, clip_inputs=False, pathology_ids=None, speaker_id=None):
 
-        speech_conditioning_latent, spk_conds = self.get_conditioning(
-            speech_conditioning_input=speech_conditioning_latent, cond_mel_lengths=cond_mel_lengths,
-            pathology_ids=pathology_ids, speaker_id=speaker_id)
+        speech_conditioning_latent, spk_conds = self.get_conditioning(speech_conditioning_input=speech_conditioning_latent, cond_mel_lengths=cond_mel_lengths, pathology_ids=pathology_ids, speaker_id=speaker_id)
 
         if types is not None:
             text_inputs = text_inputs * (1 + types).unsqueeze(-1)
@@ -167,7 +142,7 @@ class MyUnifiedVoice(UnifiedVoice):
             max_mel_len = wav_lengths.max() // self.mel_length_compression
             mel_codes = mel_codes[:, :max_mel_len]
             if raw_mels is not None:
-                raw_mels = raw_mels[:, :, :max_mel_len * 4]
+                raw_mels = raw_mels[:, :, : max_mel_len * 4]
 
         mel_codes_lengths = torch.ceil(wav_lengths / self.mel_length_compression).long() + 1
         mel_codes = self.set_mel_padding(mel_codes, mel_codes_lengths)
@@ -187,13 +162,11 @@ class MyUnifiedVoice(UnifiedVoice):
         mel_emb = mel_emb + self.mel_pos_embedding(mel_codes)
 
         if text_first:
-            text_logits, mel_logits = self.get_logits(conds, text_emb, self.text_head, mel_emb, self.mel_head,
-                                                      get_attns=return_attentions, return_latent=return_latent)
+            text_logits, mel_logits = self.get_logits(conds, text_emb, self.text_head, mel_emb, self.mel_head, get_attns=return_attentions, return_latent=return_latent)
             if return_latent:
                 return mel_logits[:, :-2]
         else:
-            mel_logits, text_logits = self.get_logits(conds, mel_emb, self.mel_head, text_emb, self.text_head,
-                                                      get_attns=return_attentions, return_latent=return_latent)
+            mel_logits, text_logits = self.get_logits(conds, mel_emb, self.mel_head, text_emb, self.text_head, get_attns=return_attentions, return_latent=return_latent)
             if return_latent:
                 return text_logits[:, :-2]
 
@@ -206,8 +179,7 @@ class MyUnifiedVoice(UnifiedVoice):
 
 
 class IndexTTS:
-    def __init__(self, cfg_path="checkpoints/config.yaml", model_dir="checkpoints", is_fp16=False, device=None,
-                 use_cuda_kernel=None, gpt_checkpoint=None, pathology_num_classes=None):
+    def __init__(self, cfg_path="checkpoints/config.yaml", model_dir="checkpoints", is_fp16=False, device=None, use_cuda_kernel=None, gpt_checkpoint=None, pathology_num_classes=None):
         """
         Args:
             gpt_checkpoint: explicit path to the finetuned gpt_best.pth; overrides cfg.gpt_checkpoint.
@@ -258,6 +230,7 @@ class IndexTTS:
         if self.use_cuda_kernel:
             try:
                 from indextts.BigVGAN.alias_free_activation.cuda import load
+
                 anti_alias_activation_cuda = load.load()
                 print(">> Preload custom CUDA kernel for BigVGAN", anti_alias_activation_cuda)
             except Exception:
@@ -352,8 +325,7 @@ class IndexTTS:
         except Exception:
             pass
 
-    def infer(self, audio_prompt, text, output_path, pathology_ids=0, verbose=False,
-              max_text_tokens_per_segment=120, **generation_kwargs):
+    def infer(self, audio_prompt, text, output_path, pathology_ids=0, verbose=False, max_text_tokens_per_segment=120, **generation_kwargs):
         print(">> starting inference...")
         start_time = time.perf_counter()
 
@@ -387,34 +359,39 @@ class IndexTTS:
             text_tokens = torch.tensor(text_tokens, dtype=torch.int32, device=self.device).unsqueeze(0)
             with torch.no_grad():
                 with torch.amp.autocast(text_tokens.device.type, enabled=self.dtype is not None, dtype=self.dtype):
-                    codes = self.gpt.inference_speech(auto_conditioning, text_tokens,
-                                                      cond_mel_lengths=torch.tensor([auto_conditioning.shape[-1]],
-                                                                                    device=text_tokens.device),
-                                                      pathology_ids=pathology_ids,
-                                                      do_sample=do_sample,
-                                                      top_p=top_p,
-                                                      top_k=top_k,
-                                                      temperature=temperature,
-                                                      num_return_sequences=1,
-                                                      length_penalty=length_penalty,
-                                                      num_beams=num_beams,
-                                                      repetition_penalty=repetition_penalty,
-                                                      max_generate_length=max_mel_tokens,
-                                                      **generation_kwargs)
+                    codes = self.gpt.inference_speech(
+                        auto_conditioning,
+                        text_tokens,
+                        cond_mel_lengths=torch.tensor([auto_conditioning.shape[-1]], device=text_tokens.device),
+                        pathology_ids=pathology_ids,
+                        do_sample=do_sample,
+                        top_p=top_p,
+                        top_k=top_k,
+                        temperature=temperature,
+                        num_return_sequences=1,
+                        length_penalty=length_penalty,
+                        num_beams=num_beams,
+                        repetition_penalty=repetition_penalty,
+                        max_generate_length=max_mel_tokens,
+                        **generation_kwargs,
+                    )
                 if not has_warned and (codes[:, -1] != self.stop_mel_token).any():
-                    warnings.warn(f"WARN: generation stopped due to exceeding max_mel_tokens ({max_mel_tokens}).",
-                                  category=RuntimeWarning)
+                    warnings.warn(f"WARN: generation stopped due to exceeding max_mel_tokens ({max_mel_tokens}).", category=RuntimeWarning)
                     has_warned = True
 
                 codes, code_lens = self.remove_long_silence(codes, silent_token=52, max_consecutive=30)
                 with torch.amp.autocast(text_tokens.device.type, enabled=self.dtype is not None, dtype=self.dtype):
-                    latent = self.gpt(auto_conditioning, text_tokens,
-                                      torch.tensor([text_tokens.shape[-1]], device=text_tokens.device), codes,
-                                      code_lens * self.gpt.mel_length_compression,
-                                      cond_mel_lengths=torch.tensor([auto_conditioning.shape[-1]],
-                                                                    device=text_tokens.device),
-                                      return_latent=True, clip_inputs=False,
-                                      pathology_ids=pathology_ids)
+                    latent = self.gpt(
+                        auto_conditioning,
+                        text_tokens,
+                        torch.tensor([text_tokens.shape[-1]], device=text_tokens.device),
+                        codes,
+                        code_lens * self.gpt.mel_length_compression,
+                        cond_mel_lengths=torch.tensor([auto_conditioning.shape[-1]], device=text_tokens.device),
+                        return_latent=True,
+                        clip_inputs=False,
+                        pathology_ids=pathology_ids,
+                    )
                     wav, _ = self.bigvgan(latent, auto_conditioning.transpose(1, 2))
                     wav = wav.squeeze(1)
                 wav = torch.clamp(32767 * wav, -32767.0, 32767.0)
@@ -442,25 +419,18 @@ class IndexTTS:
 
 if __name__ == "__main__":
     import argparse
+
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--cfg",
-        default=os.path.join(repo_root, "configs", "controllable_dysarthric_speech_synthesis.yaml"),
-    )
-    ap.add_argument("--model-dir", required=True,
-                    help="directory containing BigVGAN, DVAE and tokenizer files")
+    ap.add_argument("--cfg", default=os.path.join(repo_root, "configs", "controllable_dysarthric_speech_synthesis.yaml"))
+    ap.add_argument("--model-dir", required=True, help="directory containing BigVGAN, DVAE and tokenizer files")
     ap.add_argument("--gpt-ckpt", required=True, help="path to the trained gpt_best.pth")
-    ap.add_argument("--num-pathology-classes", type=int,
-                    help="override the number of pathology conditions")
+    ap.add_argument("--num-pathology-classes", type=int, help="override the number of pathology conditions")
     ap.add_argument("--prompt", required=True, help="timbre prompt wav")
     ap.add_argument("--text", required=True)
-    ap.add_argument("--pathology", type=int, default=0,
-                    help="condition index; meanings depend on the training dataset config")
+    ap.add_argument("--pathology", type=int, default=0, help="condition index; meanings depend on the training dataset config")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
-    tts = IndexTTS(cfg_path=args.cfg, model_dir=args.model_dir, is_fp16=False,
-                   use_cuda_kernel=False, gpt_checkpoint=args.gpt_ckpt,
-                   pathology_num_classes=args.num_pathology_classes)
+    tts = IndexTTS(cfg_path=args.cfg, model_dir=args.model_dir, is_fp16=False, use_cuda_kernel=False, gpt_checkpoint=args.gpt_ckpt, pathology_num_classes=args.num_pathology_classes)
     tts.infer(audio_prompt=args.prompt, text=args.text, output_path=args.out, pathology_ids=args.pathology)

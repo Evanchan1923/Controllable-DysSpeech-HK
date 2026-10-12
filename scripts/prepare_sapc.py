@@ -1,4 +1,5 @@
 """Extract IndexTTS features from SAPC_full's Hugging Face train/dev splits."""
+
 import argparse
 import hashlib
 import json
@@ -66,9 +67,7 @@ def main():
         preflight_columns.append(label_column or "Category")
         for row in ds.select_columns(preflight_columns):
             if str(row.get(data_cfg["text_column"]) or "").strip():
-                label, _etiology_id, _severity_id = condition_label(
-                    row, split, data_cfg, severity_lookup
-                )
+                label, _etiology_id, _severity_id = condition_label(row, split, data_cfg, severity_lookup)
                 if not 0 <= label < num_classes:
                     raise ValueError(f"Pathology label {label} outside 0..{num_classes - 1}")
                 preflight_counts[(split, label)] += 1
@@ -78,10 +77,7 @@ def main():
     absent_dev = [label for label in range(num_classes) if not preflight_counts[("dev", label)]]
     if absent_dev:
         if condition_cfg.get("mode") == "joint_etiology_severity":
-            logger.warning(
-                f"SAPC dev has no rows for joint condition classes {absent_dev}; "
-                "validation will use the conditions present in dev"
-            )
+            logger.warning(f"SAPC dev has no rows for joint condition classes {absent_dev}; " "validation will use the conditions present in dev")
         else:
             raise ValueError(f"SAPC dev has no rows for pathology classes {absent_dev}; check the mapping")
     logger.info(f"Preflight rows by split/pathology class: {dict(preflight_counts)}")
@@ -100,9 +96,7 @@ def main():
             if not speaker or not text:
                 counts[(split, "empty_speaker_or_text")] += 1
                 continue
-            label, etiology_id, severity_id = condition_label(
-                row, split, data_cfg, severity_lookup
-            )
+            label, etiology_id, severity_id = condition_label(row, split, data_cfg, severity_lookup)
             if not 0 <= label < num_classes:
                 raise ValueError(f"Label {label} for speaker {speaker!r} is outside 0..{num_classes - 1}")
             speaker_key = speaker_dir_name(speaker)
@@ -135,13 +129,9 @@ def main():
                 np.save(codes_p, codes)
                 np.save(cond_p, cond)
                 dur_p.write_text(json.dumps({"duration": duration}))
-            items_by_speaker[speaker_key][split].append({
-                "id": uid, "text": text, "codes": str(codes_p), "mels": str(mel_p),
-                "condition": str(cond_p), "duration": duration,
-                "pathology_label": label, "patient_id": speaker,
-                "etiology_label": etiology_id, "severity_label": severity_id,
-                "audio_filepath": row.get("audio_filepath"),
-            })
+            items_by_speaker[speaker_key][split].append(
+                {"id": uid, "text": text, "codes": str(codes_p), "mels": str(mel_p), "condition": str(cond_p), "duration": duration, "pathology_label": label, "patient_id": speaker, "etiology_label": etiology_id, "severity_label": severity_id, "audio_filepath": row.get("audio_filepath")}
+            )
             counts[(split, "kept")] += 1
 
     if args.converted_dir:
@@ -180,14 +170,21 @@ def main():
                         np.save(codes_p, codes)
                         np.save(cond_p, cond)
                         dur_p.write_text(json.dumps({"duration": duration}))
-                    items_by_speaker[speaker_key]["train"].append({
-                        "id": key, "text": item["text"], "codes": str(codes_p),
-                        "mels": str(mel_p), "condition": str(cond_p),
-                        "duration": duration, "pathology_label": label,
-                        "etiology_label": item.get("etiology_label"),
-                        "severity_label": item.get("severity_label"),
-                        "patient_id": item["patient_id"], "wav": str(wav_path),
-                    })
+                    items_by_speaker[speaker_key]["train"].append(
+                        {
+                            "id": key,
+                            "text": item["text"],
+                            "codes": str(codes_p),
+                            "mels": str(mel_p),
+                            "condition": str(cond_p),
+                            "duration": duration,
+                            "pathology_label": label,
+                            "etiology_label": item.get("etiology_label"),
+                            "severity_label": item.get("severity_label"),
+                            "patient_id": item["patient_id"],
+                            "wav": str(wav_path),
+                        }
+                    )
                     counts[("converted", "kept")] += 1
 
     speaker_info = []
@@ -202,7 +199,7 @@ def main():
                     f.write(json.dumps(item, ensure_ascii=False) + "\n")
         # Same summary shape used by the TORGO preparer.
         condition_items = splits["train"] or splits["dev"]
-        sample = condition_items[::max(1, len(condition_items) // 200)]
+        sample = condition_items[:: max(1, len(condition_items) // 200)]
         speaker_conditions = np.stack([np.load(it["condition"])[0] for it in sample])
         medoid = speaker_out / "medoid_condition.npy"
         np.save(medoid, speaker_conditions.mean(axis=0, keepdims=True).astype(np.float32))
@@ -211,19 +208,12 @@ def main():
             cond = np.load(item["condition"])[0].astype(np.float64)
             class_sums[label] = cond if label not in class_sums else class_sums[label] + cond
             class_counts[label] += 1
-        speaker_info.append({
-            "speaker": speaker_key,
-            "train_jsonl": str(speaker_out / "metadata_train.jsonl"),
-            "valid_jsonl": str(speaker_out / "metadata_valid.jsonl"),
-            "medoid_condition": str(medoid),
-            "n_items": len(splits["train"]) + len(splits["dev"]),
-        })
+        speaker_info.append({"speaker": speaker_key, "train_jsonl": str(speaker_out / "metadata_train.jsonl"), "valid_jsonl": str(speaker_out / "metadata_valid.jsonl"), "medoid_condition": str(medoid), "n_items": len(splits["train"]) + len(splits["dev"])})
     (out / "speaker_info.json").write_text(json.dumps(speaker_info, indent=2))
     emb_dir = out / "pathology_embedding"
     emb_dir.mkdir(exist_ok=True)
     for label, value in class_sums.items():
-        np.save(emb_dir / f"mean_pathology_condition_{label}.npy",
-                (value / class_counts[label]).astype(np.float32)[None])
+        np.save(emb_dir / f"mean_pathology_condition_{label}.npy", (value / class_counts[label]).astype(np.float32)[None])
     logger.info(f"Preparation counts: {dict(counts)}; train class counts: {dict(class_counts)}")
     missing = sorted(set(range(num_classes)) - set(class_counts))
     if missing:

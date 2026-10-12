@@ -23,7 +23,6 @@ import torch
 from transformers.utils import add_start_docstrings
 from transformers.generation.beam_constraints import Constraint, ConstraintListState
 
-
 PROCESS_INPUTS_DOCSTRING = r"""
     Args:
         input_ids (`torch.LongTensor` of shape `(batch_size * num_beams, sequence_length)`):
@@ -96,27 +95,12 @@ class BeamScorer(ABC):
 
     @abstractmethod
     @add_start_docstrings(PROCESS_INPUTS_DOCSTRING)
-    def process(
-        self,
-        input_ids: torch.LongTensor,
-        next_scores: torch.FloatTensor,
-        next_tokens: torch.LongTensor,
-        next_indices: torch.LongTensor,
-        **kwargs,
-    ) -> Tuple[torch.Tensor]:
+    def process(self, input_ids: torch.LongTensor, next_scores: torch.FloatTensor, next_tokens: torch.LongTensor, next_indices: torch.LongTensor, **kwargs) -> Tuple[torch.Tensor]:
         raise NotImplementedError("This is an abstract method.")
 
     @abstractmethod
     @add_start_docstrings(FINALIZE_INPUTS_DOCSTRING)
-    def finalize(
-        self,
-        input_ids: torch.LongTensor,
-        next_scores: torch.FloatTensor,
-        next_tokens: torch.LongTensor,
-        next_indices: torch.LongTensor,
-        max_length: int,
-        **kwargs,
-    ) -> torch.LongTensor:
+    def finalize(self, input_ids: torch.LongTensor, next_scores: torch.FloatTensor, next_tokens: torch.LongTensor, next_indices: torch.LongTensor, max_length: int, **kwargs) -> torch.LongTensor:
         raise NotImplementedError("This is an abstract method.")
 
 
@@ -159,17 +143,7 @@ class BeamSearchScorer(BeamScorer):
             The maximum length of the sequence to be generated.
     """
 
-    def __init__(
-        self,
-        batch_size: int,
-        num_beams: int,
-        device: torch.device,
-        length_penalty: Optional[float] = 1.0,
-        do_early_stopping: Optional[Union[bool, str]] = False,
-        num_beam_hyps_to_keep: Optional[int] = 1,
-        num_beam_groups: Optional[int] = 1,
-        max_length: Optional[int] = None,
-    ):
+    def __init__(self, batch_size: int, num_beams: int, device: torch.device, length_penalty: Optional[float] = 1.0, do_early_stopping: Optional[Union[bool, str]] = False, num_beam_hyps_to_keep: Optional[int] = 1, num_beam_groups: Optional[int] = 1, max_length: Optional[int] = None):
         self.num_beams = num_beams
         self.device = device
         self.length_penalty = length_penalty
@@ -181,32 +155,16 @@ class BeamSearchScorer(BeamScorer):
         self._is_init = False
         # self._beam_hyps[i*self.num_beam_groups+j] is the beam_hyps of the j-th group in the i-th mini-batch.
         # If group_beam_search is not used, the list consists of `batch_size` beam_hyps.
-        self._beam_hyps = [
-            BeamHypotheses(
-                num_beams=self.group_size,
-                length_penalty=self.length_penalty,
-                early_stopping=self.do_early_stopping,
-                max_length=max_length,
-            )
-            for _ in range(batch_size * self.num_beam_groups)
-        ]
+        self._beam_hyps = [BeamHypotheses(num_beams=self.group_size, length_penalty=self.length_penalty, early_stopping=self.do_early_stopping, max_length=max_length) for _ in range(batch_size * self.num_beam_groups)]
         # self._done[i*self.num_beam_groups+j] indicates whether the generation of the beam_hyps of the j-th group
         # in the i-th mini-batch is complete.
-        self._done = torch.tensor(
-            [False for _ in range(batch_size * self.num_beam_groups)], dtype=torch.bool, device=self.device
-        )
+        self._done = torch.tensor([False for _ in range(batch_size * self.num_beam_groups)], dtype=torch.bool, device=self.device)
 
         if not isinstance(num_beams, int) or num_beams <= 1:
-            raise ValueError(
-                f"`num_beams` has to be an integer strictly greater than 1, but is {num_beams}. For `num_beams` == 1,"
-                " one should make use of `greedy_search` instead."
-            )
+            raise ValueError(f"`num_beams` has to be an integer strictly greater than 1, but is {num_beams}. For `num_beams` == 1," " one should make use of `greedy_search` instead.")
 
         if not isinstance(num_beam_groups, int) or (num_beam_groups > num_beams) or (num_beams % num_beam_groups != 0):
-            raise ValueError(
-                "`num_beam_groups` has to be an integer smaller or equal than `num_beams` and `num_beams` has to be"
-                f" divisible by `num_beam_groups`, but is {num_beam_groups} with `num_beams` being {num_beams}."
-            )
+            raise ValueError("`num_beam_groups` has to be an integer smaller or equal than `num_beams` and `num_beams` has to be" f" divisible by `num_beam_groups`, but is {num_beam_groups} with `num_beams` being {num_beams}.")
 
     @property
     def is_done(self) -> bool:
@@ -230,15 +188,9 @@ class BeamSearchScorer(BeamScorer):
 
         if not (batch_size == (input_ids.shape[0] // self.group_size)):
             if self.num_beam_groups > 1:
-                raise ValueError(
-                    f"A group beam size of {input_ids.shape[0]} is used as the input, but a group beam "
-                    f"size of {self.group_size} is expected by the beam scorer."
-                )
+                raise ValueError(f"A group beam size of {input_ids.shape[0]} is used as the input, but a group beam " f"size of {self.group_size} is expected by the beam scorer.")
             else:
-                raise ValueError(
-                    f"A beam size of {input_ids.shape[0]} is used as the input, but a beam size of "
-                    f"{self.group_size} is expected by the beam scorer."
-                )
+                raise ValueError(f"A beam size of {input_ids.shape[0]} is used as the input, but a beam size of " f"{self.group_size} is expected by the beam scorer.")
 
         device = input_ids.device
         next_beam_scores = torch.zeros((batch_size, self.group_size), dtype=next_scores.dtype, device=device)
@@ -265,9 +217,7 @@ class BeamSearchScorer(BeamScorer):
 
             # next tokens for this sentence
             beam_idx = 0
-            for beam_token_rank, (next_token, next_score, next_index) in enumerate(
-                zip(next_tokens[batch_idx], next_scores[batch_idx], next_indices[batch_idx])
-            ):
+            for beam_token_rank, (next_token, next_score, next_index) in enumerate(zip(next_tokens[batch_idx], next_scores[batch_idx], next_indices[batch_idx])):
                 batch_beam_idx = batch_idx * self.group_size + next_index
                 # add to generated hypotheses if end of sentence
                 if (eos_token_id is not None) and (next_token.item() in eos_token_id):
@@ -281,12 +231,7 @@ class BeamSearchScorer(BeamScorer):
                     else:
                         beam_index = None
 
-                    self._beam_hyps[batch_group_idx].add(
-                        input_ids[batch_beam_idx].clone(),
-                        next_score.item(),
-                        beam_indices=beam_index,
-                        generated_len=cur_len - decoder_prompt_len,
-                    )
+                    self._beam_hyps[batch_group_idx].add(input_ids[batch_beam_idx].clone(), next_score.item(), beam_indices=beam_index, generated_len=cur_len - decoder_prompt_len)
                 else:
                     # add next predicted token since it is not eos_token
                     next_beam_scores[batch_idx, beam_idx] = next_score
@@ -299,23 +244,12 @@ class BeamSearchScorer(BeamScorer):
                     break
 
             if beam_idx < self.group_size:
-                raise ValueError(
-                    f"At most {self.group_size} tokens in {next_tokens[batch_idx]} can be equal to `eos_token_id:"
-                    f" {eos_token_id}`. Make sure {next_tokens[batch_idx]} are corrected."
-                )
+                raise ValueError(f"At most {self.group_size} tokens in {next_tokens[batch_idx]} can be equal to `eos_token_id:" f" {eos_token_id}`. Make sure {next_tokens[batch_idx]} are corrected.")
 
             # Check if we are done so that we can save a pad step if all(done)
-            self._done[batch_group_idx] = self._done[batch_group_idx] or self._beam_hyps[batch_group_idx].is_done(
-                next_scores[batch_idx].max().item(), cur_len, decoder_prompt_len
-            )
+            self._done[batch_group_idx] = self._done[batch_group_idx] or self._beam_hyps[batch_group_idx].is_done(next_scores[batch_idx].max().item(), cur_len, decoder_prompt_len)
 
-        return UserDict(
-            {
-                "next_beam_scores": next_beam_scores.view(-1),
-                "next_beam_tokens": next_beam_tokens.view(-1),
-                "next_beam_indices": next_beam_indices.view(-1),
-            }
-        )
+        return UserDict({"next_beam_scores": next_beam_scores.view(-1), "next_beam_tokens": next_beam_tokens.view(-1), "next_beam_indices": next_beam_indices.view(-1)})
 
     def finalize(
         self,
@@ -407,13 +341,7 @@ class BeamSearchScorer(BeamScorer):
                 # inserting only the first eos_token_id
                 decoded[i, sent_lengths[i]] = eos_token_id[0]
 
-        return UserDict(
-            {
-                "sequences": decoded,
-                "sequence_scores": best_scores,
-                "beam_indices": indices,
-            }
-        )
+        return UserDict({"sequences": decoded, "sequence_scores": best_scores, "beam_indices": indices})
 
 
 class ConstrainedBeamSearchScorer(BeamScorer):
@@ -475,28 +403,14 @@ class ConstrainedBeamSearchScorer(BeamScorer):
         self.constraints = constraints
 
         self._is_init = False
-        self._beam_hyps = [
-            BeamHypotheses(
-                num_beams=self.num_beams,
-                length_penalty=self.length_penalty,
-                early_stopping=self.do_early_stopping,
-                max_length=max_length,
-            )
-            for _ in range(batch_size)
-        ]
+        self._beam_hyps = [BeamHypotheses(num_beams=self.num_beams, length_penalty=self.length_penalty, early_stopping=self.do_early_stopping, max_length=max_length) for _ in range(batch_size)]
         self._done = torch.tensor([False for _ in range(batch_size)], dtype=torch.bool, device=self.device)
 
         if not isinstance(num_beams, int) or num_beams <= 1:
-            raise ValueError(
-                f"`num_beams` has to be an integer strictly greater than 1, but is {num_beams}. For `num_beams` == 1,"
-                " one should make use of `greedy_search` instead."
-            )
+            raise ValueError(f"`num_beams` has to be an integer strictly greater than 1, but is {num_beams}. For `num_beams` == 1," " one should make use of `greedy_search` instead.")
 
         if not isinstance(num_beam_groups, int) or (num_beam_groups > num_beams) or (num_beams % num_beam_groups != 0):
-            raise ValueError(
-                "`num_beam_groups` has to be an integer smaller or equal than `num_beams` and `num_beams` has to be"
-                f" divisible by `num_beam_groups`, but is {num_beam_groups} with `num_beams` being {num_beams}."
-            )
+            raise ValueError("`num_beam_groups` has to be an integer smaller or equal than `num_beams` and `num_beams` has to be" f" divisible by `num_beam_groups`, but is {num_beam_groups} with `num_beams` being {num_beams}.")
 
     @property
     def is_done(self) -> bool:
@@ -566,15 +480,9 @@ class ConstrainedBeamSearchScorer(BeamScorer):
         batch_size = len(self._beam_hyps)
         if not (batch_size == (input_ids.shape[0] // self.group_size)):
             if self.num_beam_groups > 1:
-                raise ValueError(
-                    f"A group beam size of {input_ids.shape[0]} is used as the input, but a group beam "
-                    f"size of {self.group_size} is expected by the beam scorer."
-                )
+                raise ValueError(f"A group beam size of {input_ids.shape[0]} is used as the input, but a group beam " f"size of {self.group_size} is expected by the beam scorer.")
             else:
-                raise ValueError(
-                    f"A beam size of {input_ids.shape[0]} is used as the input, but a beam size of "
-                    f"{self.group_size} is expected by the beam scorer."
-                )
+                raise ValueError(f"A beam size of {input_ids.shape[0]} is used as the input, but a beam size of " f"{self.group_size} is expected by the beam scorer.")
 
         device = input_ids.device
 
@@ -601,9 +509,7 @@ class ConstrainedBeamSearchScorer(BeamScorer):
 
             # next tokens for this sentence.
             beam_idx = 0
-            for beam_token_rank, (next_token, next_score, next_index) in enumerate(
-                zip(next_tokens[batch_idx], next_scores[batch_idx], next_indices[batch_idx])
-            ):
+            for beam_token_rank, (next_token, next_score, next_index) in enumerate(zip(next_tokens[batch_idx], next_scores[batch_idx], next_indices[batch_idx])):
                 batch_beam_idx = batch_idx * self.group_size + next_index
                 # add to generated hypotheses if end of sentence
                 if (eos_token_id is not None) and (next_token.item() in eos_token_id):
@@ -620,12 +526,7 @@ class ConstrainedBeamSearchScorer(BeamScorer):
                         else:
                             beam_index = None
 
-                        beam_hyp.add(
-                            input_ids[batch_beam_idx].clone(),
-                            next_score.item(),
-                            beam_indices=beam_index,
-                            generated_len=cur_len - decoder_prompt_len,
-                        )
+                        beam_hyp.add(input_ids[batch_beam_idx].clone(), next_score.item(), beam_indices=beam_index, generated_len=cur_len - decoder_prompt_len)
                 else:
                     # add next predicted token since it is not eos_token
                     next_beam_scores[batch_idx, beam_idx] = next_score
@@ -637,48 +538,21 @@ class ConstrainedBeamSearchScorer(BeamScorer):
                 if beam_idx == self.group_size:
                     break
 
-            new_scores, new_tokens, new_indices = self.step_sentence_constraint(
-                batch_idx,
-                input_ids,
-                scores_for_all_vocab,
-                next_beam_scores[batch_idx],
-                next_beam_tokens[batch_idx],
-                next_beam_indices[batch_idx],
-            )
+            new_scores, new_tokens, new_indices = self.step_sentence_constraint(batch_idx, input_ids, scores_for_all_vocab, next_beam_scores[batch_idx], next_beam_tokens[batch_idx], next_beam_indices[batch_idx])
 
             next_beam_scores[batch_idx] = new_scores
             next_beam_tokens[batch_idx] = new_tokens
             next_beam_indices[batch_idx] = new_indices
 
             if beam_idx < self.group_size:
-                raise ValueError(
-                    f"At most {self.group_size} tokens in {next_tokens[batch_idx]} can be equal to `eos_token_id:"
-                    f" {eos_token_id}`. Make sure {next_tokens[batch_idx]} are corrected."
-                )
+                raise ValueError(f"At most {self.group_size} tokens in {next_tokens[batch_idx]} can be equal to `eos_token_id:" f" {eos_token_id}`. Make sure {next_tokens[batch_idx]} are corrected.")
 
             # Check if we are done so that we can save a pad step if all(done)
-            self._done[batch_idx] = self._done[batch_idx] or beam_hyp.is_done(
-                next_scores[batch_idx].max().item(), cur_len, decoder_prompt_len
-            )
+            self._done[batch_idx] = self._done[batch_idx] or beam_hyp.is_done(next_scores[batch_idx].max().item(), cur_len, decoder_prompt_len)
 
-        return UserDict(
-            {
-                "next_beam_scores": next_beam_scores.view(-1),
-                "next_beam_tokens": next_beam_tokens.view(-1),
-                "next_beam_indices": next_beam_indices.view(-1),
-            }
-        )
+        return UserDict({"next_beam_scores": next_beam_scores.view(-1), "next_beam_tokens": next_beam_tokens.view(-1), "next_beam_indices": next_beam_indices.view(-1)})
 
-    def step_sentence_constraint(
-        self,
-        batch_idx: int,
-        input_ids: torch.LongTensor,
-        vocab_scores: torch.FloatTensor,
-        sent_beam_scores: torch.FloatTensor,
-        sent_beam_tokens: torch.LongTensor,
-        sent_beam_indices: torch.LongTensor,
-        push_progress: bool = False,
-    ):
+    def step_sentence_constraint(self, batch_idx: int, input_ids: torch.LongTensor, vocab_scores: torch.FloatTensor, sent_beam_scores: torch.FloatTensor, sent_beam_tokens: torch.LongTensor, sent_beam_indices: torch.LongTensor, push_progress: bool = False):
         # sent_beam_tokens are the next {num_beams} number of tokens that are under consideration for this beam
         # (candidate next tokens)
 
@@ -702,13 +576,7 @@ class ConstrainedBeamSearchScorer(BeamScorer):
         full_hypotheses = torch.cat((input_ids[sent_beam_indices], sent_beam_tokens.unsqueeze(-1)), dim=-1)
 
         # need to make new hypothesis that advance the constraints
-        track_new = {
-            "new_seqs": full_hypotheses.tolist(),
-            "new_states": [],
-            "new_indices": [],
-            "new_tokens": [],
-            "new_scores": [],
-        }
+        track_new = {"new_seqs": full_hypotheses.tolist(), "new_states": [], "new_indices": [], "new_tokens": [], "new_scores": []}
         for seq_idx, pre_seq in enumerate(this_batch_input_ids):
             # pre_seq = ith sequence generated before this step.
 
@@ -918,13 +786,7 @@ class ConstrainedBeamSearchScorer(BeamScorer):
                 # inserting only the first eos_token_id
                 decoded[i, sent_lengths[i]] = eos_token_id[0]
 
-        return UserDict(
-            {
-                "sequences": decoded,
-                "sequence_scores": best_scores,
-                "beam_indices": indices,
-            }
-        )
+        return UserDict({"sequences": decoded, "sequence_scores": best_scores, "beam_indices": indices})
 
 
 class BeamHypotheses:
@@ -940,10 +802,7 @@ class BeamHypotheses:
         self.worst_score = 1e9
 
         if not isinstance(self.early_stopping, bool) and self.max_length is None:
-            raise ValueError(
-                "When `do_early_stopping` is set to a string, `max_length` must be defined. Ensure it is passed to the"
-                " BeamScorer class instance at initialization time."
-            )
+            raise ValueError("When `do_early_stopping` is set to a string, `max_length` must be defined. Ensure it is passed to the" " BeamScorer class instance at initialization time.")
 
     def __len__(self):
         """
@@ -951,13 +810,7 @@ class BeamHypotheses:
         """
         return len(self.beams)
 
-    def add(
-        self,
-        hyp: torch.LongTensor,
-        sum_logprobs: float,
-        beam_indices: Optional[torch.LongTensor] = None,
-        generated_len: Optional[int] = None,
-    ):
+    def add(self, hyp: torch.LongTensor, sum_logprobs: float, beam_indices: Optional[torch.LongTensor] = None, generated_len: Optional[int] = None):
         """
         Add a new hypothesis to the list.
         """
@@ -1003,9 +856,7 @@ class BeamHypotheses:
             if self.length_penalty > 0.0:
                 if self.max_length <= decoder_prompt_len:
                     raise ValueError("max_length is not larger than decoder prompt length")
-                highest_attainable_score = (
-                    best_sum_logprobs / (self.max_length - decoder_prompt_len) ** self.length_penalty
-                )
+                highest_attainable_score = best_sum_logprobs / (self.max_length - decoder_prompt_len) ** self.length_penalty
             # the opposite logic applies here (max `highest_attainable_score` from `cur_len`)
             else:
                 highest_attainable_score = best_sum_logprobs / (cur_len - decoder_prompt_len) ** self.length_penalty

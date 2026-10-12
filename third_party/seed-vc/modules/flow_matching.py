@@ -8,11 +8,9 @@ from modules.commons import sequence_mask
 
 from tqdm import tqdm
 
+
 class BASECFM(torch.nn.Module, ABC):
-    def __init__(
-        self,
-        args,
-    ):
+    def __init__(self, args):
         super().__init__()
         self.sigma_min = 1e-6
 
@@ -22,7 +20,7 @@ class BASECFM(torch.nn.Module, ABC):
 
         self.criterion = torch.nn.MSELoss() if args.reg_loss_type == "l2" else torch.nn.L1Loss()
 
-        if hasattr(args.DiT, 'zero_prompt_speech_token'):
+        if hasattr(args.DiT, "zero_prompt_speech_token"):
             self.zero_prompt_speech_token = args.DiT.zero_prompt_speech_token
         else:
             self.zero_prompt_speech_token = False
@@ -89,9 +87,7 @@ class BASECFM(torch.nn.Module, ABC):
                 stacked_t = torch.cat([t.unsqueeze(0), t.unsqueeze(0)], dim=0)
 
                 # Perform a single forward pass for both original and CFG inputs
-                stacked_dphi_dt = self.estimator(
-                    stacked_x, stacked_prompt_x, x_lens, stacked_t, stacked_style, stacked_mu,
-                )
+                stacked_dphi_dt = self.estimator(stacked_x, stacked_prompt_x, x_lens, stacked_t, stacked_style, stacked_mu)
 
                 # Split the output back into the original and CFG components
                 dphi_dt, cfg_dphi_dt = stacked_dphi_dt.chunk(2, dim=0)
@@ -109,6 +105,7 @@ class BASECFM(torch.nn.Module, ABC):
             x[:, :, :prompt_len] = 0
 
         return sol[-1]
+
     def forward(self, x1, x_lens, prompt_lens, mu, style):
         """Computes diffusion loss
 
@@ -139,27 +136,24 @@ class BASECFM(torch.nn.Module, ABC):
 
         prompt = torch.zeros_like(x1)
         for bib in range(b):
-            prompt[bib, :, :prompt_lens[bib]] = x1[bib, :, :prompt_lens[bib]]
+            prompt[bib, :, : prompt_lens[bib]] = x1[bib, :, : prompt_lens[bib]]
             # range covered by prompt are set to 0
-            y[bib, :, :prompt_lens[bib]] = 0
+            y[bib, :, : prompt_lens[bib]] = 0
             if self.zero_prompt_speech_token:
-                mu[bib, :, :prompt_lens[bib]] = 0
+                mu[bib, :, : prompt_lens[bib]] = 0
 
         estimator_out = self.estimator(y, prompt, x_lens, t.squeeze(1).squeeze(1), style, mu, prompt_lens)
         loss = 0
         for bib in range(b):
-            loss += self.criterion(estimator_out[bib, :, prompt_lens[bib]:x_lens[bib]], u[bib, :, prompt_lens[bib]:x_lens[bib]])
+            loss += self.criterion(estimator_out[bib, :, prompt_lens[bib] : x_lens[bib]], u[bib, :, prompt_lens[bib] : x_lens[bib]])
         loss /= b
 
         return loss, estimator_out + (1 - self.sigma_min) * z
 
 
-
 class CFM(BASECFM):
     def __init__(self, args):
-        super().__init__(
-            args
-        )
+        super().__init__(args)
         if args.dit_type == "DiT":
             self.estimator = DiT(args)
         else:

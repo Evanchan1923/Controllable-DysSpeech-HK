@@ -24,21 +24,8 @@ def eval_decorator(fn):
     return inner
 
 
-def dvae_wav_to_mel(
-    wav, mel_norms_file="../experiments/clips_mel_norms.pth", mel_norms=None, device=torch.device("cpu")
-):
-    mel_stft = torchaudio.transforms.MelSpectrogram(
-        n_fft=1024,
-        hop_length=256,
-        win_length=1024,
-        power=2,
-        normalized=False,
-        sample_rate=22050,
-        f_min=0,
-        f_max=8000,
-        n_mels=80,
-        norm="slaney",
-    ).to(device)
+def dvae_wav_to_mel(wav, mel_norms_file="../experiments/clips_mel_norms.pth", mel_norms=None, device=torch.device("cpu")):
+    mel_stft = torchaudio.transforms.MelSpectrogram(n_fft=1024, hop_length=256, win_length=1024, power=2, normalized=False, sample_rate=22050, f_min=0, f_max=8000, n_mels=80, norm="slaney").to(device)
     wav = wav.to(device)
     mel = mel_stft(wav)
     mel = torch.log(torch.clamp(mel, min=1e-5))
@@ -171,13 +158,7 @@ class DiscretizationLoss(nn.Module):
 class ResBlock(nn.Module):
     def __init__(self, chan, conv, activation):
         super().__init__()
-        self.net = nn.Sequential(
-            conv(chan, chan, 3, padding=1),
-            activation(),
-            conv(chan, chan, 3, padding=1),
-            activation(),
-            conv(chan, chan, 1),
-        )
+        self.net = nn.Sequential(conv(chan, chan, 3, padding=1), activation(), conv(chan, chan, 3, padding=1), activation(), conv(chan, chan, 1))
 
     def forward(self, x):
         return self.net(x) + x
@@ -227,9 +208,7 @@ class DiscreteVAE(nn.Module):
         self.num_layers = num_layers
         self.straight_through = straight_through
         self.positional_dims = positional_dims
-        self.discrete_loss = DiscretizationLoss(
-            num_tokens, 2, 1 / (num_tokens * 2), discretization_loss_averaging_steps
-        )
+        self.discrete_loss = DiscretizationLoss(num_tokens, 2, 1 / (num_tokens * 2), discretization_loss_averaging_steps)
 
         assert positional_dims > 0 and positional_dims < 3  # This VAE only supports 1d and 2d inputs for now.
         if positional_dims == 2:
@@ -267,9 +246,7 @@ class DiscreteVAE(nn.Module):
                 enc_layers.append(nn.Sequential(conv(enc_in, enc_out, kernel_size, stride=stride, padding=pad), act()))
                 if encoder_norm:
                     enc_layers.append(nn.GroupNorm(8, enc_out))
-                dec_layers.append(
-                    nn.Sequential(conv_transpose(dec_in, dec_out, kernel_size, stride=stride, padding=pad), act())
-                )
+                dec_layers.append(nn.Sequential(conv_transpose(dec_in, dec_out, kernel_size, stride=stride, padding=pad), act()))
             dec_out_chans = dec_chans[-1]
             innermost_dim = dec_chans[0]
         else:
@@ -375,7 +352,7 @@ class DiscreteVAE(nn.Module):
             out, _ = self.decode(codes)
 
         # reconstruction loss
-        out = out[..., :img.shape[-1]]
+        out = out[..., : img.shape[-1]]
         recon_loss = self.loss_fn(img, out, reduction="mean")
         ssim_loss = torch.zeros(size=(1,)).cuda()
 

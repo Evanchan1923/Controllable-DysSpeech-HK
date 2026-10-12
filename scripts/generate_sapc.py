@@ -1,4 +1,5 @@
 """Generate same-text, cross-condition Seed-VC samples from SAPC train only."""
+
 import argparse
 import hashlib
 import json
@@ -21,16 +22,8 @@ def select_validation_pair(dataset, data_cfg, settings, severity_lookup):
     etiology = str(data_cfg["etiology"])
     low_label = str(selection["low_label"])
     high_label = str(selection["high_label"])
-    low_speakers = {
-        speaker for (row_split, speaker), row in severity_lookup.items()
-        if row_split == split and row["etiology"] == etiology
-        and row["speaker_severity"] == low_label
-    }
-    high_speakers = {
-        speaker for (row_split, speaker), row in severity_lookup.items()
-        if row_split == split and row["etiology"] == etiology
-        and row["speaker_severity"] == high_label
-    }
+    low_speakers = {speaker for (row_split, speaker), row in severity_lookup.items() if row_split == split and row["etiology"] == etiology and row["speaker_severity"] == low_label}
+    high_speakers = {speaker for (row_split, speaker), row in severity_lookup.items() if row_split == split and row["etiology"] == etiology and row["speaker_severity"] == high_label}
     requested_low = selection.get("low_speaker")
     requested_high = selection.get("high_speaker")
     if requested_low:
@@ -63,13 +56,7 @@ def select_validation_pair(dataset, data_cfg, settings, severity_lookup):
         pairing_text = str(row[pairing_col] or "").strip().casefold()
         transcript = str(row[text_col] or "").strip()
         if pairing_text and transcript:
-            by_speaker_text[speaker][pairing_text].append({
-                "dataset_index": index,
-                "id": str(row[id_col]),
-                "speaker": speaker,
-                "text": transcript,
-                "pairing_text": pairing_text,
-            })
+            by_speaker_text[speaker][pairing_text].append({"dataset_index": index, "id": str(row[id_col]), "speaker": speaker, "text": transcript, "pairing_text": pairing_text})
     feasible = []
     for low_speaker in sorted(low_speakers):
         low_texts = set(by_speaker_text[low_speaker])
@@ -82,11 +69,7 @@ def select_validation_pair(dataset, data_cfg, settings, severity_lookup):
     rng = random.Random(int(settings["experiment"]["seed"]))
     low_speaker, high_speaker, shared = rng.choice(feasible)
     pairing_text = rng.choice(shared)
-    return (
-        rng.choice(by_speaker_text[low_speaker][pairing_text]),
-        rng.choice(by_speaker_text[high_speaker][pairing_text]),
-        len(feasible),
-    )
+    return (rng.choice(by_speaker_text[low_speaker][pairing_text]), rng.choice(by_speaker_text[high_speaker][pairing_text]), len(feasible))
 
 
 def run_validation_pair(settings, out_dir, plan=False):
@@ -96,16 +79,9 @@ def run_validation_pair(settings, out_dir, plan=False):
     severity_csv = data_cfg["condition_labels"]["speaker_csv"]
     severity_lookup = load_speaker_severity(severity_csv)
     dataset = load_split(data_cfg["path"], split)
-    low_row, high_row, feasible_pairs = select_validation_pair(
-        dataset, data_cfg, settings, severity_lookup
-    )
+    low_row, high_row, feasible_pairs = select_validation_pair(dataset, data_cfg, settings, severity_lookup)
     output_dir = Path(out_dir).expanduser().resolve()
-    paths = {
-        "low_original": output_dir / "low_original.wav",
-        "high_original": output_dir / "high_original.wav",
-        "high_articulation_low_timbre": output_dir / "high_articulation_low_timbre.wav",
-        "low_articulation_high_timbre": output_dir / "low_articulation_high_timbre.wav",
-    }
+    paths = {"low_original": output_dir / "low_original.wav", "high_original": output_dir / "high_original.wav", "high_articulation_low_timbre": output_dir / "high_articulation_low_timbre.wav", "low_articulation_high_timbre": output_dir / "low_articulation_high_timbre.wav"}
     low_stats = severity_lookup[(split, low_row["speaker"])]
     high_stats = severity_lookup[(split, high_row["speaker"])]
     report = {
@@ -115,23 +91,12 @@ def run_validation_pair(settings, out_dir, plan=False):
         "split": split,
         "feasible_speaker_pairs": feasible_pairs,
         "shared_pairing_text": low_row["pairing_text"],
-        "low": {**low_row, "speaker_avg_cer": float(low_stats["speaker_avg_cer"]),
-                "speaker_avg_wer": float(low_stats["speaker_avg_wer"]),
-                "speaker_severity": low_stats["speaker_severity"],
-                "audio": str(paths["low_original"])},
-        "high": {**high_row, "speaker_avg_cer": float(high_stats["speaker_avg_cer"]),
-                 "speaker_avg_wer": float(high_stats["speaker_avg_wer"]),
-                 "speaker_severity": high_stats["speaker_severity"],
-                 "audio": str(paths["high_original"])},
-        "outputs": {name: str(path) for name, path in paths.items()
-                    if name not in {"low_original", "high_original"}},
+        "low": {**low_row, "speaker_avg_cer": float(low_stats["speaker_avg_cer"]), "speaker_avg_wer": float(low_stats["speaker_avg_wer"]), "speaker_severity": low_stats["speaker_severity"], "audio": str(paths["low_original"])},
+        "high": {**high_row, "speaker_avg_cer": float(high_stats["speaker_avg_cer"]), "speaker_avg_wer": float(high_stats["speaker_avg_wer"]), "speaker_severity": high_stats["speaker_severity"], "audio": str(paths["high_original"])},
+        "outputs": {name: str(path) for name, path in paths.items() if name not in {"low_original", "high_original"}},
         "directions": {
-            "high_articulation_low_timbre": {
-                "source": "high_original", "reference": "low_original",
-                "expected_timbre": "low speaker", "expected_severity": "high"},
-            "low_articulation_high_timbre": {
-                "source": "low_original", "reference": "high_original",
-                "expected_timbre": "high speaker", "expected_severity": "low"},
+            "high_articulation_low_timbre": {"source": "high_original", "reference": "low_original", "expected_timbre": "low speaker", "expected_severity": "high"},
+            "low_articulation_high_timbre": {"source": "low_original", "reference": "high_original", "expected_timbre": "high speaker", "expected_severity": "low"},
         },
     }
     print(json.dumps(report, indent=2, ensure_ascii=False), flush=True)
@@ -165,19 +130,13 @@ def run_validation_pair(settings, out_dir, plan=False):
     seed_inference.fp16 = fp16
     model_args = types.SimpleNamespace(f0_condition=False, checkpoint=None, config=None, fp16=fp16)
     model, semantic_fn, _, vocoder_fn, campplus_model, mel_fn, _ = seed_inference.load_models(model_args)
-    conversions = [
-        (paths["high_original"], paths["low_original"], paths["high_articulation_low_timbre"]),
-        (paths["low_original"], paths["high_original"], paths["low_articulation_high_timbre"]),
-    ]
+    conversions = [(paths["high_original"], paths["low_original"], paths["high_articulation_low_timbre"]), (paths["low_original"], paths["high_original"], paths["low_articulation_high_timbre"])]
     overwrite = bool(settings["experiment"].get("overwrite", False))
     for source, reference, output in conversions:
         if output.is_file() and not overwrite:
             print(f"Keeping existing output: {output}", flush=True)
             continue
-        convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, fp16,
-                    str(source), str(reference), str(output),
-                    int(vc_cfg["diffusion_steps"]), float(vc_cfg["length_adjust"]),
-                    float(vc_cfg["inference_cfg_rate"]))
+        convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, fp16, str(source), str(reference), str(output), int(vc_cfg["diffusion_steps"]), float(vc_cfg["length_adjust"]), float(vc_cfg["inference_cfg_rate"]))
     print(f"VC_VALIDATION_GENERATE_DONE: {output_dir}", flush=True)
 
 
@@ -200,15 +159,11 @@ def plan_pairs(dataset, data_cfg, max_labels, seed, severity_lookup=None):
         pairing_text = str(row[data_cfg["pairing_text_column"]] or "").strip().casefold()
         if not speaker or not text or not pairing_text:
             continue
-        label, etiology_label, severity_label = condition_label(
-            row, "train", data_cfg, severity_lookup
-        )
+        label, etiology_label, severity_label = condition_label(row, "train", data_cfg, severity_lookup)
         num_classes = int(condition_cfg.get("num_classes", data_cfg["pathology_labels"]["num_classes"]))
         if not 0 <= label < num_classes:
             raise ValueError(f"Pathology label {label} for speaker {speaker!r} must be 0..{num_classes - 1}")
-        rec = {"index": index, "id": str(row["id"] or index), "speaker": speaker,
-               "text": text, "pairing_text": pairing_text, "pathology_label": label,
-               "etiology_label": etiology_label, "severity_label": severity_label}
+        rec = {"index": index, "id": str(row["id"] or index), "speaker": speaker, "text": text, "pairing_text": pairing_text, "pathology_label": label, "etiology_label": etiology_label, "severity_label": severity_label}
         records.append(rec)
         by_text_label[(pairing_text, label)].append(rec)
     classes = sorted({r["pathology_label"] for r in records})
@@ -219,9 +174,7 @@ def plan_pairs(dataset, data_cfg, max_labels, seed, severity_lookup=None):
         for label in classes:
             donors = by_text_label[(target["pairing_text"], label)]
             if pairing_mode == "same_etiology_cross_severity":
-                donors = [r for r in donors
-                          if r["etiology_label"] == target["etiology_label"]
-                          and r["severity_label"] != target["severity_label"]]
+                donors = [r for r in donors if r["etiology_label"] == target["etiology_label"] and r["severity_label"] != target["severity_label"]]
             elif label == target["pathology_label"]:
                 continue
             donors = [r for r in donors if r["speaker"] != target["speaker"]]
@@ -260,7 +213,7 @@ def main():
     pairs, n_records = plan_pairs(ds, cfg, int(gen["max_source_labels_per_target"]), int(gen["seed"]), severity_lookup)
     pairs = [p for i, p in enumerate(pairs) if i % args.num_shards == args.shard]
     if args.max_pairs is not None:
-        pairs = pairs[:args.max_pairs]
+        pairs = pairs[: args.max_pairs]
     print(f"SAPC train rows with text: {n_records}; same-text conversion pairs: {len(pairs)} on shard {args.shard}/{args.num_shards}", flush=True)
     if not pairs:
         raise ValueError("No same-text cross-condition pairs. Check mapping and pairing_text_column.")
@@ -301,18 +254,25 @@ def main():
         wav_path = out / f"{target_speaker}_converted_from_{label}" / f"{key}.wav"
         if not wav_path.is_file():
             try:
-                convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device,
-                            seed_inference.fp16, str(audio_file(donor)), str(audio_file(target)), str(wav_path))
+                convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, seed_inference.fp16, str(audio_file(donor)), str(audio_file(target)), str(wav_path))
             except Exception as exc:
                 print(f"[{i}/{len(pairs)}] conversion failed: {exc}", flush=True)
                 failures += 1
                 continue
-        manifest.append({"id": key, "speaker": f"{target_speaker}_converted_from_{label}",
-                         "patient_id": target["speaker"], "pathology_label": label,
-                         "etiology_label": donor["etiology_label"],
-                         "severity_label": donor["severity_label"],
-                         "text": donor["text"], "wav": str(wav_path),
-                         "source_id": donor["id"], "target_id": target["id"]})
+        manifest.append(
+            {
+                "id": key,
+                "speaker": f"{target_speaker}_converted_from_{label}",
+                "patient_id": target["speaker"],
+                "pathology_label": label,
+                "etiology_label": donor["etiology_label"],
+                "severity_label": donor["severity_label"],
+                "text": donor["text"],
+                "wav": str(wav_path),
+                "source_id": donor["id"],
+                "target_id": target["id"],
+            }
+        )
         if i % 100 == 0:
             print(f"[{i}/{len(pairs)}] converted; failures={failures}", flush=True)
     manifest_path = out / f"pairs_shard_{args.shard}.jsonl"

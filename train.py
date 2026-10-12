@@ -19,14 +19,12 @@ from torch.optim import AdamW
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
 from transformers import get_cosine_schedule_with_warmup
+
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, REPO_ROOT)
 from indextts.utils.checkpoint import load_checkpoint
 from indextts.BigVGAN.models import BigVGAN
-from indextts.data_utils_pathology_disentangle_embedding import (
-    collate_finetune_fn,
-    load_finetune_datasets_pathology,
-)
+from indextts.data_utils_pathology_disentangle_embedding import collate_finetune_fn, load_finetune_datasets_pathology
 from indextts.gpt.model import UnifiedVoice
 from torch import nn
 from transformers import LogitsProcessorList
@@ -43,20 +41,19 @@ class GradientReversal(Function):
     def backward(ctx, grad_output):
         return -ctx.lambd * grad_output, None
 
+
 def grl(x: torch.Tensor, lambd: float = 1.0) -> torch.Tensor:
     return GradientReversal.apply(x, lambd)
 
 
-
 class MyUnifiedVoice(UnifiedVoice):
-    def get_conditioning(self,  speech_conditioning_input, cond_mel_lengths=None,pathology_ids=None,speaker_id=None):
+    def get_conditioning(self, speech_conditioning_input, cond_mel_lengths=None, pathology_ids=None, speaker_id=None):
         if speaker_id is None:
-            spk_conditioning_input, mask = self.conditioning_encoder(speech_conditioning_input.transpose(1, 2),
-                                                                        cond_mel_lengths)  # (b, s, d), (b, 1, s)
+            spk_conditioning_input, mask = self.conditioning_encoder(speech_conditioning_input.transpose(1, 2), cond_mel_lengths)  # (b, s, d), (b, 1, s)
             spk_conds_mask = self.cond_mask_pad(mask.squeeze(1))
             spk_conds = self.perceiver_encoder(spk_conditioning_input, spk_conds_mask)  # (b, 32, d)
         else:
-            param_name = f'speaker_{speaker_id}_center'
+            param_name = f"speaker_{speaker_id}_center"
             spk_conds = getattr(self, param_name)
 
         device = speech_conditioning_input.device if speech_conditioning_input is not None else next(self.parameters()).device
@@ -69,7 +66,7 @@ class MyUnifiedVoice(UnifiedVoice):
         for pathology_id in pathology_ids:
             if torch.is_tensor(pathology_id):
                 pathology_id = int(pathology_id.item())
-            param_name = f'mean_pathology_condition_{pathology_id}'
+            param_name = f"mean_pathology_condition_{pathology_id}"
             if not hasattr(self, param_name):
                 raise ValueError(f"Unknown pathology condition {pathology_id}; missing {param_name}")
             pathology_condition = getattr(self, param_name)
@@ -82,15 +79,13 @@ class MyUnifiedVoice(UnifiedVoice):
                 pathology_condition = pathology_condition.squeeze(0)
             conds_list.append(pathology_condition)
 
-
         # Assemble the selected prefixes into (batch_size, 32, model_dim).
         pathology_conds = torch.cat(conds_list, dim=0)
 
         conds = spk_conds + pathology_conds
-        return conds , spk_conds
+        return conds, spk_conds
 
-    def inference_speech(self, speech_conditioning_mel, text_inputs, cond_mel_lengths=None, input_tokens=None, num_return_sequences=1,
-                         max_generate_length=None, typical_sampling=False, typical_mass=.9, speaker_id=None,pathology_ids=None,**hf_generate_kwargs):
+    def inference_speech(self, speech_conditioning_mel, text_inputs, cond_mel_lengths=None, input_tokens=None, num_return_sequences=1, max_generate_length=None, typical_sampling=False, typical_mass=0.9, speaker_id=None, pathology_ids=None, **hf_generate_kwargs):
         """
         Args:
             speech_conditioning_mel: (b, n_mels, frames) or (n_mels, frames)
@@ -100,12 +95,12 @@ class MyUnifiedVoice(UnifiedVoice):
             max_generate_length: limit the number of generated tokens
             hf_generate_kwargs: kwargs for `GPT2InferenceModel.generate(**hf_generate_kwargs)`
         """
-        if speech_conditioning_mel.ndim == 2: #'mean_condition_F01_indextts'
+        if speech_conditioning_mel.ndim == 2:  #'mean_condition_F01_indextts'
             speech_conditioning_mel = speech_conditioning_mel.unsqueeze(0)
         if cond_mel_lengths is None:
             cond_mel_lengths = torch.tensor([speech_conditioning_mel.shape[-1]], device=speech_conditioning_mel.device)
 
-        conds_latent, spk_conds = self.get_conditioning( speech_conditioning_input=speech_conditioning_mel,cond_mel_lengths=cond_mel_lengths, pathology_ids=pathology_ids,speaker_id=speaker_id)
+        conds_latent, spk_conds = self.get_conditioning(speech_conditioning_input=speech_conditioning_mel, cond_mel_lengths=cond_mel_lengths, pathology_ids=pathology_ids, speaker_id=speaker_id)
         input_ids, inputs_embeds, attention_mask = self.prepare_gpt_inputs(conds_latent, text_inputs)
         self.inference_model.store_mel_emb(inputs_embeds)
         if input_tokens is None:
@@ -113,10 +108,8 @@ class MyUnifiedVoice(UnifiedVoice):
         else:
             if input_tokens.ndim == 1:
                 input_tokens = input_tokens.unsqueeze(0)
-            assert num_return_sequences % input_tokens.shape[0] == 0, \
-                    "The num_return_sequences must be divisible by the batch number of input_tokens"
-            assert num_return_sequences % text_inputs.shape[0] == 0, \
-                    "The num_return_sequences must be divisible by the batch number of text_inputs"
+            assert num_return_sequences % input_tokens.shape[0] == 0, "The num_return_sequences must be divisible by the batch number of input_tokens"
+            assert num_return_sequences % text_inputs.shape[0] == 0, "The num_return_sequences must be divisible by the batch number of text_inputs"
             b = num_return_sequences // input_ids.shape[0]
             if b > 1:
                 input_ids = input_ids.repeat(b, 1)
@@ -133,24 +126,18 @@ class MyUnifiedVoice(UnifiedVoice):
             min_tokens_to_keep = 2 if hf_generate_kwargs.get("num_beams", 1) > 1 else 1
             logits_processor.append(TypicalLogitsWarper(mass=typical_mass, min_tokens_to_keep=min_tokens_to_keep))
         max_length = (trunc_index + self.max_mel_tokens - 1) if max_generate_length is None else trunc_index + max_generate_length
-        output = self.inference_model.generate(inputs,
-                                            bos_token_id=self.start_mel_token, pad_token_id=self.stop_mel_token,
-                                            eos_token_id=self.stop_mel_token, attention_mask=attention_mask,
-                                            max_length=max_length, logits_processor=logits_processor,
-                                            num_return_sequences=num_return_sequences,
-                                            **hf_generate_kwargs)
+        output = self.inference_model.generate(
+            inputs, bos_token_id=self.start_mel_token, pad_token_id=self.stop_mel_token, eos_token_id=self.stop_mel_token, attention_mask=attention_mask, max_length=max_length, logits_processor=logits_processor, num_return_sequences=num_return_sequences, **hf_generate_kwargs
+        )
         if isinstance(output, torch.Tensor):
             return output[:, trunc_index:]
         # GenerateOutput
         output.sequences = output.sequences[:, trunc_index:]
         return output
 
+    def forward(self, speech_conditioning_latent, text_inputs, text_lengths, mel_codes, wav_lengths, cond_mel_lengths=None, types=None, text_first=True, raw_mels=None, return_attentions=False, return_latent=False, clip_inputs=False, pathology_ids=None, speaker_id=None):
 
-    def forward(self, speech_conditioning_latent, text_inputs, text_lengths, mel_codes, wav_lengths,
-                cond_mel_lengths=None, types=None, text_first=True, raw_mels=None, return_attentions=False,
-                return_latent=False, clip_inputs=False,pathology_ids=None,speaker_id=None):
-
-        speech_conditioning_latent,spk_conds = self.get_conditioning( speech_conditioning_input=speech_conditioning_latent,cond_mel_lengths=cond_mel_lengths, pathology_ids=pathology_ids,speaker_id=speaker_id)
+        speech_conditioning_latent, spk_conds = self.get_conditioning(speech_conditioning_input=speech_conditioning_latent, cond_mel_lengths=cond_mel_lengths, pathology_ids=pathology_ids, speaker_id=speaker_id)
 
         # Types are expressed by expanding the text embedding space.
         if types is not None:
@@ -164,7 +151,7 @@ class MyUnifiedVoice(UnifiedVoice):
             max_mel_len = wav_lengths.max() // self.mel_length_compression
             mel_codes = mel_codes[:, :max_mel_len]
             if raw_mels is not None:
-                raw_mels = raw_mels[:, :, :max_mel_len * 4]
+                raw_mels = raw_mels[:, :, : max_mel_len * 4]
 
         # Set padding areas within MEL (currently it is coded with the MEL code for <zero>).
         mel_codes_lengths = torch.ceil(wav_lengths / self.mel_length_compression).long() + 1
@@ -200,6 +187,7 @@ class MyUnifiedVoice(UnifiedVoice):
         loss_mel = F.cross_entropy(mel_logits, mel_targets.long())
         return loss_text.mean(), loss_mel.mean(), mel_logits
 
+
 def load_UnifiedVoice(gpt_config: DictConfig, gpt_checkpoint_path: str, device: torch.device) -> MyUnifiedVoice:
     """Load UnifiedVoice weights from a checkpoint."""
 
@@ -220,15 +208,8 @@ def clear_torch_cache():
         torch.cuda.synchronize()
         torch.cuda.empty_cache()
 
-def forward_gpt2(
-    model: MyUnifiedVoice,
-    inputs_embeds: torch.FloatTensor,
-    text_lengths: torch.LongTensor,
-    codes_lengths: torch.LongTensor,
-    attention_mask: Optional[torch.Tensor] = None,
-    output_latent: bool = False,
-    output_logits: bool = True,
-):
+
+def forward_gpt2(model: MyUnifiedVoice, inputs_embeds: torch.FloatTensor, text_lengths: torch.LongTensor, codes_lengths: torch.LongTensor, attention_mask: Optional[torch.Tensor] = None, output_latent: bool = False, output_logits: bool = True):
     assert attention_mask is not None, "Attention mask must be provided for UnifiedVoice forward pass."
 
     """Run the GPT-2 portion of the UnifiedVoice forward pass."""
@@ -265,13 +246,11 @@ def forward_gpt2(
 
         # Verify the expected length
         expected_len = text_len + mel_len
-        assert sample_latent.shape[0] == expected_len, \
-            f"Expected valid_latent shape {expected_len}, got {sample_latent.shape[0]}, " \
-            f"text_len: {text_len}, mel_len: {mel_len}"
+        assert sample_latent.shape[0] == expected_len, f"Expected valid_latent shape {expected_len}, got {sample_latent.shape[0]}, " f"text_len: {text_len}, mel_len: {mel_len}"
 
         # Split and assign to batched tensors
         batch_text_latents[i, :text_len] = sample_latent[:text_len]
-        batch_mel_latents[i, :mel_len] = sample_latent[text_len:text_len + mel_len]
+        batch_mel_latents[i, :mel_len] = sample_latent[text_len : text_len + mel_len]
 
     # Vectorized head processing
     # Process all text latents at once
@@ -291,6 +270,7 @@ def forward_gpt2(
         output["latent"] = (batch_text_latents, batch_mel_latents)
     return output
 
+
 def forward_UnifiedVoice(
     model: MyUnifiedVoice,
     mel_spec: torch.FloatTensor,
@@ -307,11 +287,11 @@ def forward_UnifiedVoice(
     output_latent: bool = False,
     loss_reduction: str = "mean",
     pathology_ids: torch.LongTensor = None,
-    speaker_id: torch.LongTensor = None
+    speaker_id: torch.LongTensor = None,
 ):
     """Run the complete UnifiedVoice training forward pass."""
 
-    conditioning_latent, spk_conds = model.get_conditioning( speech_conditioning_input=mel_same_spk,cond_mel_lengths=spk_mel_lengths, pathology_ids=pathology_ids,speaker_id=speaker_id)
+    conditioning_latent, spk_conds = model.get_conditioning(speech_conditioning_input=mel_same_spk, cond_mel_lengths=spk_mel_lengths, pathology_ids=pathology_ids, speaker_id=speaker_id)
 
     # -------- build text_inputs with start/stop tokens --------
     B, T_pad = text_ids.shape
@@ -370,15 +350,7 @@ def forward_UnifiedVoice(
         mel_end = mel_start + actual_mel_lengths[i].item()
         attention_mask[i, mel_start:mel_end] = 1
 
-    gpt2_outputs = forward_gpt2(
-        model,
-        inputs_embeds,
-        text_lengths + 2,
-        codes_lengths + 1 + int(add_mel_stop_token),
-        attention_mask=attention_mask,
-        output_latent=output_latent,
-        output_logits=output_logits or output_loss,
-    )
+    gpt2_outputs = forward_gpt2(model, inputs_embeds, text_lengths + 2, codes_lengths + 1 + int(add_mel_stop_token), attention_mask=attention_mask, output_latent=output_latent, output_logits=output_logits or output_loss)
 
     outputs = {}
     if output_logits or output_loss:
@@ -401,8 +373,8 @@ def forward_UnifiedVoice(
                 actual_mel_len = codes_lengths[i].item() + int(add_mel_stop_token)
                 mel_mask[i, :actual_mel_len] = True
 
-            loss_text = F.cross_entropy(text_logits, text_targets.long(), reduction='none')
-            loss_mel = F.cross_entropy(mel_logits, mel_targets.long(), reduction='none')
+            loss_text = F.cross_entropy(text_logits, text_targets.long(), reduction="none")
+            loss_mel = F.cross_entropy(mel_logits, mel_targets.long(), reduction="none")
 
             # Apply masking and reduce - only calculate loss on valid positions
             loss_text = (loss_text * text_mask).sum() / text_mask.sum() if text_mask.sum() > 0 else torch.tensor(0.0, device=text_logits.device)
@@ -430,12 +402,12 @@ def forward_UnifiedVoice(
             outputs["logits"] = (text_logits, mel_logits)
             outputs["targets"] = (text_targets, mel_targets)
 
-
     if output_latent:
         outputs["latent"] = gpt2_outputs["latent"]
     outputs["embedding_sum"] = conditioning_latent
-    outputs['embedding_spk'] = spk_conds
+    outputs["embedding_spk"] = spk_conds
     return outputs
+
 
 def top_k_accuracy(logits: torch.Tensor, targets: torch.Tensor, k: Tuple[int, ...] = (1, 10, 20)) -> List[float]:
     """Compute top-k classification accuracy."""
@@ -443,8 +415,8 @@ def top_k_accuracy(logits: torch.Tensor, targets: torch.Tensor, k: Tuple[int, ..
     _, topk_preds = torch.topk(logits, max_k, dim=1)  # (B*L, max_k)
 
     # Reshape for comparison
-    targets_reshaped = targets.view(-1, 1) # (B*L, 1)
-    topk_preds_reshaped = topk_preds.view(-1, max_k) # (B*L, max_k)
+    targets_reshaped = targets.view(-1, 1)  # (B*L, 1)
+    topk_preds_reshaped = topk_preds.view(-1, max_k)  # (B*L, max_k)
 
     res = []
     for ki in k:
@@ -454,8 +426,10 @@ def top_k_accuracy(logits: torch.Tensor, targets: torch.Tensor, k: Tuple[int, ..
         res.append(acc)
     return res
 
+
 class Trainer:
     """Train UnifiedVoice with timbre and pathology conditioning."""
+
     def __init__(self, config: DictConfig, save_checkpoints: bool = True):
         """
         Initialize the trainer.
@@ -481,7 +455,7 @@ class Trainer:
         self._load_models()
 
         # Initialize training state.
-        self.best_val_loss = (0, float('inf'), float('inf'))  # (epoch, text_loss, mel_loss)
+        self.best_val_loss = (0, float("inf"), float("inf"))  # (epoch, text_loss, mel_loss)
         self.update_steps = 0
 
     def _set_seed(self, seed: int):
@@ -518,11 +492,8 @@ class Trainer:
 
         for p in self.model.perceiver_encoder.parameters():
             p.requires_grad = True
-        if hasattr(self.config, "pathology") :
+        if hasattr(self.config, "pathology"):
             self._load_pathology_embedding()
-
-
-
 
     def _load_pathology_embedding(self):
         self.pathology_mean_conditions = {}
@@ -534,8 +505,6 @@ class Trainer:
         emb_dir = getattr(self.config.pathology, "embedding_dir", None)
         if emb_dir is None:
             raise ValueError("config.pathology.embedding_dir must be set to load pretrained pathology embeddings")
-
-
 
         for pathology_label in range(num_classes):
             param_name = f"mean_pathology_condition_{pathology_label}"
@@ -549,21 +518,17 @@ class Trainer:
                 if os.path.exists(legacy_path):
                     emb_path = legacy_path
 
-
             emb = np.load(emb_path)
 
             # ---------- 2. normalize shape ----------
             # Accept either (32, D) or (1, 32, D).
             if emb.ndim == 2:
-                emb = emb[None, ...]   # (1, 32, D)
+                emb = emb[None, ...]  # (1, 32, D)
             elif emb.ndim != 3:
                 raise ValueError(f"{emb_path} has invalid shape {emb.shape}")
 
             if emb.shape[1] != cond_num or emb.shape[2] != model_dim:
-                raise ValueError(
-                    f"{emb_path} shape mismatch: expected (1,{cond_num},{model_dim}), "
-                    f"got {emb.shape}"
-                )
+                raise ValueError(f"{emb_path} shape mismatch: expected (1,{cond_num},{model_dim}), " f"got {emb.shape}")
 
             condition = torch.from_numpy(emb).float().to(self.device)
             logger.info(f"[Pathology {pathology_label}] loaded embedding from {emb_path}")
@@ -591,25 +556,16 @@ class Trainer:
         self.model.pathology_classifier_spk = nn.Linear(model_dim, classifier_num_classes).to(self.device)
         for p in self.model.pathology_classifier_spk.parameters():
             p.requires_grad = True
-        logger.info(
-            f"Loaded and registered {len(self.pathology_mean_conditions)} pretrained pathology embeddings."
-        )
-
+        logger.info(f"Loaded and registered {len(self.pathology_mean_conditions)} pretrained pathology embeddings.")
 
     def _apply_lora(self, model: MyUnifiedVoice) -> MyUnifiedVoice:
         """Configure and apply LoRA to the model."""
         lora_cfg = self.config.train.lora
-        gpt_lora_config = LoraConfig(
-            r=lora_cfg.r,
-            target_modules=lora_cfg.target_modules,
-            task_type=TaskType.CAUSAL_LM,
-            lora_alpha=lora_cfg.lora_alpha,
-            lora_dropout=lora_cfg.lora_dropout,
-            bias="none",
-        )
+        gpt_lora_config = LoraConfig(r=lora_cfg.r, target_modules=lora_cfg.target_modules, task_type=TaskType.CAUSAL_LM, lora_alpha=lora_cfg.lora_alpha, lora_dropout=lora_cfg.lora_dropout, bias="none")
         model.requires_grad_(False)
         model.inference_model = get_peft_model(model.inference_model, gpt_lora_config)
         return model
+
     def _move_params_to_new_group(self, optimizer, names_to_move, new_lr, new_wd):
         """
         Move matching parameters from their existing optimizer group into a new group.
@@ -640,97 +596,49 @@ class Trainer:
         opt_cfg = self.config.train.optimizer
         base_lr = opt_cfg.learning_rate
 
-        self.optimizer = create_loraplus_optimizer(
-            model=self.model,
-            optimizer_cls=AdamW,
-            lr=base_lr,
-            loraplus_lr_ratio=opt_cfg.loraplus_lr_ratio,
-            loraplus_weight_decay=opt_cfg.weight_decay,
-        )
+        self.optimizer = create_loraplus_optimizer(model=self.model, optimizer_cls=AdamW, lr=base_lr, loraplus_lr_ratio=opt_cfg.loraplus_lr_ratio, loraplus_weight_decay=opt_cfg.weight_decay)
 
         # Give pathology prefixes, classifiers, and the Perceiver dedicated rates.
         pathology_lr = base_lr * 50
         cls_lr = base_lr * 5
         perc_lr = base_lr * 5
 
-        n_pathology = self._move_params_to_new_group(
-            self.optimizer,
-            names_to_move=["mean_pathology_condition_"],
-            new_lr=pathology_lr,
-            new_wd=0.0
-        )
-        n_cls = self._move_params_to_new_group(
-            self.optimizer,
-            names_to_move=["pathology_classifier"],
-            new_lr=cls_lr,
-            new_wd=0.0
-        )
-        n_perc = self._move_params_to_new_group(
-            self.optimizer,
-            names_to_move=["perceiver_encoder"],
-            new_lr=perc_lr,
-            new_wd=opt_cfg.weight_decay
-        )
+        n_pathology = self._move_params_to_new_group(self.optimizer, names_to_move=["mean_pathology_condition_"], new_lr=pathology_lr, new_wd=0.0)
+        n_cls = self._move_params_to_new_group(self.optimizer, names_to_move=["pathology_classifier"], new_lr=cls_lr, new_wd=0.0)
+        n_perc = self._move_params_to_new_group(self.optimizer, names_to_move=["perceiver_encoder"], new_lr=perc_lr, new_wd=opt_cfg.weight_decay)
 
+        self.scheduler = get_cosine_schedule_with_warmup(self.optimizer, num_warmup_steps=int(num_training_steps * opt_cfg.warmup_ratio), num_training_steps=num_training_steps)
 
+        logger.info(f"Optimizer regrouped: moved pathology={n_pathology} (lr={pathology_lr}, wd=0), " f"cls={n_cls} (lr={cls_lr}, wd=0), " f"perceiver={n_perc} (lr={perc_lr}, wd={opt_cfg.weight_decay})")
 
-
-
-        self.scheduler = get_cosine_schedule_with_warmup(
-            self.optimizer,
-            num_warmup_steps=int(num_training_steps * opt_cfg.warmup_ratio),
-            num_training_steps=num_training_steps,
-        )
-
-
-        logger.info(
-            f"Optimizer regrouped: moved pathology={n_pathology} (lr={pathology_lr}, wd=0), "
-            f"cls={n_cls} (lr={cls_lr}, wd=0), "
-            f"perceiver={n_perc} (lr={perc_lr}, wd={opt_cfg.weight_decay})"
-        )
     def _train_step(self, data_batch: tuple) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict]:
         """Run one training forward pass and compute its loss terms."""
         self.model.train()
         self.model.inference_model.kv_cache = False  # KV caching is only used for autoregressive inference.
 
         # Unpack data_batch: mel_spec, mel_codes, text_ids, conditions, speaker_ids, mel_lengths, codes_lengths, text_lengths
-        mel_spec, mel_codes, text_ids, conditions, speaker_ids, pathology_ids, mel_same_spk,mel_lengths, codes_lengths, text_lengths,spk_mel_lengths = data_batch
-        outputs = forward_UnifiedVoice(
-            self.model,
-            mel_spec,
-            mel_codes,
-            text_ids,
-            mel_lengths,
-            codes_lengths,
-            text_lengths,
-            mel_same_spk=mel_same_spk,
-            output_loss=True,
-            output_logits=True,
-            spk_mel_lengths=spk_mel_lengths,
-            pathology_ids=pathology_ids
-        )
+        mel_spec, mel_codes, text_ids, conditions, speaker_ids, pathology_ids, mel_same_spk, mel_lengths, codes_lengths, text_lengths, spk_mel_lengths = data_batch
+        outputs = forward_UnifiedVoice(self.model, mel_spec, mel_codes, text_ids, mel_lengths, codes_lengths, text_lengths, mel_same_spk=mel_same_spk, output_loss=True, output_logits=True, spk_mel_lengths=spk_mel_lengths, pathology_ids=pathology_ids)
         loss_text, loss_mel = outputs["loss"]
         mel_accuracy = outputs.get("mel_accuracy", {"acc_1": 0.0, "acc_10": 0.0, "acc_20": 0.0})
 
         # ---------- classification loss ----------
         sum_cls_loss = torch.tensor(0.0, device=loss_text.device)
         spk_cls_loss = torch.tensor(0.0, device=loss_text.device)
-        if "embedding_sum" in outputs and 'embedding_spk' in outputs:
+        if "embedding_sum" in outputs and "embedding_spk" in outputs:
             grl_lambda_max = float(getattr(self.config.pathology, "grl_lambda_max", 0.01))
             grl_warmup_steps = int(getattr(self.config.pathology, "grl_warmup_steps", 500))
 
             progress = min(1.0, self.global_step / grl_warmup_steps)
             grl_lambda = grl_lambda_max * progress
 
-
-
-            embedding_sum = outputs["embedding_sum"]       # [B, 32, D]
-            embedding_spk = outputs["embedding_spk"]        # [B, 32, D]
+            embedding_sum = outputs["embedding_sum"]  # [B, 32, D]
+            embedding_spk = outputs["embedding_spk"]  # [B, 32, D]
             # Mean-pool conditioning tokens before classification.
-            embedding_sum = embedding_sum.mean(dim=1)            # [B, D]
-            embedding_spk = embedding_spk.mean(dim=1)            # [B, D]
+            embedding_sum = embedding_sum.mean(dim=1)  # [B, D]
+            embedding_spk = embedding_spk.mean(dim=1)  # [B, D]
             logits_sum = self.model.pathology_classifier_sum(embedding_sum)  # [B, num_classes]
-            logits_spk = self.model.pathology_classifier_spk(grl(embedding_spk, grl_lambda))    # [B, num_classes]
+            logits_spk = self.model.pathology_classifier_spk(grl(embedding_spk, grl_lambda))  # [B, num_classes]
             classifier_num_classes = logits_sum.shape[-1]
             configured_num_classes = int(getattr(self.config.pathology, "num_classes", 2))
             if classifier_num_classes == 2 and configured_num_classes != 2:
@@ -740,11 +648,7 @@ class Trainer:
             sum_cls_loss = F.cross_entropy(logits_sum, classifier_labels)
             spk_cls_loss = F.cross_entropy(logits_spk, classifier_labels)
 
-
-        return loss_text, loss_mel, sum_cls_loss, spk_cls_loss,mel_accuracy
-
-
-
+        return loss_text, loss_mel, sum_cls_loss, spk_cls_loss, mel_accuracy
 
     @torch.no_grad()
     def _validate_epoch(self, valid_ds: Dataset, epoch: int):
@@ -767,22 +671,9 @@ class Trainer:
                     data_batch.append(item)
 
             # Unpack the collated multi-speaker batch.
-            mel_spec, mel_codes, text_ids, conditions, speaker_ids, pathology_ids, mel_same_spk,mel_lengths, codes_lengths, text_lengths,spk_mel_lengths = data_batch
+            mel_spec, mel_codes, text_ids, conditions, speaker_ids, pathology_ids, mel_same_spk, mel_lengths, codes_lengths, text_lengths, spk_mel_lengths = data_batch
 
-            outputs = forward_UnifiedVoice(
-                self.model,
-                mel_spec,
-                mel_codes,
-                text_ids,
-                mel_lengths,
-                codes_lengths,
-                text_lengths,
-                mel_same_spk=mel_same_spk,
-                output_loss=True,
-                output_logits=True,
-                spk_mel_lengths=spk_mel_lengths,
-                pathology_ids=pathology_ids
-            )
+            outputs = forward_UnifiedVoice(self.model, mel_spec, mel_codes, text_ids, mel_lengths, codes_lengths, text_lengths, mel_same_spk=mel_same_spk, output_loss=True, output_logits=True, spk_mel_lengths=spk_mel_lengths, pathology_ids=pathology_ids)
 
             loss_text, loss_mel = outputs["loss"]
             batch_text_tokens = text_lengths.sum().item()
@@ -853,7 +744,7 @@ class Trainer:
                 self.model.inference_model.merge_adapter()
 
         state_dict = model_to_save.state_dict()
-        checkpoint_data = {'model': state_dict}
+        checkpoint_data = {"model": state_dict}
 
         torch.save(checkpoint_data, checkpoint_path)
         logger.info(f"Checkpoint saved to: {checkpoint_path}")
@@ -869,13 +760,14 @@ class Trainer:
             self.model.inference_model.unmerge_adapter()
 
         self.model.train()
+
     def print_trainable_parameters(self):
         print("Trainable parameters:")
         for name, param in self.model.named_parameters():
             if param.requires_grad:
                 print(f"{name}: shape={tuple(param.shape)}")
-    def train(self, train_ds: Dataset, valid_ds: Dataset, max_train_batches: Optional[int] = None,
-              skip_validation: bool = False):
+
+    def train(self, train_ds: Dataset, valid_ds: Dataset, max_train_batches: Optional[int] = None, skip_validation: bool = False):
         """
         Run the complete training loop.
 
@@ -895,9 +787,6 @@ class Trainer:
         logger.info(f"Optimizer batches per epoch: {batches_per_epoch}")
         logger.info(f"Total update steps: {total_update_steps}")
 
-
-
-
         text_weight = train_cfg.text_weight
         self.global_step = 0
         for epoch in range(train_cfg.epochs):
@@ -914,17 +803,12 @@ class Trainer:
                     else:
                         data_batch.append(item)
 
-                loss_text, loss_mel, sum_cls_loss, spk_cls_loss,mel_accuracy  = self._train_step(tuple(data_batch))
+                loss_text, loss_mel, sum_cls_loss, spk_cls_loss, mel_accuracy = self._train_step(tuple(data_batch))
                 acc_1, acc_10, acc_20 = mel_accuracy["acc_1"], mel_accuracy["acc_10"], mel_accuracy["acc_20"]
 
                 alpha = float(getattr(self.config.pathology, "alpha", 1.0))
                 beta = float(getattr(self.config.pathology, "beta", 1.0))
-                weighted_loss = (
-                    text_weight * loss_text
-                    + (1.0 - text_weight) * loss_mel
-                    + alpha * sum_cls_loss
-                    + beta * spk_cls_loss
-                )
+                weighted_loss = text_weight * loss_text + (1.0 - text_weight) * loss_mel + alpha * sum_cls_loss + beta * spk_cls_loss
 
                 if torch.isnan(weighted_loss) or torch.isinf(weighted_loss):
                     logger.warning(f"NaN or Inf loss at epoch {epoch}, batch {batch_idx}. Skipping.")
@@ -938,8 +822,6 @@ class Trainer:
                 self.scheduler.step()
                 self.update_steps += 1
 
-
-
                 logger.info(
                     f"Epoch {epoch + 1}/{train_cfg.epochs} | Batch {batch_idx + 1}/{len(train_ds)} | "
                     f"text_loss={loss_text.item():.4f}, mel_loss={loss_mel.item():.4f}, "
@@ -949,7 +831,6 @@ class Trainer:
                     f"grad_norm={grad_norm.item():.2f}"
                 )
                 self.global_step += 1
-
 
             # --- Epoch End ---
             if skip_validation:
@@ -984,21 +865,17 @@ class Trainer:
         OmegaConf.save(final_config, final_config_path)
         logger.info(f"Final config saved to {final_config_path}")
 
-        logger.info(f"Best validation loss at epoch {self.best_val_loss[0] + 1}: "
-                    f"text_loss: {self.best_val_loss[1]:.4f}, mel_loss: {self.best_val_loss[2]:.4f}")
+        logger.info(f"Best validation loss at epoch {self.best_val_loss[0] + 1}: " f"text_loss: {self.best_val_loss[1]:.4f}, mel_loss: {self.best_val_loss[2]:.4f}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Fine-tune IndexTTS with timbre/pathology factorization.")
-    parser.add_argument(
-        "--config",
-        default=os.path.join(REPO_ROOT, "configs", "controllable_dysarthric_speech_synthesis.yaml"),
-    )
+    parser.add_argument("--config", default=os.path.join(REPO_ROOT, "configs", "controllable_dysarthric_speech_synthesis.yaml"))
     parser.add_argument("--model-dir", help="Directory containing gpt.pth, dvae.pth and bpe.model")
     parser.add_argument("--output-dir", help="Directory for training logs and checkpoints; defaults to model-dir")
     parser.add_argument("--data-dir", help="Prepared dataset directory containing speaker_info.json")
     parser.add_argument("--embedding-dir", help="Directory containing mean_pathology_condition_*.npy")
-    parser.add_argument("--num-pathology-classes", type=int,
-                        help="Override pathology condition and classifier class counts")
+    parser.add_argument("--num-pathology-classes", type=int, help="Override pathology condition and classifier class counts")
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--batch-size", type=int, default=100)
     parser.add_argument("--num-workers", type=int, default=20)
@@ -1031,14 +908,11 @@ def main():
 
     # Build multi-speaker datasets with the configured tokenizer model.
     train_ds, valid_ds = load_finetune_datasets_pathology(config, bpe_model_path)
-    train_ds = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
-                          collate_fn=collate_finetune_fn, num_workers=args.num_workers)
-    valid_ds = DataLoader(valid_ds, batch_size=min(args.batch_size, 8), shuffle=False,
-                          collate_fn=collate_finetune_fn, num_workers=min(args.num_workers, 2))
+    train_ds = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, collate_fn=collate_finetune_fn, num_workers=args.num_workers)
+    valid_ds = DataLoader(valid_ds, batch_size=min(args.batch_size, 8), shuffle=False, collate_fn=collate_finetune_fn, num_workers=min(args.num_workers, 2))
 
     trainer = Trainer(config, save_checkpoints=not args.no_save)
-    trainer.train(train_ds, valid_ds, max_train_batches=args.max_train_batches,
-                  skip_validation=args.skip_validation)
+    trainer.train(train_ds, valid_ds, max_train_batches=args.max_train_batches, skip_validation=args.skip_validation)
     logger.info("Finetuning UnifiedVoice completed.")
 
 

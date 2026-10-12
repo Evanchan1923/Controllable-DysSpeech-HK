@@ -22,24 +22,12 @@ class FeatureExtractor(nn.Module):
 
 
 class MelSpectrogramFeatures(FeatureExtractor):
-    def __init__(self, sample_rate=24000, n_fft=1024, hop_length=256, win_length=None,
-                 n_mels=100, mel_fmin=0, mel_fmax=None, normalize=False, padding="center"):
+    def __init__(self, sample_rate=24000, n_fft=1024, hop_length=256, win_length=None, n_mels=100, mel_fmin=0, mel_fmax=None, normalize=False, padding="center"):
         super().__init__()
         if padding not in ["center", "same"]:
             raise ValueError("Padding must be 'center' or 'same'.")
         self.padding = padding
-        self.mel_spec = torchaudio.transforms.MelSpectrogram(
-            sample_rate=sample_rate,
-            n_fft=n_fft,
-            hop_length=hop_length,
-            win_length=win_length,
-            power=1,
-            normalized=normalize,
-            f_min=mel_fmin,
-            f_max=mel_fmax,
-            n_mels=n_mels,
-            center=padding == "center",
-        )
+        self.mel_spec = torchaudio.transforms.MelSpectrogram(sample_rate=sample_rate, n_fft=n_fft, hop_length=hop_length, win_length=win_length, power=1, normalized=normalize, f_min=mel_fmin, f_max=mel_fmax, n_mels=n_mels, center=padding == "center")
 
     def forward(self, audio, **kwargs):
         if self.padding == "same":

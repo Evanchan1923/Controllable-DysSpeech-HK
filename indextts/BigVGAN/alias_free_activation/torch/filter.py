@@ -18,19 +18,13 @@ else:
         Implementation of sinc, i.e. sin(pi * x) / (pi * x)
         __Warning__: Different to julius.sinc, the input is multiplied by `pi`!
         """
-        return torch.where(
-            x == 0,
-            torch.tensor(1.0, device=x.device, dtype=x.dtype),
-            torch.sin(math.pi * x) / math.pi / x,
-        )
+        return torch.where(x == 0, torch.tensor(1.0, device=x.device, dtype=x.dtype), torch.sin(math.pi * x) / math.pi / x)
 
 
 # This code is adopted from adefossez's julius.lowpass.LowPassFilters under the MIT License
 # https://adefossez.github.io/julius/julius/lowpass.html
 #   LICENSE is in incl_licenses directory.
-def kaiser_sinc_filter1d(
-    cutoff, half_width, kernel_size
-):  # return filter [1,1,kernel_size]
+def kaiser_sinc_filter1d(cutoff, half_width, kernel_size):  # return filter [1,1,kernel_size]
     even = kernel_size % 2 == 0
     half_size = kernel_size // 2
 
@@ -64,15 +58,7 @@ def kaiser_sinc_filter1d(
 
 
 class LowPassFilter1d(nn.Module):
-    def __init__(
-        self,
-        cutoff=0.5,
-        half_width=0.6,
-        stride: int = 1,
-        padding: bool = True,
-        padding_mode: str = "replicate",
-        kernel_size: int = 12,
-    ):
+    def __init__(self, cutoff=0.5, half_width=0.6, stride: int = 1, padding: bool = True, padding_mode: str = "replicate", kernel_size: int = 12):
         """
         kernel_size should be even number for stylegan3 setup, in this implementation, odd number is also possible.
         """

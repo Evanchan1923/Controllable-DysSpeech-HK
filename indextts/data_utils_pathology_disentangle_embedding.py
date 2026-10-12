@@ -17,6 +17,7 @@ class FinetuneDataset(Dataset):
     """
     Custom dataset used for UnifiedVoice fine-tuning, supporting multi-speaker data.
     """
+
     def __init__(self, manifest_files: List[str], bpe_path: str, speaker_ids: List[str], config: DictConfig):
         super().__init__()
         self.config = config
@@ -61,10 +62,7 @@ class FinetuneDataset(Dataset):
                     self.pathology2indices.setdefault(pathology, []).append(idx)
                     self.speaker2indices.setdefault(speaker_id, []).append(idx)
 
-        logger.info(
-            f"Loaded {len(self.data)} samples from {len(manifest_files)} speakers. "
-            f"pathology buckets: { {k: len(v) for k, v in self.pathology2indices.items()} }"
-        )
+        logger.info(f"Loaded {len(self.data)} samples from {len(manifest_files)} speakers. " f"pathology buckets: { {k: len(v) for k, v in self.pathology2indices.items()} }")
 
     def _load_mel(self, item: dict) -> torch.FloatTensor:
         """Load a mel spectrogram for prompt sampling."""
@@ -119,21 +117,13 @@ class FinetuneDataset(Dataset):
         # Sample a real recording from the timbre-donor speaker.
         # Converted directory names retain the donor speaker as their prefix:
         #   'FC02_converted_from_F01' -> 'FC02',  'M01_converted' -> 'M01',  'F01' -> 'F01'
-        spk_id = speaker_id.split('_converted')[0]
+        spk_id = speaker_id.split("_converted")[0]
         spk_bucket = self.speaker2indices.get(spk_id, [])
 
         spk_idx = self._sample_index_from_bucket(spk_bucket, exclude_idx=index)
 
         mel_same_speaker = self._load_mel(self.data[spk_idx])
-        return (
-            mel_spec,
-            mel_codes,
-            text_ids,
-            condition,
-            speaker_id,
-            int(pathology_label),
-            mel_same_speaker,      # Random timbre prompt from the same donor speaker.
-        )
+        return (mel_spec, mel_codes, text_ids, condition, speaker_id, int(pathology_label), mel_same_speaker)  # Random timbre prompt from the same donor speaker.
 
 
 # Batch collation
@@ -168,13 +158,13 @@ def _pad_sequence(seqs, pad_value=0, dim=-1):
     for i, s in enumerate(seqs):
         # Copy each tensor into a batch padded along the final dimension.
         if s.dim() == 1:  # 1D tensor: [L] -> [B, L]
-            padded[i, :s.shape[0]] = s
+            padded[i, : s.shape[0]] = s
         elif s.dim() == 2:  # 2D tensor: [D, L] -> [B, D, L]
-            padded[i, :, :s.shape[1]] = s
+            padded[i, :, : s.shape[1]] = s
         elif s.dim() == 3:  # 3D tensor: [C, D, L] -> [B, C, D, L]
-            padded[i, :, :, :s.shape[2]] = s
+            padded[i, :, :, : s.shape[2]] = s
         else:  # Four or more dimensions.
-            padded[i, ..., :s.shape[-1]] = s
+            padded[i, ..., : s.shape[-1]] = s
 
     return padded, lengths
 
@@ -194,24 +184,13 @@ def collate_finetune_fn(batch):
         text_lengths         (B,)
         spk_mel_lengths      (B,)
     """
-    (
-        mel_specs,
-        mel_codes,
-        text_ids,
-        conditions,
-        speaker_ids,
-        pathology_labels,
-        mel_same_speaker,
-    ) = zip(*batch)
+    mel_specs, mel_codes, text_ids, conditions, speaker_ids, pathology_labels, mel_same_speaker = zip(*batch)
 
     # Remove the extra batch dimension left by data preprocessing for mel_specs and mel_codes (1, ...) -> (...)
     mel_specs = [spec.squeeze(0) if spec.dim() >= 3 and spec.size(0) == 1 else spec for spec in mel_specs]
     mel_codes = [codes.squeeze(0) if codes.dim() >= 2 and codes.size(0) == 1 else codes for codes in mel_codes]
 
-    mel_same_speaker = [
-        m.squeeze(0) if m is not None and m.dim() >= 3 and m.size(0) == 1 else m
-        for m in mel_same_speaker
-    ]
+    mel_same_speaker = [m.squeeze(0) if m is not None and m.dim() >= 3 and m.size(0) == 1 else m for m in mel_same_speaker]
 
     # Remove the extra batch dimension added to text_ids inside the dataset (1, L) -> (L)
     text_ids = [ids.squeeze(0) if ids.dim() == 2 and ids.size(0) == 1 else ids for ids in text_ids]
@@ -238,13 +217,13 @@ def collate_finetune_fn(batch):
     pathology_labels = torch.tensor(pathology_labels, dtype=torch.long)
 
     return (
-        mel_specs_padded,        # [B, 100, T_max]
-        mel_codes_padded,        # [B, T_max_codes]
-        text_ids_padded,         # [B, T_max_text]
-        conditions_padded,       # [B, 32, 1280]
-        list(speaker_ids),       # [B] list[str]
-        pathology_labels,         # [B]
-        mel_same_spk_padded,     # [B, 100, T_max_spk]   TIMBRE prompt
+        mel_specs_padded,  # [B, 100, T_max]
+        mel_codes_padded,  # [B, T_max_codes]
+        text_ids_padded,  # [B, T_max_text]
+        conditions_padded,  # [B, 32, 1280]
+        list(speaker_ids),  # [B] list[str]
+        pathology_labels,  # [B]
+        mel_same_spk_padded,  # [B, 100, T_max_spk]   TIMBRE prompt
         mel_lengths,
         codes_lengths,
         text_lengths,
@@ -264,7 +243,7 @@ def load_finetune_datasets_pathology(config: DictConfig, bpe_path: str) -> Tuple
     """
     # Read per-speaker manifest locations.
     speaker_info_path = os.path.join(config.train.data_path, "speaker_info.json")
-    with open(speaker_info_path, 'r', encoding='utf-8') as f:
+    with open(speaker_info_path, "r", encoding="utf-8") as f:
         speaker_info_list = json.load(f)
 
     train_manifest_files = []
@@ -273,10 +252,10 @@ def load_finetune_datasets_pathology(config: DictConfig, bpe_path: str) -> Tuple
 
     # Collect training and validation manifests for every speaker.
     for speaker_info in speaker_info_list:
-        speaker_id = speaker_info['speaker']
+        speaker_id = speaker_info["speaker"]
 
-        train_file = speaker_info['train_jsonl']
-        valid_file = speaker_info['valid_jsonl']
+        train_file = speaker_info["train_jsonl"]
+        valid_file = speaker_info["valid_jsonl"]
 
         if os.path.exists(train_file) and os.path.exists(valid_file):
             train_manifest_files.append(train_file)
@@ -303,13 +282,13 @@ def load_speaker_conditions(config: DictConfig) -> dict:
         dict: Dictionary mapping speaker_id to mean_condition tensor.
     """
     speaker_info_path = os.path.join(config.train.data_path, "speaker_info.json")
-    with open(speaker_info_path, 'r', encoding='utf-8') as f:
+    with open(speaker_info_path, "r", encoding="utf-8") as f:
         speaker_info_list = json.load(f)
 
     speaker_conditions = {}
     for speaker_info in speaker_info_list:
-        speaker_id = speaker_info['speaker']
-        medoid_path = speaker_info['medoid_condition']
+        speaker_id = speaker_info["speaker"]
+        medoid_path = speaker_info["medoid_condition"]
 
         if os.path.exists(medoid_path):
             condition = np.load(medoid_path)

@@ -27,6 +27,7 @@ def find_multiple(n: int, k: int) -> int:
         return n
     return n + k - (n % k)
 
+
 class AdaptiveLayerNorm(nn.Module):
     r"""Adaptive Layer Normalization"""
 
@@ -40,11 +41,7 @@ class AdaptiveLayerNorm(nn.Module):
     def forward(self, input: Tensor, embedding: Tensor = None) -> Tensor:
         if embedding is None:
             return self.norm(input)
-        weight, bias = torch.split(
-            self.project_layer(embedding),
-            split_size_or_sections=self.d_model,
-            dim=-1,
-        )
+        weight, bias = torch.split(self.project_layer(embedding), split_size_or_sections=self.d_model, dim=-1)
         return weight * self.norm(input) + bias
 
 
@@ -74,6 +71,7 @@ class ModelArgs:
             self.intermediate_size = find_multiple(n_hidden, 256)
         # self.head_dim = self.dim // self.n_head
 
+
 class Transformer(nn.Module):
     def __init__(self, config: ModelArgs) -> None:
         super().__init__()
@@ -97,8 +95,7 @@ class Transformer(nn.Module):
         dtype = self.norm.project_layer.weight.dtype
         device = self.norm.project_layer.weight.device
 
-        self.freqs_cis = precompute_freqs_cis(self.config.block_size, self.config.head_dim,
-                                              self.config.rope_base, dtype).to(device)
+        self.freqs_cis = precompute_freqs_cis(self.config.block_size, self.config.head_dim, self.config.rope_base, dtype).to(device)
         self.causal_mask = torch.tril(torch.ones(self.max_seq_length, self.max_seq_length, dtype=torch.bool)).to(device)
         self.use_kv_cache = use_kv_cache
         self.uvit_skip_connection = self.config.uvit_skip_connection
@@ -109,17 +106,9 @@ class Transformer(nn.Module):
             self.layers_emit_skip = []
             self.layers_receive_skip = []
 
-    def forward(self,
-                x: Tensor,
-                c: Tensor,
-                input_pos: Optional[Tensor] = None,
-                mask: Optional[Tensor] = None,
-                context: Optional[Tensor] = None,
-                context_input_pos: Optional[Tensor] = None,
-                cross_attention_mask: Optional[Tensor] = None,
-                ) -> Tensor:
+    def forward(self, x: Tensor, c: Tensor, input_pos: Optional[Tensor] = None, mask: Optional[Tensor] = None, context: Optional[Tensor] = None, context_input_pos: Optional[Tensor] = None, cross_attention_mask: Optional[Tensor] = None) -> Tensor:
         assert self.freqs_cis is not None, "Caches must be initialized first"
-        if mask is None: # in case of non-causal model
+        if mask is None:  # in case of non-causal model
             if not self.training and self.use_kv_cache:
                 mask = self.causal_mask[None, None, input_pos]
             else:
@@ -170,17 +159,7 @@ class TransformerBlock(nn.Module):
 
         self.time_as_token = config.time_as_token
 
-    def forward(self,
-                x: Tensor,
-                c: Tensor,
-                input_pos: Tensor,
-                freqs_cis: Tensor,
-                mask: Tensor,
-                context: Optional[Tensor] = None,
-                context_freqs_cis: Optional[Tensor] = None,
-                cross_attention_mask: Optional[Tensor] = None,
-                skip_in_x: Optional[Tensor] = None,
-                ) -> Tensor:
+    def forward(self, x: Tensor, c: Tensor, input_pos: Tensor, freqs_cis: Tensor, mask: Tensor, context: Optional[Tensor] = None, context_freqs_cis: Optional[Tensor] = None, cross_attention_mask: Optional[Tensor] = None, skip_in_x: Optional[Tensor] = None) -> Tensor:
         c = None if self.time_as_token else c
         if self.uvit_skip_connection and skip_in_x is not None:
             x = self.skip_in_linear(torch.cat([x, skip_in_x], dim=-1))
@@ -219,14 +198,7 @@ class Attention(nn.Module):
     #         wv = state_dict.pop(prefix + "wv.weight")
     #         state_dict[prefix + "wqkv.weight"] = torch.cat([wq, wk, wv])
 
-    def forward(self,
-                x: Tensor,
-                freqs_cis: Tensor,
-                mask: Tensor,
-                input_pos: Optional[Tensor] = None,
-                context: Optional[Tensor] = None,
-                context_freqs_cis: Optional[Tensor] = None,
-                ) -> Tensor:
+    def forward(self, x: Tensor, freqs_cis: Tensor, mask: Tensor, input_pos: Optional[Tensor] = None, context: Optional[Tensor] = None, context_freqs_cis: Optional[Tensor] = None) -> Tensor:
         bsz, seqlen, _ = x.shape
 
         kv_size = self.n_local_heads * self.head_dim
@@ -285,10 +257,7 @@ class RMSNorm(nn.Module):
         return output * self.weight
 
 
-def precompute_freqs_cis(
-        seq_len: int, n_elem: int, base: int = 10000,
-        dtype: torch.dtype = torch.bfloat16
-) -> Tensor:
+def precompute_freqs_cis(seq_len: int, n_elem: int, base: int = 10000, dtype: torch.dtype = torch.bfloat16) -> Tensor:
     freqs = 1.0 / (base ** (torch.arange(0, n_elem, 2)[: (n_elem // 2)].float() / n_elem))
     t = torch.arange(seq_len, device=freqs.device)
     freqs = torch.outer(t, freqs)
@@ -300,13 +269,7 @@ def precompute_freqs_cis(
 def apply_rotary_emb(x: Tensor, freqs_cis: Tensor) -> Tensor:
     xshaped = x.float().reshape(*x.shape[:-1], -1, 2)
     freqs_cis = freqs_cis.view(1, xshaped.size(1), 1, xshaped.size(3), 2)
-    x_out2 = torch.stack(
-        [
-            xshaped[..., 0] * freqs_cis[..., 0] - xshaped[..., 1] * freqs_cis[..., 1],
-            xshaped[..., 1] * freqs_cis[..., 0] + xshaped[..., 0] * freqs_cis[..., 1],
-        ],
-        -1,
-    )
+    x_out2 = torch.stack([xshaped[..., 0] * freqs_cis[..., 0] - xshaped[..., 1] * freqs_cis[..., 1], xshaped[..., 1] * freqs_cis[..., 0] + xshaped[..., 0] * freqs_cis[..., 1]], -1)
 
     x_out2 = x_out2.flatten(3)
     return x_out2.type_as(x)
@@ -320,25 +283,21 @@ def modulate(x, shift, scale):
 #               Embedding Layers for Timesteps and Class Labels                 #
 #################################################################################
 
+
 class TimestepEmbedder(nn.Module):
     """
     Embeds scalar timesteps into vector representations.
     """
+
     def __init__(self, hidden_size, frequency_embedding_size=256):
         super().__init__()
-        self.mlp = nn.Sequential(
-            nn.Linear(frequency_embedding_size, hidden_size, bias=True),
-            nn.SiLU(),
-            nn.Linear(hidden_size, hidden_size, bias=True),
-        )
+        self.mlp = nn.Sequential(nn.Linear(frequency_embedding_size, hidden_size, bias=True), nn.SiLU(), nn.Linear(hidden_size, hidden_size, bias=True))
         self.frequency_embedding_size = frequency_embedding_size
         self.max_period = 10000
         self.scale = 1000
 
         half = frequency_embedding_size // 2
-        freqs = torch.exp(
-            -math.log(self.max_period) * torch.arange(start=0, end=half, dtype=torch.float32) / half
-        )
+        freqs = torch.exp(-math.log(self.max_period) * torch.arange(start=0, end=half, dtype=torch.float32) / half)
         self.register_buffer("freqs", freqs)
 
     def timestep_embedding(self, t):
@@ -368,6 +327,7 @@ class StyleEmbedder(nn.Module):
     """
     Embeds class labels into vector representations. Also handles label dropout for classifier-free guidance.
     """
+
     def __init__(self, input_size, hidden_size, dropout_prob):
         super().__init__()
         use_cfg_embedding = dropout_prob > 0
@@ -385,18 +345,17 @@ class StyleEmbedder(nn.Module):
         embeddings = labels
         return embeddings
 
+
 class FinalLayer(nn.Module):
     """
     The final layer of DiT.
     """
+
     def __init__(self, hidden_size, patch_size, out_channels):
         super().__init__()
         self.norm_final = nn.LayerNorm(hidden_size, elementwise_affine=False, eps=1e-6)
         self.linear = weight_norm(nn.Linear(hidden_size, patch_size * patch_size * out_channels, bias=True))
-        self.adaLN_modulation = nn.Sequential(
-            nn.SiLU(),
-            nn.Linear(hidden_size, 2 * hidden_size, bias=True)
-        )
+        self.adaLN_modulation = nn.Sequential(nn.SiLU(), nn.Linear(hidden_size, 2 * hidden_size, bias=True))
 
     def forward(self, x, c):
         shift, scale = self.adaLN_modulation(c).chunk(2, dim=1)
@@ -404,25 +363,14 @@ class FinalLayer(nn.Module):
         x = self.linear(x)
         return x
 
+
 class DiT(torch.nn.Module):
-    def __init__(
-        self,
-        args
-    ):
+    def __init__(self, args):
         super(DiT, self).__init__()
-        self.time_as_token = args.DiT.time_as_token if hasattr(args.DiT, 'time_as_token') else False
-        self.style_as_token = args.DiT.style_as_token if hasattr(args.DiT, 'style_as_token') else False
-        self.uvit_skip_connection = args.DiT.uvit_skip_connection if hasattr(args.DiT, 'uvit_skip_connection') else False
-        model_args = ModelArgs(
-            block_size=16384,#args.DiT.block_size,
-            n_layer=args.DiT.depth,
-            n_head=args.DiT.num_heads,
-            dim=args.DiT.hidden_dim,
-            head_dim=args.DiT.hidden_dim // args.DiT.num_heads,
-            vocab_size=1024,
-            uvit_skip_connection=self.uvit_skip_connection,
-            time_as_token=self.time_as_token,
-        )
+        self.time_as_token = args.DiT.time_as_token if hasattr(args.DiT, "time_as_token") else False
+        self.style_as_token = args.DiT.style_as_token if hasattr(args.DiT, "style_as_token") else False
+        self.uvit_skip_connection = args.DiT.uvit_skip_connection if hasattr(args.DiT, "uvit_skip_connection") else False
+        model_args = ModelArgs(block_size=16384, n_layer=args.DiT.depth, n_head=args.DiT.num_heads, dim=args.DiT.hidden_dim, head_dim=args.DiT.hidden_dim // args.DiT.num_heads, vocab_size=1024, uvit_skip_connection=self.uvit_skip_connection, time_as_token=self.time_as_token)  # args.DiT.block_size,
         self.transformer = Transformer(model_args)
         self.in_channels = args.DiT.in_channels
         self.out_channels = args.DiT.in_channels
@@ -431,10 +379,10 @@ class DiT(torch.nn.Module):
         self.x_embedder = weight_norm(nn.Linear(args.DiT.in_channels, args.DiT.hidden_dim, bias=True))
 
         self.content_type = args.DiT.content_type  # 'discrete' or 'continuous'
-        self.content_codebook_size = args.DiT.content_codebook_size # for discrete content
-        self.content_dim = args.DiT.content_dim # for continuous content
+        self.content_codebook_size = args.DiT.content_codebook_size  # for discrete content
+        self.content_dim = args.DiT.content_dim  # for continuous content
         self.cond_embedder = nn.Embedding(args.DiT.content_codebook_size, args.DiT.hidden_dim)  # discrete content
-        self.cond_projection = nn.Linear(args.DiT.content_dim, args.DiT.hidden_dim, bias=True) # continuous content
+        self.cond_projection = nn.Linear(args.DiT.content_dim, args.DiT.hidden_dim, bias=True)  # continuous content
 
         self.is_causal = args.DiT.is_causal
 
@@ -444,30 +392,18 @@ class DiT(torch.nn.Module):
         self.register_buffer("input_pos", input_pos)
 
         self.final_layer_type = args.DiT.final_layer_type  # mlp or wavenet
-        if self.final_layer_type == 'wavenet':
+        if self.final_layer_type == "wavenet":
             self.t_embedder2 = TimestepEmbedder(args.wavenet.hidden_dim)
             self.conv1 = nn.Linear(args.DiT.hidden_dim, args.wavenet.hidden_dim)
             self.conv2 = nn.Conv1d(args.wavenet.hidden_dim, args.DiT.in_channels, 1)
-            self.wavenet = WN(hidden_channels=args.wavenet.hidden_dim,
-                              kernel_size=args.wavenet.kernel_size,
-                              dilation_rate=args.wavenet.dilation_rate,
-                              n_layers=args.wavenet.num_layers,
-                              gin_channels=args.wavenet.hidden_dim,
-                              p_dropout=args.wavenet.p_dropout,
-                              causal=False)
+            self.wavenet = WN(hidden_channels=args.wavenet.hidden_dim, kernel_size=args.wavenet.kernel_size, dilation_rate=args.wavenet.dilation_rate, n_layers=args.wavenet.num_layers, gin_channels=args.wavenet.hidden_dim, p_dropout=args.wavenet.p_dropout, causal=False)
             self.final_layer = FinalLayer(args.wavenet.hidden_dim, 1, args.wavenet.hidden_dim)
-            self.res_projection = nn.Linear(args.DiT.hidden_dim,
-                                            args.wavenet.hidden_dim)  # residual connection from tranformer output to final output
+            self.res_projection = nn.Linear(args.DiT.hidden_dim, args.wavenet.hidden_dim)  # residual connection from tranformer output to final output
             self.wavenet_style_condition = args.wavenet.style_condition
             assert args.DiT.style_condition == args.wavenet.style_condition
         else:
-            self.final_mlp = nn.Sequential(
-                    nn.Linear(args.DiT.hidden_dim, args.DiT.hidden_dim),
-                    nn.SiLU(),
-                    nn.Linear(args.DiT.hidden_dim, args.DiT.in_channels),
-            )
+            self.final_mlp = nn.Sequential(nn.Linear(args.DiT.hidden_dim, args.DiT.hidden_dim), nn.SiLU(), nn.Linear(args.DiT.hidden_dim, args.DiT.in_channels))
         self.transformer_style_condition = args.DiT.style_condition
-
 
         self.class_dropout_prob = args.DiT.class_dropout_prob
         self.content_mask_embedder = nn.Embedding(1, args.DiT.hidden_dim)
@@ -475,14 +411,13 @@ class DiT(torch.nn.Module):
         self.long_skip_connection = args.DiT.long_skip_connection
         self.skip_linear = nn.Linear(args.DiT.hidden_dim + args.DiT.in_channels, args.DiT.hidden_dim)
 
-        self.cond_x_merge_linear = nn.Linear(args.DiT.hidden_dim + args.DiT.in_channels * 2 +
-                                             args.style_encoder.dim * self.transformer_style_condition * (not self.style_as_token),
-                                             args.DiT.hidden_dim)
+        self.cond_x_merge_linear = nn.Linear(args.DiT.hidden_dim + args.DiT.in_channels * 2 + args.style_encoder.dim * self.transformer_style_condition * (not self.style_as_token), args.DiT.hidden_dim)
         if self.style_as_token:
             self.style_in = nn.Linear(args.style_encoder.dim, args.DiT.hidden_dim)
 
     def setup_caches(self, max_batch_size, max_seq_length):
         self.transformer.setup_caches(max_batch_size, max_seq_length, use_kv_cache=False)
+
     def forward(self, x, prompt_x, x_lens, t, style, cond, mask_content=False):
         class_dropout = False
         if self.training and torch.rand(1) < self.class_dropout_prob:
@@ -493,7 +428,6 @@ class DiT(torch.nn.Module):
         cond_in_module = self.cond_projection
 
         B, _, T = x.size()
-
 
         t1 = self.t_embedder(t)  # (N, D)
 
@@ -506,7 +440,7 @@ class DiT(torch.nn.Module):
         if self.transformer_style_condition and not self.style_as_token:
             x_in = torch.cat([x_in, style[:, None, :].repeat(1, T, 1)], dim=-1)
         if class_dropout:
-            x_in[..., self.in_channels:] = x_in[..., self.in_channels:] * 0
+            x_in[..., self.in_channels :] = x_in[..., self.in_channels :] * 0
         x_in = self.cond_x_merge_linear(x_in)  # (N, T, D)
 
         if self.style_as_token:
@@ -516,19 +450,18 @@ class DiT(torch.nn.Module):
         if self.time_as_token:
             x_in = torch.cat([t1.unsqueeze(1), x_in], dim=1)
         x_mask = sequence_mask(x_lens + self.style_as_token + self.time_as_token).to(x.device).unsqueeze(1)
-        input_pos = self.input_pos[:x_in.size(1)]  # (T,)
+        input_pos = self.input_pos[: x_in.size(1)]  # (T,)
         x_mask_expanded = x_mask[:, None, :].repeat(1, 1, x_in.size(1), 1) if not self.is_causal else None
         x_res = self.transformer(x_in, t1.unsqueeze(1), input_pos, x_mask_expanded)
         x_res = x_res[:, 1:] if self.time_as_token else x_res
         x_res = x_res[:, 1:] if self.style_as_token else x_res
         if self.long_skip_connection:
             x_res = self.skip_linear(torch.cat([x_res, x], dim=-1))
-        if self.final_layer_type == 'wavenet':
+        if self.final_layer_type == "wavenet":
             x = self.conv1(x_res)
             x = x.transpose(1, 2)
             t2 = self.t_embedder2(t)
-            x = self.wavenet(x, x_mask, g=t2.unsqueeze(2)).transpose(1, 2) + self.res_projection(
-                x_res)  # long residual connection
+            x = self.wavenet(x, x_mask, g=t2.unsqueeze(2)).transpose(1, 2) + self.res_projection(x_res)  # long residual connection
             x = self.final_layer(x, t1).transpose(1, 2)
             x = self.conv2(x)
         else:

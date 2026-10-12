@@ -1,4 +1,5 @@
 """IndexTTS feature extraction shared by the TORGO and SAPC preparers."""
+
 import os
 import sys
 
@@ -22,15 +23,17 @@ class FeatureExtractor:
         self.mel_fn = MelSpectrogramFeatures().to(device)
 
         dvae_path = os.path.join(finetune_dir, cfg.dvae_checkpoint)
-        self.dvae = DiscreteVAE(channels=cfg.vqvae.channels,
-                                num_tokens=cfg.vqvae.num_tokens,
-                                hidden_dim=cfg.vqvae.hidden_dim,
-                                num_resnet_blocks=cfg.vqvae.num_resnet_blocks,
-                                codebook_dim=cfg.vqvae.codebook_dim,
-                                num_layers=cfg.vqvae.num_layers,
-                                positional_dims=cfg.vqvae.positional_dims,
-                                kernel_size=cfg.vqvae.kernel_size,
-                                use_transposed_convs=cfg.vqvae.use_transposed_convs)
+        self.dvae = DiscreteVAE(
+            channels=cfg.vqvae.channels,
+            num_tokens=cfg.vqvae.num_tokens,
+            hidden_dim=cfg.vqvae.hidden_dim,
+            num_resnet_blocks=cfg.vqvae.num_resnet_blocks,
+            codebook_dim=cfg.vqvae.codebook_dim,
+            num_layers=cfg.vqvae.num_layers,
+            positional_dims=cfg.vqvae.positional_dims,
+            kernel_size=cfg.vqvae.kernel_size,
+            use_transposed_convs=cfg.vqvae.use_transposed_convs,
+        )
         dvae_sd = torch.load(dvae_path, map_location="cpu")
         dvae_sd = dvae_sd.get("model", dvae_sd)
         self.dvae.load_state_dict(dvae_sd, strict=False)
@@ -65,7 +68,4 @@ class FeatureExtractor:
         cond = self.gpt.get_conditioning(mel, cond_len)
         if not (torch.isfinite(mel).all() and torch.isfinite(cond).all()):
             return None
-        return (mel.cpu().numpy().astype(np.float32),
-                codes.cpu().numpy().astype(np.int64),
-                cond.cpu().numpy().astype(np.float32),
-                duration)
+        return (mel.cpu().numpy().astype(np.float32), codes.cpu().numpy().astype(np.int64), cond.cpu().numpy().astype(np.float32), duration)

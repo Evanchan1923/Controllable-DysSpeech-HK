@@ -1,4 +1,5 @@
 """Preload Seed-VC's public model assets into the configured shared HF cache."""
+
 import os
 
 from huggingface_hub import hf_hub_download, snapshot_download

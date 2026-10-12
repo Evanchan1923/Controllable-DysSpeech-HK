@@ -39,15 +39,7 @@ class Linear(torch.nn.Module):
     torch.Size([10, 50, 100])
     """
 
-    def __init__(
-        self,
-        n_neurons,
-        input_shape=None,
-        input_size=None,
-        bias=True,
-        max_norm=None,
-        combine_dims=False,
-    ):
+    def __init__(self, n_neurons, input_shape=None, input_size=None, bias=True, max_norm=None, combine_dims=False):
         super().__init__()
         self.max_norm = max_norm
         self.combine_dims = combine_dims
@@ -80,9 +72,7 @@ class Linear(torch.nn.Module):
             x = x.reshape(x.shape[0], x.shape[1], x.shape[2] * x.shape[3])
 
         if self.max_norm is not None:
-            self.w.weight.data = torch.renorm(
-                self.w.weight.data, p=2, dim=0, maxnorm=self.max_norm
-            )
+            self.w.weight.data = torch.renorm(self.w.weight.data, p=2, dim=0, maxnorm=self.max_norm)
 
         wx = self.w(x)
 
