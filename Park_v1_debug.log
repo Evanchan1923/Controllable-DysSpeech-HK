@@ -1,0 +1,44 @@
+Debug job started at: Tue Oct 13 09:16:44 AEDT 2026  Job ID: 9505581.kman.restech.unsw.edu.au  Host: k094
+Python: /srv/scratch/z5327748/venv/controll-dys-gen/bin/python
+Python 3.10.8
+ffmpeg version 7.0.2 Copyright (c) 2000-2024 the FFmpeg developers
+built with gcc 12.2.0 (Spack GCC)
+configuration: --prefix=/apps/z_install_tree/linux-rocky8-ivybridge/gcc-12.2.0/ffmpeg-7.0.2-yd6onsmqsqz7dabsos5foujvnqmunl3r --enable-pic --cc=/srv/apps/spack/lib/spack/env/gcc/gcc --cxx=/srv/apps/spack/lib/spack/env/gcc/g++ --disable-libxcb --disable-libxcb-shape --disable-libxcb-shm --disable-libxcb-xfixes --disable-xlib --disable-libfontconfig --disable-libfreetype --disable-libfribidi --enable-bzlib --disable-doc --enable-gpl --enable-libmp3lame --disable-libopenjpeg --enable-libopus --enable-libspeex --enable-libvorbis --disable-libvpx --enable-libx264 --disable-nonfree --disable-openssl --enable-shared --enable-version3 --enable-libzmq --disable-libssh --disable-libwebp --disable-lzma --enable-libsnappy --enable-sdl2 --disable-libaom --disable-libxml2
+libavutil      59.  8.100 / 59.  8.100
+libavcodec     61.  3.100 / 61.  3.100
+libavformat    61.  1.100 / 61.  1.100
+libavdevice    61.  1.100 / 61.  1.100
+libavfilter    10.  1.100 / 10.  1.100
+libswscale      8.  1.100 /  8.  1.100
+libswresample   5.  1.100 /  5.  1.100
+libpostproc    58.  1.100 / 58.  1.100
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+ModuleNotFoundError: No module named 'transformers'
+
+================================================================================
+                     Resource Usage on 13/10/2026 09:18:06                      
+
+Job Id: 9505581 
+Queue: SIMI
+Walltime: 00:01:20  (requested 00:15:00)
+Job unsuccessful. Exit Status 1 - Exit status refers to the exit value of the
+top process in the job, typically the shell.
+This may be the exit value of the last command executed in the shell.
+See job output error.
+
+--------------------------------------------------------------------------------
+|              |             GPUs              |            Memory             |
+--------------------------------------------------------------------------------
+| Node  GPU ID | Requested   Used   Efficiency | Available   Used              |
+| k094    4    |     1       0.42       42%    | 46068 MiB   7.83G             |
+--------------------------------------------------------------------------------
+|Total         |     1       0.42      42.0%   |                               |
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+|              |             CPUs              |            Memory             |
+--------------------------------------------------------------------------------
+| Node         | Requested   Used   Efficiency | Requested   Used   Efficiency |
+| k094         |     2       0.04      2.0%    |  32.0gb    0.59gb     1.8%    |
+--------------------------------------------------------------------------------
