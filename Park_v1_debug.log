@@ -1,4 +1,4 @@
-Debug job started at: Tue Oct 13 09:16:44 AEDT 2026  Job ID: 9505581.kman.restech.unsw.edu.au  Host: k094
+Debug job started at: Tue Oct 13 09:31:24 AEDT 2026  Job ID: 9505628.kman.restech.unsw.edu.au  Host: k102
 Python: /srv/scratch/z5327748/venv/controll-dys-gen/bin/python
 Python 3.10.8
 ffmpeg version 7.0.2 Copyright (c) 2000-2024 the FFmpeg developers
@@ -12,33 +12,103 @@ libavfilter    10.  1.100 / 10.  1.100
 libswscale      8.  1.100 /  8.  1.100
 libswresample   5.  1.100 /  5.  1.100
 libpostproc    58.  1.100 / 58.  1.100
-Traceback (most recent call last):
-  File "<stdin>", line 5, in <module>
-ModuleNotFoundError: No module named 'transformers'
+datasets=2.21.0
+torch=2.14.1+cu130
+transformers=4.46.3
+CUDA available=True
+/srv/scratch/z5327748/venv/controll-dys-gen/lib/python3.10/site-packages/torch/cuda/__init__.py:484: UserWarning: Found GPU0 Tesla V100-SXM2-32GB which is of compute capability (CC) 7.0.
+The following list shows the CCs this version of PyTorch was built for and the hardware CCs it supports:
+- 7.5 which supports hardware CC >=7.5,<8.0
+- 8.0 which supports hardware CC >=8.0,<9.0 except {8.7}
+- 8.6 which supports hardware CC >=8.6,<9.0 except {8.7}
+- 9.0 which supports hardware CC >=9.0,<10.0
+- 10.0 which supports hardware CC >=10.0,<11.0 except {10.1}
+- 12.0 which supports hardware CC >=12.0,<13.0
+Your installed torch==2.14.1+cu130 does not include kernels for this GPU. Reinstall the same version against a CUDA build that does, e.g.:
+  For CUDA 12.6 use pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu126
+  _warn_unsupported_code(d, device_cc, code_ccs)
+GPU=Tesla V100-SXM2-32GB
+Validating pipeline configuration and required paths...
+Pipeline type: vc_validation
+Output directory: /srv/scratch/z5327748/dys-gen-runs/Park_v1
+[/home/z5327748/Controllable-DysSpeech-HK] /srv/scratch/z5327748/venv/controll-dys-gen/bin/python scripts/generate_sapc.py --settings /home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml --out-dir /srv/scratch/z5327748/dys-gen-runs/Park_v1 --validation-pair
+[/home/z5327748/Controllable-DysSpeech-HK] /srv/scratch/z5327748/venv/controll-dys-gen/bin/python scripts/debug_vc.py --experiment-dir /srv/scratch/z5327748/dys-gen-runs/Park_v1
+Loading SAPC and selecting a reproducible validation pair...
+Pipeline type: vc_validation
+Output directory: /srv/scratch/z5327748/dys-gen-runs/Park_v1
+[/home/z5327748/Controllable-DysSpeech-HK] /srv/scratch/z5327748/venv/controll-dys-gen/bin/python scripts/generate_sapc.py --settings /home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml --out-dir /srv/scratch/z5327748/dys-gen-runs/Park_v1 --validation-pair --plan
+{
+  "experiment": "Park_v1",
+  "seed": 1234,
+  "etiology": "Parkinson's Disease",
+  "split": "train",
+  "feasible_speaker_pairs": 3315,
+  "shared_pairing_text": "what alarms are set",
+  "low": {
+    "dataset_index": 53949,
+    "id": "efa8810e-a911-493d-09f1-08db87b19e27_241_5543",
+    "speaker": "efa8810e-a911-493d-09f1-08db87b19e27",
+    "text": "what alarms are set",
+    "pairing_text": "what alarms are set",
+    "speaker_avg_cer": 0.0162,
+    "speaker_avg_wer": 0.0417,
+    "speaker_severity": "low",
+    "audio": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_original.wav"
+  },
+  "high": {
+    "dataset_index": 133839,
+    "id": "20c27dbe-3ba4-445a-1b1a-08db3b55cd4a_241_1017",
+    "speaker": "20c27dbe-3ba4-445a-1b1a-08db3b55cd4a",
+    "text": "what alarms are set",
+    "pairing_text": "what alarms are set",
+    "speaker_avg_cer": 0.619,
+    "speaker_avg_wer": 0.8081,
+    "speaker_severity": "high",
+    "audio": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_original.wav"
+  },
+  "outputs": {
+    "high_articulation_low_timbre": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_articulation_low_timbre.wav",
+    "low_articulation_high_timbre": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_articulation_high_timbre.wav"
+  },
+  "directions": {
+    "high_articulation_low_timbre": {
+      "source": "high_original",
+      "reference": "low_original",
+      "expected_timbre": "low speaker",
+      "expected_severity": "high"
+    },
+    "low_articulation_high_timbre": {
+      "source": "low_original",
+      "reference": "high_original",
+      "expected_timbre": "high speaker",
+      "expected_severity": "low"
+    }
+  }
+}
+VALIDATION_PAIR_PLAN_DONE: audio was not decoded and Seed-VC was not loaded
+PARK_V1_SMOKE_TEST_PASSED
+Debug job finished at: Tue Oct 13 09:35:41 AEDT 2026
 
 ================================================================================
-                     Resource Usage on 13/10/2026 09:18:06                      
+                     Resource Usage on 13/10/2026 09:35:45                      
 
-Job Id: 9505581 
+Job Id: 9505628 
 Queue: SIMI
-Walltime: 00:01:20  (requested 00:15:00)
-Job unsuccessful. Exit Status 1 - Exit status refers to the exit value of the
-top process in the job, typically the shell.
-This may be the exit value of the last command executed in the shell.
-See job output error.
+Walltime: 00:04:19  (requested 00:15:00)
+Job execution was successful. Exit Status 0. 
 
 --------------------------------------------------------------------------------
 |              |             GPUs              |            Memory             |
 --------------------------------------------------------------------------------
 | Node  GPU ID | Requested   Used   Efficiency | Available   Used              |
-| k094    4    |     1       0.42       42%    | 46068 MiB   7.83G             |
+| k102    2    |     1        0.0       0%     | 32768 MiB   0.0B              |
 --------------------------------------------------------------------------------
-|Total         |     1       0.42      42.0%   |                               |
+|Total         |     1        0.0      0.0%    |                               |
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 |              |             CPUs              |            Memory             |
 --------------------------------------------------------------------------------
 | Node         | Requested   Used   Efficiency | Requested   Used   Efficiency |
-| k094         |     2       0.04      2.0%    |  32.0gb    0.59gb     1.8%    |
+| k102         |     2       0.06      3.0%    |  32.0gb    0.74gb     2.3%    |
 --------------------------------------------------------------------------------
