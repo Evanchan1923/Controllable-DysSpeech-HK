@@ -32,6 +32,7 @@ import time
 
 import numpy as np
 import librosa
+import soundfile as sf
 import torch
 import torchaudio
 
@@ -186,7 +187,7 @@ def convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, 
             processed_frames += vc_target.size(2) - overlap_frame_len
     vc_wave = torch.tensor(np.concatenate(generated_wave_chunks))[None, :].float()
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    torchaudio.save(out_path, vc_wave.cpu(), sr)
+    sf.write(out_path, vc_wave.squeeze(0).cpu().numpy(), sr)
 
 
 def _crossfade(chunk1, chunk2, overlap):
