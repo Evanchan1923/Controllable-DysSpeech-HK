@@ -1,28 +1,106 @@
-Job started at: Thu Oct  8 17:46:18 AEDT 2026  Job ID: 9475589.kman.restech.unsw.edu.au  Host: k102
+Job started at: Tue Oct 13 15:50:43 AEDT 2026  Job ID: 9505656.kman.restech.unsw.edu.au  Host: k094
+Python: /srv/scratch/z5327748/venv/controll-dys-gen/bin/python
+torch=2.14.1+cu130
+GPU=NVIDIA L40S; compute_capability=8.9
+CUDA preflight passed; result_mean=-0.021023
+Tue Oct 13 15:51:29 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 610.43.02              KMD Version: 610.43.02     CUDA UMD Version: 13.3     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA L40S                    On  |   00000000:04:00.0 Off |                    0 |
+| N/A   32C    P0             87W /  350W |       0MiB /  46068MiB |      1%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
 Pipeline type: vc_validation
 Output directory: /srv/scratch/z5327748/dys-gen-runs/Park_v1
 [/home/z5327748/Controllable-DysSpeech-HK] /srv/scratch/z5327748/venv/controll-dys-gen/bin/python scripts/generate_sapc.py --settings /home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml --out-dir /srv/scratch/z5327748/dys-gen-runs/Park_v1 --validation-pair
+{
+  "experiment": "Park_v1",
+  "seed": 1234,
+  "etiology": "Parkinson's Disease",
+  "split": "train",
+  "feasible_speaker_pairs": 3315,
+  "shared_pairing_text": "what alarms are set",
+  "low": {
+    "dataset_index": 53949,
+    "id": "efa8810e-a911-493d-09f1-08db87b19e27_241_5543",
+    "speaker": "efa8810e-a911-493d-09f1-08db87b19e27",
+    "text": "what alarms are set",
+    "pairing_text": "what alarms are set",
+    "speaker_avg_cer": 0.0162,
+    "speaker_avg_wer": 0.0417,
+    "speaker_severity": "low",
+    "audio": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_original.wav"
+  },
+  "high": {
+    "dataset_index": 133839,
+    "id": "20c27dbe-3ba4-445a-1b1a-08db3b55cd4a_241_1017",
+    "speaker": "20c27dbe-3ba4-445a-1b1a-08db3b55cd4a",
+    "text": "what alarms are set",
+    "pairing_text": "what alarms are set",
+    "speaker_avg_cer": 0.619,
+    "speaker_avg_wer": 0.8081,
+    "speaker_severity": "high",
+    "audio": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_original.wav"
+  },
+  "outputs": {
+    "high_articulation_low_timbre": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_articulation_low_timbre.wav",
+    "low_articulation_high_timbre": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_articulation_high_timbre.wav"
+  },
+  "directions": {
+    "high_articulation_low_timbre": {
+      "source": "high_original",
+      "reference": "low_original",
+      "expected_timbre": "low speaker",
+      "expected_severity": "high"
+    },
+    "low_articulation_high_timbre": {
+      "source": "low_original",
+      "reference": "high_original",
+      "expected_timbre": "high speaker",
+      "expected_severity": "low"
+    }
+  }
+}
 Traceback (most recent call last):
-  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 14, in <module>
-    from sapc_audio import condition_label, decode_audio, load_speaker_severity, load_split, speaker_dir_name
-  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/sapc_audio.py", line 10, in <module>
-    from datasets import Audio, Dataset, DatasetDict, load_from_disk
-ModuleNotFoundError: No module named 'datasets'
-Traceback (most recent call last):
-  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/run_pipeline.py", line 210, in <module>
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 290, in <module>
     main()
-  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/run_pipeline.py", line 205, in main
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 204, in main
+    run_validation_pair(settings, args.out_dir, plan=args.plan)
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 121, in run_validation_pair
+    import inference as seed_inference
+  File "/home/z5327748/Controllable-DysSpeech-HK/third_party/seed-vc/inference.py", line 17, in <module>
+    from modules.commons import *
+  File "/home/z5327748/Controllable-DysSpeech-HK/third_party/seed-vc/modules/commons.py", line 6, in <module>
+    from munch import Munch
+ModuleNotFoundError: No module named 'munch'
+Traceback (most recent call last):
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/run_pipeline.py", line 216, in <module>
+    main()
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/run_pipeline.py", line 211, in main
     subprocess.run(command, cwd=cwd, check=True, env=os.environ.copy())
   File "/apps/z_install_tree/linux-rocky8-ivybridge/gcc-12.2.0/python-3.10.8-pmtwsrrmcmrs6olvgx5xhepgh7gl5vro/lib/python3.10/subprocess.py", line 526, in run
     raise CalledProcessError(retcode, process.args,
 subprocess.CalledProcessError: Command '['/srv/scratch/z5327748/venv/controll-dys-gen/bin/python', 'scripts/generate_sapc.py', '--settings', '/home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml', '--out-dir', '/srv/scratch/z5327748/dys-gen-runs/Park_v1', '--validation-pair']' returned non-zero exit status 1.
 
 ================================================================================
-                     Resource Usage on 08/10/2026 17:46:29                      
+                     Resource Usage on 13/10/2026 15:56:31                      
 
-Job Id: 9475589 
+Job Id: 9505656 
 Queue: SIMI
-Walltime: 00:00:09  (requested 02:00:00)
+Walltime: 00:05:46  (requested 02:00:00)
 Job unsuccessful. Exit Status 1 - Exit status refers to the exit value of the
 top process in the job, typically the shell.
 This may be the exit value of the last command executed in the shell.
@@ -32,14 +110,14 @@ See job output error.
 |              |             GPUs              |            Memory             |
 --------------------------------------------------------------------------------
 | Node  GPU ID | Requested   Used   Efficiency | Available   Used              |
-| k102    1    |     1        0.0       0%     | 32768 MiB   0.0B              |
+| k094    5    |     1       0.75       75%    | 46068 MiB  18.26G             |
 --------------------------------------------------------------------------------
-|Total         |     1        0.0      0.0%    |                               |
+|Total         |     1       0.75      75.0%   |                               |
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 |              |             CPUs              |            Memory             |
 --------------------------------------------------------------------------------
 | Node         | Requested   Used   Efficiency | Requested   Used   Efficiency |
-| k102         |     2       0.11      6.0%    |  32.0gb    0.04gb     0.1%    |
+| k094         |     2       0.03      2.0%    |  32.0gb    1.02gb     3.2%    |
 --------------------------------------------------------------------------------
