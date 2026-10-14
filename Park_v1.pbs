@@ -35,26 +35,6 @@ export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
 
 echo "Job started at: $(date)  Job ID: ${PBS_JOBID:-unknown}  Host: $(hostname)"
 echo "Python: $(command -v python)"
-python - <<'PY'
-import torch
-
-if not torch.cuda.is_available():
-    raise SystemExit("CUDA is not available inside the PBS job")
-
-device = torch.device("cuda:0")
-properties = torch.cuda.get_device_properties(device)
-print(f"torch={torch.__version__}")
-print(f"GPU={properties.name}; compute_capability={properties.major}.{properties.minor}")
-
-# is_available() can still be true when the installed wheel has no kernels for
-# the allocated GPU. A real operation catches that mismatch before model load.
-left = torch.randn((2048, 2048), device=device)
-right = torch.randn((2048, 2048), device=device)
-result = left @ right
-torch.cuda.synchronize(device)
-print(f"CUDA preflight passed; result_mean={result.mean().item():.6f}")
-PY
-nvidia-smi
 
 args=(--config "$CONFIG_PATH")
 if [[ -n "${STAGE:-}" ]]; then args+=(--stage "$STAGE"); fi

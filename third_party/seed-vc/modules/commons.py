@@ -3,9 +3,29 @@ import numpy as np
 import torch
 from torch import nn
 from torch.nn import functional as F
-from munch import Munch
 import json
 import argparse
+
+try:
+    from munch import Munch
+except ModuleNotFoundError:
+    class Munch(dict):
+        """Minimal fallback for Seed-VC configs when the external package is absent."""
+
+        def __getattr__(self, key):
+            try:
+                return self[key]
+            except KeyError as exc:
+                raise AttributeError(key) from exc
+
+        def __setattr__(self, key, value):
+            self[key] = value
+
+        def __delattr__(self, key):
+            try:
+                del self[key]
+            except KeyError as exc:
+                raise AttributeError(key) from exc
 
 
 def str2bool(v):

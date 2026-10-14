@@ -1,9 +1,10 @@
 # Additional packages used by the bundled Seed-VC counterfactual generator.
-# Torch, torchaudio, transformers, numpy, librosa, munch and einops are pinned
-# by pyproject.toml to the versions used for this project.
+# Torch, torchaudio, transformers, numpy, librosa and einops are pinned by
+# pyproject.toml to the versions used for this project.
 scipy==1.13.1
 huggingface-hub>=0.28.1
 descript-audio-codec==1.0.0
+munch==4.0.0
 resemblyzer
 soundfile==0.12.1
 funasr==1.1.5
