@@ -1,28 +1,5 @@
-Job started at: Tue Oct 13 15:50:43 AEDT 2026  Job ID: 9505656.kman.restech.unsw.edu.au  Host: k094
+Job started at: Wed Oct 14 17:09:52 AEDT 2026  Job ID: 9512690.kman.restech.unsw.edu.au  Host: k098
 Python: /srv/scratch/z5327748/venv/controll-dys-gen/bin/python
-torch=2.14.1+cu130
-GPU=NVIDIA L40S; compute_capability=8.9
-CUDA preflight passed; result_mean=-0.021023
-Tue Oct 13 15:51:29 2026       
-+-----------------------------------------------------------------------------------------+
-| NVIDIA-SMI 610.43.02              KMD Version: 610.43.02     CUDA UMD Version: 13.3     |
-+-----------------------------------------+------------------------+----------------------+
-| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
-|                                         |                        |               MIG M. |
-|=========================================+========================+======================|
-|   0  NVIDIA L40S                    On  |   00000000:04:00.0 Off |                    0 |
-| N/A   32C    P0             87W /  350W |       0MiB /  46068MiB |      1%      Default |
-|                                         |                        |                  N/A |
-+-----------------------------------------+------------------------+----------------------+
-
-+-----------------------------------------------------------------------------------------+
-| Processes:                                                                              |
-|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
-|        ID   ID                                                               Usage      |
-|=========================================================================================|
-|  No running processes found                                                             |
-+-----------------------------------------------------------------------------------------+
 Pipeline type: vc_validation
 Output directory: /srv/scratch/z5327748/dys-gen-runs/Park_v1
 [/home/z5327748/Controllable-DysSpeech-HK] /srv/scratch/z5327748/venv/controll-dys-gen/bin/python scripts/generate_sapc.py --settings /home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml --out-dir /srv/scratch/z5327748/dys-gen-runs/Park_v1 --validation-pair
@@ -74,18 +51,37 @@ Output directory: /srv/scratch/z5327748/dys-gen-runs/Park_v1
     }
   }
 }
+Warning: Skipped loading some keys due to shape mismatch: {'estimator.f0_embedder.weight', 'estimator.input_pos'}
+cfm loaded
+length_regulator loaded
+Loading weights from nvidia/bigvgan_v2_22khz_80band_256x
+Removing weight norm...
+It is strongly recommended to pass the `sampling_rate` argument to this function. Failing to do so can result in silent errors that might be hard to debug.
+It is strongly recommended to pass the `sampling_rate` argument to this function. Failing to do so can result in silent errors that might be hard to debug.
+  0%|          | 0/30 [00:00<?, ?it/s]  3%|▎         | 1/30 [00:00<00:11,  2.51it/s] 40%|████      | 12/30 [00:00<00:00, 30.69it/s] 77%|███████▋  | 23/30 [00:00<00:00, 52.10it/s]100%|██████████| 30/30 [00:00<00:00, 45.00it/s]
+Traceback (most recent call last):
+  File "/srv/scratch/z5327748/venv/controll-dys-gen/lib/python3.10/site-packages/torchaudio/_torchcodec.py", line 246, in save_with_torchcodec
+    from torchcodec.encoders import AudioEncoder
+ModuleNotFoundError: No module named 'torchcodec'
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 290, in <module>
     main()
   File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 204, in main
     run_validation_pair(settings, args.out_dir, plan=args.plan)
-  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 121, in run_validation_pair
-    import inference as seed_inference
-  File "/home/z5327748/Controllable-DysSpeech-HK/third_party/seed-vc/inference.py", line 17, in <module>
-    from modules.commons import *
-  File "/home/z5327748/Controllable-DysSpeech-HK/third_party/seed-vc/modules/commons.py", line 6, in <module>
-    from munch import Munch
-ModuleNotFoundError: No module named 'munch'
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/generate_sapc.py", line 139, in run_validation_pair
+    convert_one(model, semantic_fn, vocoder_fn, campplus_model, mel_fn, device, fp16, str(source), str(reference), str(output), int(vc_cfg["diffusion_steps"]), float(vc_cfg["length_adjust"]), float(vc_cfg["inference_cfg_rate"]))
+  File "/srv/scratch/z5327748/venv/controll-dys-gen/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/z5327748/Controllable-DysSpeech-HK/scripts/torgo/generate_data.py", line 189, in convert_one
+    torchaudio.save(out_path, vc_wave.cpu(), sr)
+  File "/srv/scratch/z5327748/venv/controll-dys-gen/lib/python3.10/site-packages/torchaudio/__init__.py", line 178, in save
+    return save_with_torchcodec(
+  File "/srv/scratch/z5327748/venv/controll-dys-gen/lib/python3.10/site-packages/torchaudio/_torchcodec.py", line 248, in save_with_torchcodec
+    raise ImportError(
+ImportError: TorchCodec is required for save_with_torchcodec. Please install torchcodec to use this function.
 Traceback (most recent call last):
   File "/home/z5327748/Controllable-DysSpeech-HK/scripts/run_pipeline.py", line 216, in <module>
     main()
@@ -96,11 +92,11 @@ Traceback (most recent call last):
 subprocess.CalledProcessError: Command '['/srv/scratch/z5327748/venv/controll-dys-gen/bin/python', 'scripts/generate_sapc.py', '--settings', '/home/z5327748/Controllable-DysSpeech-HK/configs/Park_v1.yaml', '--out-dir', '/srv/scratch/z5327748/dys-gen-runs/Park_v1', '--validation-pair']' returned non-zero exit status 1.
 
 ================================================================================
-                     Resource Usage on 13/10/2026 15:56:31                      
+                     Resource Usage on 14/10/2026 17:13:41                      
 
-Job Id: 9505656 
+Job Id: 9512690 
 Queue: SIMI
-Walltime: 00:05:46  (requested 02:00:00)
+Walltime: 00:03:48  (requested 02:00:00)
 Job unsuccessful. Exit Status 1 - Exit status refers to the exit value of the
 top process in the job, typically the shell.
 This may be the exit value of the last command executed in the shell.
@@ -110,14 +106,14 @@ See job output error.
 |              |             GPUs              |            Memory             |
 --------------------------------------------------------------------------------
 | Node  GPU ID | Requested   Used   Efficiency | Available   Used              |
-| k094    5    |     1       0.75       75%    | 46068 MiB  18.26G             |
+| k098    0    |     1        0.0       0%     | 46068 MiB   1.92G             |
 --------------------------------------------------------------------------------
-|Total         |     1       0.75      75.0%   |                               |
+|Total         |     1        0.0      0.0%    |                               |
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 |              |             CPUs              |            Memory             |
 --------------------------------------------------------------------------------
 | Node         | Requested   Used   Efficiency | Requested   Used   Efficiency |
-| k094         |     2       0.03      2.0%    |  32.0gb    1.02gb     3.2%    |
+| k098         |     2       0.12      6.0%    |  32.0gb    3.76gb     11.8%   |
 --------------------------------------------------------------------------------
