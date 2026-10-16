@@ -1,0 +1,49 @@
+{
+  "audio": {
+    "low_original": {
+      "path": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_original.wav",
+      "sample_rate": 16000,
+      "duration_seconds": 4.07,
+      "rms": 0.085018,
+      "peak": 0.834717,
+      "clipped_sample_ratio": 0.0
+    },
+    "high_original": {
+      "path": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_original.wav",
+      "sample_rate": 16000,
+      "duration_seconds": 3.79,
+      "rms": 0.112706,
+      "peak": 0.999969,
+      "clipped_sample_ratio": 1.6e-05
+    },
+    "high_articulation_low_timbre": {
+      "path": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_articulation_low_timbre.wav",
+      "sample_rate": 22050,
+      "duration_seconds": 3.7849,
+      "rms": 0.118944,
+      "peak": 0.85556,
+      "clipped_sample_ratio": 0.0
+    },
+    "low_articulation_high_timbre": {
+      "path": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_articulation_high_timbre.wav",
+      "sample_rate": 22050,
+      "duration_seconds": 4.0635,
+      "rms": 0.112576,
+      "peak": 0.996185,
+      "clipped_sample_ratio": 0.0
+    }
+  },
+  "speaker_similarity": {
+    "high_articulation_low_timbre": {
+      "to_expected_low_timbre": 0.654776,
+      "to_high_source_timbre": 0.026542,
+      "closer_to_expected_reference": true
+    },
+    "low_articulation_high_timbre": {
+      "to_expected_high_timbre": 0.608562,
+      "to_low_source_timbre": 0.341343,
+      "closer_to_expected_reference": true
+    }
+  },
+  "interpretation": "Speaker similarity checks timbre transfer only. Rerun Parakeet on the converted audio to measure CER and the severity proxy."
+}

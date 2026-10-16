@@ -1,0 +1,48 @@
+{
+  "experiment": "Park_v1",
+  "seed": 1234,
+  "etiology": "Parkinson's Disease",
+  "split": "train",
+  "feasible_speaker_pairs": 3315,
+  "shared_pairing_text": "what alarms are set",
+  "low": {
+    "dataset_index": 53949,
+    "id": "efa8810e-a911-493d-09f1-08db87b19e27_241_5543",
+    "speaker": "efa8810e-a911-493d-09f1-08db87b19e27",
+    "text": "what alarms are set",
+    "pairing_text": "what alarms are set",
+    "speaker_avg_cer": 0.0162,
+    "speaker_avg_wer": 0.0417,
+    "speaker_severity": "low",
+    "audio": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_original.wav"
+  },
+  "high": {
+    "dataset_index": 133839,
+    "id": "20c27dbe-3ba4-445a-1b1a-08db3b55cd4a_241_1017",
+    "speaker": "20c27dbe-3ba4-445a-1b1a-08db3b55cd4a",
+    "text": "what alarms are set",
+    "pairing_text": "what alarms are set",
+    "speaker_avg_cer": 0.619,
+    "speaker_avg_wer": 0.8081,
+    "speaker_severity": "high",
+    "audio": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_original.wav"
+  },
+  "outputs": {
+    "high_articulation_low_timbre": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/high_articulation_low_timbre.wav",
+    "low_articulation_high_timbre": "/srv/scratch/z5327748/dys-gen-runs/Park_v1/low_articulation_high_timbre.wav"
+  },
+  "directions": {
+    "high_articulation_low_timbre": {
+      "source": "high_original",
+      "reference": "low_original",
+      "expected_timbre": "low speaker",
+      "expected_severity": "high"
+    },
+    "low_articulation_high_timbre": {
+      "source": "low_original",
+      "reference": "high_original",
+      "expected_timbre": "high speaker",
+      "expected_severity": "low"
+    }
+  }
+}
